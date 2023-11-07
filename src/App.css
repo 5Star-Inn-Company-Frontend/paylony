@@ -1,0 +1,77 @@
+#root {
+  font-family: 'Nunito Sans', sans-serif;
+  background:#f2f3f8;
+}
+.bg-bodyCl{
+  background:#f2f3f8;
+}
+body{
+  background:#f2f3f8;
+}
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.bar-container{
+    position:relative;
+    height: 20rem;
+}
+.bg-pmain{
+  background-color: #854FFF;
+}
+.bg-violet{
+  background-color:  #CA22EF;
+}
+.desktopNav{
+  position:relative !important;
+}
+.text-purple{
+  color:#854FFF;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.hamburger{
+  display:none !important;
+}
+@media only screen and (max-width:768px){
+  .desktopNav{
+  display:none !important;
+}
+.hamburger{
+  display:block !important;
+}
+}
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+.authLayout{
+  background:#f2f3f8;
+}
+.bg-purple{
+  background-color: #854FFF;
+}
