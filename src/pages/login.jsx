@@ -44,11 +44,11 @@ export const SignIn =()=>{
     return(
         <AuthLayout>
             <Text
-                style="text-center text-3xl font-semibold "
+                style="text-center text-xl font-semibold "
                 value="Welcome Admin!"
             />
             <Text
-                style="font-light text-center text-lg mb-6"
+                style="font-light text-center text-sm mb-6"
                 value="Login to your account"
             />
             <form onSubmit={(e)=>submitHandler(e)}>
@@ -98,7 +98,7 @@ export const SignIn =()=>{
                         )
                 })
             }
-            <Link to="/reset">Forgot your password?</Link>
+            <Link to="/reset" className="text-sm">Forgot your password?</Link>
             {/* {LoginError && <Text style="text-danger text-xs" value={LoginError}/>} */}
             <div>
             <button

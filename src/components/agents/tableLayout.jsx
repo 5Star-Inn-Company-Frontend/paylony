@@ -18,7 +18,7 @@ export const TableLayout =({
             {
                 !hideheaderActions &&(
                 <div className="flex flex-wrap justify-between mb-2">
-                    <div className="flex items-center mb-1">
+                    <div className="flex items-center mb-1 flex-wrap">
                         {
                             !hideCreateAction &&(
                                 <div>
