@@ -31,6 +31,7 @@ import { MainWalletHistory } from './components/report&Analytics/mainWalletHisto
 import { Overview } from './components/report&Analytics/overView';
 import { AllUsers } from './components/portalSettings/users';
 import { AddUsers } from './components/portalSettings/AddUsers';
+import { Register } from './pages/register';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
        <Router>
           <Routes>
             <Route exact path="/login" element={ <SignIn/>}/>
+             <Route exact path="/register" element={ <Register/>}/>
             <Route exact path="/reset" element={ <Reset/>}/>
             <Route exact path="/" element={ <DashbaordMainView/>}/>
             <Route exact path="/personalInfo" element={ <PersonalInfo/>}/>

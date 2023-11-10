@@ -2,20 +2,18 @@
 // import { AuthLayout } from "./authLayout"
 import { useForm } from "react-hook-form"
 // import { InputField } from "./cutormFormField";
-import { Link} from "react-router-dom";
-import { Text } from "../components/global/text";
-import { AuthLayout } from "../components/auth/authLayout";
 import {
     Input,
     initTE,
   } from "tw-elements";
 import { useEffect } from "react";
+import { Text } from "../global/text";
 
 // import { Btn } from "../elements/btn";
 // import { useDispatch, useSelector } from "react-redux";
 // import { LogInUser } from "../store/authSlice";
 
-export const SignIn =()=>{
+export const StepThree =()=>{
     useEffect(()=>{
         initTE({ Input });
     })
@@ -27,11 +25,11 @@ export const SignIn =()=>{
         formState: { errors } 
     } = useForm();
     // const SubmitHandler =({
-    //     email,
+    //     AccountNumber,
     //     password
     // })=>{
     //     dispatch(LogInUser({
-    //         email,
+    //         AccountNumber,
     //         password
     //     }))   
     // }
@@ -42,31 +40,30 @@ export const SignIn =()=>{
     }
 
     return(
-        <AuthLayout>
+        <>
             <Text
-                style="text-center text-xl font-medium"
-                value="Welcome Admin!"
+                style="text-start text-lg mb-6"
+                value="Enter your Account Information"
             />
-            <Text
-                style="text-center text-lg mb-6"
-                value="Access to your Dashboard"
-            />
-            <form onSubmit={(e)=>submitHandler(e)}>
+            <form 
+                onSubmit={(e)=>submitHandler(e)}
+                className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-8"
+            >
                 {
                     [
                         {
-                            title:"email",
-                            labelName:"Email",
-                            type:"email",
-                            error:errors.email,
-                            placeHold:"Enter email",
+                            title:"AccountNumber",
+                            labelName:"Account Number",
+                            type:"AccountNumber",
+                            error:errors.AccountNumber,
+                            placeHold:"Enter Account Number",
 
                         },{
-                            title:"password",
-                            labelName:"Password",
-                            type:"password",
-                            error:errors.password,
-                            placeHold:"Enter password"
+                            title:"accName",
+                            labelName:"AccountName",
+                            type:"text",
+                            error:errors.accName,
+                            placeHold:"AccountName",
 
                         }
                     ].map((option,index)=>{
@@ -79,13 +76,13 @@ export const SignIn =()=>{
                         }=option;
                         return(
                             <div 
-                                className="flex flex-col items-start mb-4 w-full" 
+                                className="flex flex-col items-start w-full" 
                                 data-te-input-wrapper-init
                                 key={index}
                             >
                                 
                                 <label
-                                    for={`exampleFormControlInput1${index}`}
+                                    htmlFor={`exampleFormControlInput1${index}`}
                                     className="pointer-events-none mb-3 origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                                     >{labelName}
                                 </label>
@@ -100,21 +97,15 @@ export const SignIn =()=>{
                         )
                 })
             }
-            <Link to="/reset" className="text-sm">Forgot your password?</Link>
-            {/* {LoginError && <Text style="text-danger text-xs" value={LoginError}/>} */}
             <div>
             <button
                 type="button"
                 data-te-ripple-init
                 className=" bg-purple w-full px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                Login In
+                Next
             </button>
             </div>
-            <div className="flex items-center m-auto w-fit">
-                <span className="me-1 text-sm font-medium">Dont have an account?</span>
-                <Link to="/register" className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700">Sigup here?</Link>
-            </div>
-            </form>
-        </AuthLayout>
+        </form>
+        </>
     )
 }

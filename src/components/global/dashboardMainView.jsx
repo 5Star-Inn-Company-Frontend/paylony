@@ -8,7 +8,7 @@ export const DashbaordMainView =()=>{
     <>
        <DashBoardLayout>
             <Text
-                style="text-lg text-start font-semibold mt-6"
+                style="text-lg text-start mt-6"
                 value="Welcome!"
             />
             <Text
