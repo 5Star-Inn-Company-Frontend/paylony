@@ -48,7 +48,7 @@ export const SignIn =()=>{
                 value="Welcome Admin!"
             />
             <Text
-                style="text-center text-lg mb-6"
+                style="text-center text-sm mb-6"
                 value="Access to your Dashboard"
             />
             <form onSubmit={(e)=>submitHandler(e)}>
@@ -86,7 +86,7 @@ export const SignIn =()=>{
                                 
                                 <label
                                     for={`exampleFormControlInput1${index}`}
-                                    className="pointer-events-none mb-3 origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                                    className="pointer-events-none origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-sm text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                                     >{labelName}
                                 </label>
                                 <input
@@ -112,7 +112,7 @@ export const SignIn =()=>{
             </div>
             <div className="flex items-center m-auto w-fit">
                 <span className="me-1 text-sm font-medium">Dont have an account?</span>
-                <Link to="/register" className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700">Sigup here?</Link>
+                <Link to="/register_one" className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700">Sigup here?</Link>
             </div>
             </form>
         </AuthLayout>

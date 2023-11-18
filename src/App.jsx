@@ -31,7 +31,12 @@ import { MainWalletHistory } from './components/report&Analytics/mainWalletHisto
 import { Overview } from './components/report&Analytics/overView';
 import { AllUsers } from './components/portalSettings/users';
 import { AddUsers } from './components/portalSettings/AddUsers';
-import { Register } from './pages/register';
+import { Auth_Personanl } from './pages/auth_personal';
+import { Auth_Business } from './pages/auth_business';
+import { Auth_Acc } from './pages/auth_acc';
+import { Auth_Upload } from './pages/auth_upload';
+import { Transaction_Map } from './components/report&Analytics/transactionMap';
+import { Agent_Map } from './components/report&Analytics/agentMap';
 
 function App() {
   return (
@@ -39,7 +44,10 @@ function App() {
        <Router>
           <Routes>
             <Route exact path="/login" element={ <SignIn/>}/>
-             <Route exact path="/register" element={ <Register/>}/>
+             <Route exact path="/register_one" element={ <Auth_Personanl/>}/>
+             <Route exact path="/register_two" element={ <Auth_Business/>}/>
+             <Route exact path="/register_three" element={ <Auth_Acc/>}/>
+             <Route exact path="/register_four" element={ <Auth_Upload/>}/>
             <Route exact path="/reset" element={ <Reset/>}/>
             <Route exact path="/" element={ <DashbaordMainView/>}/>
             <Route exact path="/personalInfo" element={ <PersonalInfo/>}/>
@@ -64,6 +72,8 @@ function App() {
             <Route exact path="/report-performance_count" element={ <PerformanceReport/>}/>
             <Route exact path="/report-terminal_count" element={ <TerminalReport/>}/>
             <Route exact path="/report-dispute_count" element={ <DisputeCount/>}/>
+            <Route exact path="/report-transaction_map" element={ <Transaction_Map/>}/>
+            <Route exact path="/report-agent_map" element={ <Agent_Map/>}/>
             <Route exact path="/report-discount_count" element={ <DisputeCount/>}/>
             <Route exact path="/report-Charge_Back_count" element={ <ChargeBackCount/>}/>
             <Route exact path="/report-agent_count" element={ <AgentStateCount/>}/>

@@ -14,9 +14,9 @@ import { Text } from "../global/text";
 // import { LogInUser } from "../store/authSlice";
 
 export const StepFour =()=>{
-    useEffect(()=>{
-        initTE({ Input });
-    })
+    // useEffect(()=>{
+    //     initTE({ Input });
+    // })
     // const dispatch = useDispatch();
     // const {LoginError,LoginStatus} = useSelector(state=>state.auth);
     const { 
@@ -36,13 +36,13 @@ export const StepFour =()=>{
 
     const submitHandler =(e)=>{
         e.preventDefault();
-        window.location.replace("/")
+        window.location.replace("/register_four")
     }
 
     return(
-        <>
+        <div className="w-full">
             <Text
-                style="text-start text-lg mb-6"
+                style="text-start text-sm mb-6"
                 value="Document Upload"
             />
             <form 
@@ -104,7 +104,7 @@ export const StepFour =()=>{
                                             placeholder={placeHold} />
                                         <label
                                             htmlFor={`exampleFormControlInput1${index}`}
-                                            className="text-start pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                                            className="text-start text-sm pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
                                             >{labelName}
                                         </label>
                                     </div>
@@ -117,10 +117,11 @@ export const StepFour =()=>{
                                     >
                                         <label
                                             htmlFor={title}
-                                            className="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
+                                            className="text-sm inline-block text-neutral-700 dark:text-neutral-200"
                                             >{labelName}</label
                                         >
                                         <input
+                                            required
                                             className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
                                             type={type}
                                             id={title} 
@@ -132,13 +133,13 @@ export const StepFour =()=>{
                     }
             <div>
             <button
-                type="button"
+                type="submit"
                 data-te-ripple-init
-                className=" bg-purple w-full px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
                 Submit
             </button>
             </div>
         </form>
-        </>
+        </div>
     )
 }

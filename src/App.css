@@ -8,6 +8,12 @@
 body{
   background:#f2f3f8;
 }
+.bg-purple{
+  background-color: #4a2950;
+}
+.bg-mixed-grey{
+  background-color: rgba(153, 155, 163, 0.1);
+}
 .logo {
   height: 6em;
   padding: 1.5em;

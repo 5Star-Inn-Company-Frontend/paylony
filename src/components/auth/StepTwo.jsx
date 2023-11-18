@@ -14,9 +14,9 @@ import { Text } from "../global/text";
 // import { LogInUser } from "../store/authSlice";
 
 export const StepTwo =()=>{
-    useEffect(()=>{
-        initTE({ Input });
-    })
+    // useEffect(()=>{
+    //     initTE({ Input });
+    // })
     // const dispatch = useDispatch();
     // const {LoginError,LoginStatus} = useSelector(state=>state.auth);
     const { 
@@ -36,13 +36,13 @@ export const StepTwo =()=>{
 
     const submitHandler =(e)=>{
         e.preventDefault();
-        window.location.replace("/")
+        window.location.replace("/register_three")
     }
 
     return(
-        <>
+        <div className="w-full">
             <Text
-                style="text-start text-lg mb-6"
+                style="text-start text-sm mb-6"
                 value="Enter your Business Information"
             />
             <form 
@@ -97,12 +97,13 @@ export const StepTwo =()=>{
                                 
                                 <label
                                     htmlFor={`exampleFormControlInput1${index}`}
-                                    className="pointer-events-none mb-3 origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                                    className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                                     >{labelName}
                                 </label>
                                 <input
                                     type={type}
                                     name={title}
+                                    required
                                     className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.72rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                     id={`exampleFormControlInput1${index}`}
                                     placeholder={placeHold} 
@@ -113,13 +114,13 @@ export const StepTwo =()=>{
             }
             <div>
             <button
-                type="button"
+                type="submit"
                 data-te-ripple-init
-                className=" bg-purple w-full px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
                 Next
             </button>
             </div>
         </form>
-        </>
+        </div>
     )
 }
