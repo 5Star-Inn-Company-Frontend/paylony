@@ -1,42 +1,35 @@
-// import { Text } from "../elements/text"
-// import { AuthLayout } from "./authLayout"
 import { useForm } from "react-hook-form"
-// import { InputField } from "./cutormFormField";
-import {
-    Input,
-    initTE,
-  } from "tw-elements";
-import { useEffect } from "react";
 import { Text } from "../global/text";
-
-// import { Btn } from "../elements/btn";
-// import { useDispatch, useSelector } from "react-redux";
-// import { LogInUser } from "../store/authSlice";
+import { SavaToLocal_With_navigate } from "./action";
 
 export const StepTwo =()=>{
-    // useEffect(()=>{
-    //     initTE({ Input });
-    // })
-    // const dispatch = useDispatch();
-    // const {LoginError,LoginStatus} = useSelector(state=>state.auth);
     const { 
         register, 
         handleSubmit, 
         formState: { errors } 
     } = useForm();
-    // const SubmitHandler =({
-    //     email,
-    //     password
-    // })=>{
-    //     dispatch(LogInUser({
-    //         email,
-    //         password
-    //     }))   
-    // }
-
-    const submitHandler =(e)=>{
-        e.preventDefault();
-        window.location.replace("/register_three")
+    const SubmitHandler =({
+        BusinessName,
+        businessAddress,
+        phone,
+        State,
+        res_address,
+        Agent_Type,
+        BState,
+        localG
+    })=>{
+        SavaToLocal_With_navigate(
+            {
+                BusinessName,
+                localG,
+                BState,
+                businessAddress,
+                phone,
+                res_address,
+                Agent_Type,
+                State
+            },"/register_three"
+        ) 
     }
 
     return(
@@ -46,12 +39,19 @@ export const StepTwo =()=>{
                 value="Enter your Business Information"
             />
             <form 
-                onSubmit={(e)=>submitHandler(e)}
-                className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-8"
-            >
+                onSubmit={handleSubmit(SubmitHandler)} >
+                <div className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-4">
+               
                 {
                     [
                         {
+                            title:"Agent_Type",
+                            labelName:"Agent Type",
+                            type:"text",
+                            error:errors.Agent_Type,
+                            placeHold:"Agent_Type",
+
+                        },{
                             title:"BusinessName",
                             labelName:"Business Name",
                             type:"text",
@@ -73,6 +73,27 @@ export const StepTwo =()=>{
                             placeHold:"Phone Number",
 
                         },{
+                            title:"res_address",
+                            labelName:"Residential Address",
+                            type:"text",
+                            error:errors.res_address,
+                            placeHold:"residential address",
+
+                        },{
+                            title:"BState",
+                            labelName:"Business State",
+                            type:"text",
+                            error:errors.BState,
+                            placeHold:"Enter Business State"
+
+                        },{
+                            title:"localG",
+                            labelName:"Local Government",
+                            type:"text",
+                            error:errors.localG,
+                            placeHold:"Enter Local Government"
+
+                        },{
                             title:"State",
                             labelName:"State",
                             type:"text",
@@ -90,8 +111,7 @@ export const StepTwo =()=>{
                         }=option;
                         return(
                             <div 
-                                className="flex flex-col items-start w-full" 
-                                data-te-input-wrapper-init
+                                className="flex flex-col items-start w-full"
                                 key={index}
                             >
                                 
@@ -107,12 +127,16 @@ export const StepTwo =()=>{
                                     className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.72rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                     id={`exampleFormControlInput1${index}`}
                                     placeholder={placeHold} 
+                                    {...register(
+                                        `${title}`
+                                    )}
                                 />
                             </div>
                         )
                 })
             }
-            <div>
+            </div>
+            <div className="flex justify-end items-end">
             <button
                 type="submit"
                 data-te-ripple-init

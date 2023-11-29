@@ -1,37 +1,50 @@
 import { AgentLayout } from "./agentLayout"
 import { TableLayout } from "./tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
-import { useGetAllManagersQuery } from "../../store/apiSlice";
-
-export const ViewAccountMangers =()=>{
+import { useGetAllAggregatorsQuery } from "../../store/apiSlice";
+export const ViewAggregators =()=>{
     const{
-        data:managersData,
+        data:aggregatorsData,
         isLoading,
         isError,
         error
-    }= useGetAllManagersQuery();
-    console.log(managersData)
+    }= useGetAllAggregatorsQuery();
+    console.log(aggregatorsData)
     const data =[];
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
 
     return(
         <DashBoardLayout>
-        <AgentLayout title="View Acc Managers">
+        <AgentLayout title="View Aggregators">
             <TableLayout
-                createBtnAction={()=>window.location.replace("/loginDetails")}
-                createBtnText="Create Managers"
+                createBtnAction={()=>window.location.replace("/create_aggregators")}
+                createBtnText="Create Aggregators"
                 headerData={[
-                    "s/n","ID","first_name","last_name","email","Date of birth","gender","Residential Address","State","Agent Type","User Type",
-                    "Account Status","Created At","Updated At"
+                    "s/n",
+                    "id",
+                    "first_name",
+                    "last_name",
+                    "username",
+                    "email",
+                    "dob",
+                    "gender",
+                    "residential_address",
+                    "state",
+                    "agent_type",
+                    "user_type",
+                    "account_status",
+                    "created_at",
+                    "updated_at",
                 ]}
-                data={managersData?.data}
+                data={aggregatorsData?.data}
             >
             {
-                managersData?.data?.map((info,index)=>{
+                aggregatorsData?.data?.map((info,index)=>{
                     const{
                         id,
                         first_name,
                         last_name,
+                        username,
                         email,
                         dob,
                         gender,
@@ -39,9 +52,9 @@ export const ViewAccountMangers =()=>{
                         state,
                         agent_type,
                         user_type,
+                        account_status,
                         created_at,
                         updated_at,
-                        account_status
                     }=info
                     return(
                         <tr 
@@ -54,6 +67,7 @@ export const ViewAccountMangers =()=>{
                                     id,
                                     first_name,
                                     last_name,
+                                    username,
                                     email,
                                     dob,
                                     gender,

@@ -1,10 +1,10 @@
 
 import { useForm } from "react-hook-form"
 import { CreateAccountManagerLayout } from "./createAccountMangerLayout";
-import { useCreateManagersMutation } from "../../store/apiSlice";
+import { useCreateAggregatorsMutation } from "../../store/apiSlice";
 import { toast } from "react-toastify";
-export const LoginDetails =()=>{
-    const [createManagers, {isLoading}] = useCreateManagersMutation()
+export const AggregatorsDetails =()=>{
+    const [createAggregators, {isLoading}] = useCreateAggregatorsMutation()
     const { 
         register, 
         handleSubmit, 
@@ -64,7 +64,7 @@ export const LoginDetails =()=>{
             }=arr;
             formdata.append(title, value)
         })
-        createManagers({
+        createAggregators({
             body:formdata
         }).unwrap().then((payload)=>{
             toast(payload?.message)

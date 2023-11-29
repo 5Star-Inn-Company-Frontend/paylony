@@ -1,8 +1,33 @@
+import { toast } from "react-toastify";
+import { useDeleteTerminalsMutation, useGetAllTerminalsQuery } from "../../store/apiSlice";
 import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
+import { TableDropDown } from "../global/dropdown";
 import { TerminalLayout } from "./terminalLayout";
 
 export const AllTerminal =()=>{
+    const{
+        data:terminalData,
+        isLoading:terminalIsLoading,
+        isError,
+        error
+    }= useGetAllTerminalsQuery();
+    const [deleteTerminals, {isLoading}] = useDeleteTerminalsMutation()
+    const deleteAction =(id)=>{
+        deleteTerminals({
+            id:id
+        }).unwrap().then((payload)=>{
+            toast(payload?.message)
+        }).catch((error)=>{
+            const{
+                status,
+                data
+            }=error
+            toast.error(data?.message)
+            console.log(error)
+        })
+    }
+    console.log(terminalData)
     const data =[];
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
     return(
@@ -12,30 +37,72 @@ export const AllTerminal =()=>{
                 createBtnAction={()=>window.location.replace("/add_terminal")}
                 createBtnText="Add Terminal"
                 headerData={[
-                    "Terminal Id","Agent assigned","Batch No","Serial No","Status","Created At","Action"
+                    "s/n",
+                    "Id",
+                    "Business ID",
+                    "User_ID",
+                    "Serial Number",
+                    "POS Type",
+                    "Name",
+                    "Terminal Sim",
+                    "Type",
+                    "Balance",
+                    "Cashback",
+                    "Mid_id",
+                    "State head",
+                    "Aggregator",
+                    "location",
+                    "Trans_pin",
+                    "Default_pin",
+                    "Payout_status",
+                    "Payout_Fee",
+                    "Fee Type",
+                "Flat Fee",
+                    "Fee Cent",
+                    "Fee Cap",
+                    "cta",
+                    "Paf",
+                 "Fee Bearer",
+                    "Status",
+                    "Date_assigned",
+                    "Created_at",
+                    "Updated_at",
+                    "Actions"
                 ]}
-                data={data}
+                data={terminalData?.data}
             >
             {
-                data?.map((info,index)=>{
+                terminalData?.data?.map((info,index)=>{
                     const{
                         id,
-                        title,
-                        remark,
-                        // token,
-                        // server_response,
-                        server,
-                        new_balance,
-                        prev_balance,
+                        business_id,
+                        user_id,
+                        serial_number,
+                        pos_type,
+                        name,
+                        terminal_sim,
                         type,
+                        balance,
+                        cashback,
+                        mid_id,
+                        statehead,
+                        aggregator,
+                        location,
+                        trans_pin,
+                        default_pin,
+                        payout_status,
+                        payout_fee,
+                        feeType,
+                        flatFee,
+                        feeCent,
+                        feeCap,
+                        cta,
+                        paf,
+                        feeBearer,
                         status,
-                        recipient,
-                        amount,
-                        commission,
-                        charges,
-                        reference,
+                        date_assigned,
                         created_at,
-                        updated_at,
+                        updated_at
                     }=info
                     return(
                         <tr 
@@ -46,20 +113,32 @@ export const AllTerminal =()=>{
                             {
                                 [
                                     id,
-                                    title,
-                                    remark,
-                                    // token,
-                                    // server_response?.status,
-                                    server,
-                                    new_balance,
-                                    prev_balance,
+                                    business_id,
+                                    user_id,
+                                    serial_number,
+                                    pos_type,
+                                    name,
+                                    terminal_sim,
                                     type,
+                                    balance,
+                                    cashback,
+                                    mid_id,
+                                    statehead,
+                                    aggregator,
+                                    location,
+                                    trans_pin,
+                                    default_pin,
+                                    payout_status,
+                                    payout_fee,
+                                    feeType,
+                                    flatFee,
+                                    feeCent,
+                                    feeCap,
+                                    cta,
+                                    paf,
+                                    feeBearer,
                                     status,
-                                    recipient,
-                                    amount,
-                                    commission,
-                                    charges,
-                                    reference
+                                    date_assigned
                                 ].map((body,index)=>{
                                     return  (
                                         <td className={bodyStyle} key={index}>{body}</td>
@@ -67,7 +146,7 @@ export const AllTerminal =()=>{
                                 })
                             }
                             <td className={bodyStyle}>{
-                                    new Date(created_at)
+                                new Date(created_at)
                                     .toLocaleString()
                                 }
                             </td>
@@ -75,6 +154,14 @@ export const AllTerminal =()=>{
                                     new Date(updated_at)
                                     .toLocaleString()
                                 }
+                            </td>
+                            <td>
+                                <TableDropDown
+                                    list={[{
+                                        dropTitle:isLoading?"please wait...":"delete",
+                                        action:deleteAction(id)
+                                    }]}
+                                />
                             </td>
                         </tr>
                     )

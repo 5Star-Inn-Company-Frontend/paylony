@@ -13,7 +13,7 @@ export const AuthLayout =({children,adjHeight,style})=>{
                             className="w-18 h-18"
                         />
                     </div>
-                <div className="overflow-auto bg-white rounded-lg px-4 py-8 ">
+                <div className="overflow-auto bg-white rounded-lg lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 xxs:px-2 xxxs:px-2 py-8 ">
                     {children}
                 </div>
             </div>

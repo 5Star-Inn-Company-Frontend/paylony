@@ -37,10 +37,18 @@ import { Auth_Acc } from './pages/auth_acc';
 import { Auth_Upload } from './pages/auth_upload';
 import { Transaction_Map } from './components/report&Analytics/transactionMap';
 import { Agent_Map } from './components/report&Analytics/agentMap';
+import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import store from './store';
+import { AggregatorsDetails } from './components/agents/createAggregators';
+import { ViewAggregators } from './components/agents/viewAggregators';
+
 
 function App() {
   return (
     <>
+    <Provider store={store}>
        <Router>
           <Routes>
             <Route exact path="/login" element={ <SignIn/>}/>
@@ -56,6 +64,8 @@ function App() {
             <Route exact path="/userDetails" element={ <UserDetails/>}/>
             <Route exact path="/loginDetails" element={ <LoginDetails/>}/>
             <Route exact path="/viewAgent" element={ <ViewAgent/>}/>
+            <Route exact path="/create_aggregators" element={ <AggregatorsDetails/>}/>
+            <Route exact path="/view_aggregators" element={ <ViewAggregators/>}/>
             <Route exact path="/view_acc_manager" element={ <ViewAccountMangers/>}/>
             <Route exact path="/transact-card" element={ <CardTransactionHistory/>}/>
             <Route exact path="/transact-admin" element={ <AdminTransactionHistory/>}/>
@@ -84,6 +94,8 @@ function App() {
             {/* <Route exact path="/viewAggregators" element={ <ViewAggregators/>}/> */}
           </Routes>
        </Router>
+    </Provider>
+    <ToastContainer />
     </>
   )
 }

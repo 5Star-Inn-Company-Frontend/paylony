@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export const Auth_Register_Layout =({title,children})=>{
     return(
-        <div className="py-8 px-4  m-auto lg:w-[75%] xl:w-[75%] md:w-[75%] sm:w-full xs:w-full xxs:w-full">
+        <div className="py-8 lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 xxs:px-2 xxxs:px-2  m-auto lg:w-[75%] xl:w-[75%] md:w-[75%] sm:w-full xs:w-full xxs:w-full">
             <div className="mb-8 m-auto w-fit">
                 <img 
                     src={logo}

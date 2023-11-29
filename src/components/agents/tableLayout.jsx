@@ -14,7 +14,7 @@ export const TableLayout =({
 })=>{
     const headStyle = "px-6 py-4"
     return(
-        <div className="px-4">
+        <div className="lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 xxs:px-2 xxxs:px-2">
             {
                 !hideheaderActions &&(
                 <div className="flex flex-wrap justify-between mb-2">

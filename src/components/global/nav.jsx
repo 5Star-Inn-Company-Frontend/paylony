@@ -1,4 +1,5 @@
 import { useEffect} from "react";
+import logo from "../../assets/Paylony logo 1.png"
 import {
     Sidenav,
     Ripple,
@@ -17,6 +18,13 @@ export const Nav =({style})=>{
             data-te-sidenav-init
             data-te-sidenav-content="#content">
             <div>
+                <div className="lg:hidden xl:hidden md:hidden sm:block xs:block xxs:block my-2 px-[1.8rem] pt-[1rem]">
+                    <img 
+                        src={logo}
+                        alt="object not found"
+                        className="w-16 h-12"
+                    />
+                </div>
                 <ul
                     className="relative m-0 list-none px-[0.2rem]"
                     data-te-sidenav-menu-ref
@@ -24,7 +32,7 @@ export const Nav =({style})=>{
                     <li className="relative">
                         <a
                             className="group flex h-12 cursor-pointer items-center truncate rounded-[5px] px-6 py-4 text-[0.875rem] text-gray-700 outline-none transition duration-300 ease-linear hover:bg-primary-400/10 hover:text-primary-600 hover:outline-none focus:bg-primary-400/10 focus:text-primary-600 focus:outline-none active:bg-primary-400/10 active:text-primary-600 active:outline-none data-[te-sidenav-state-active]:text-primary-600 data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
-                            href="/dashboard"
+                            href="/"
                             data-te-sidenav-link-ref
                         >
                             <span
@@ -79,6 +87,14 @@ export const Nav =({style})=>{
                                     data-te-sidenav-link-ref
                                     href="/viewAgent"
                                     >View Agents</a
+                                >
+                            </li>
+                            <li className="relative">
+                                <a
+                                    className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-700 outline-none transition duration-300 ease-linear hover:bg-primary-400/10 hover:text-primary-600 hover:outline-none focus:bg-primary-400/10 focus:text-primary-600 focus:outline-none active:bg-primary-400/10 active:text-primary-600 active:outline-none data-[te-sidenav-state-active]:text-primary-600 data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
+                                    data-te-sidenav-link-ref
+                                    href="/view_aggregators"
+                                    >View Aggregators</a
                                 >
                             </li>
                             <li className="relative">
@@ -362,30 +378,6 @@ export const Nav =({style})=>{
 
                             </span>
                             <span>Portal Settings</span>
-                        </a>
-                    </li>
-                    <li 
-                        className="relative"
-                        onClick={()=>{
-                            // dispatch(LogOutUser());
-                            // if(!localStorage.getItem('DataHubUserToken')){
-                            // navigate("/");
-                            // }
-                            window.location.replace("/login");
-                        }
-                        }
-                    >
-                        <a
-                            className="group flex h-12 cursor-pointer items-center truncate rounded-[5px] px-6 py-4 text-[0.875rem] text-gray-700 outline-none transition duration-300 ease-linear hover:bg-primary-400/10 hover:text-primary-600 hover:outline-none focus:bg-primary-400/10 focus:text-primary-600 focus:outline-none active:bg-primary-400/10 active:text-primary-600 active:outline-none data-[te-sidenav-state-active]:text-primary-600 data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
-                            href="#!"
-                            data-te-sidenav-link-ref>
-                            <span
-                            className="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:fill-gray-700 [&>svg]:transition [&>svg]:duration-300 [&>svg]:ease-linear group-hover:[&>svg]:fill-primary-600 group-focus:[&>svg]:fill-primary-600 group-active:[&>svg]:fill-primary-600 group-[te-sidenav-state-active]:[&>svg]:fill-primary-600 motion-reduce:[&>svg]:transition-none dark:[&>svg]:fill-gray-300 dark:group-hover:[&>svg]:fill-gray-300 ">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
-                                </svg>
-                            </span>
-                            <span>Log out</span>
                         </a>
                     </li>
                 </ul>

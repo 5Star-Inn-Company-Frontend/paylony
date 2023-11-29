@@ -3,7 +3,7 @@ import logo from "../../assets/Paylony logo 1.png"
 import { AiOutlineUser } from "react-icons/ai";
 export const DashBoardTopNav =()=>{
     return(
-        <div className="flex flex-row justify-between w-full p-4 items-center bg-white">
+        <div className="flex flex-row justify-between w-full py-2 px-4 items-center bg-white shadow">
             <div className="flex items-center">
                 <div className="me-2 hamburger">
                     <div
@@ -35,8 +35,17 @@ export const DashBoardTopNav =()=>{
                 </div>
             </div>
             <div className="flex flex-row items-center">
+                <div className="w-fit p-2 me-2">
+                    <button
+                        type="button"
+                        onClick={()=>window.location.replace("/login")}
+                        data-te-ripple-init
+                        className=" bg-purple w-fit px-6 py-2 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-sm leading-normal">
+                        Sign Out
+                    </button> 
+                </div>
                 <div className="w-fit border rounded-full p-2 me-2">
-                    <AiOutlineUser size="1rem"/>
+                    <AiOutlineUser size="1rem" color="black"/>
                 </div>
                <div
                 className="hidden-arrow flex items-center text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"

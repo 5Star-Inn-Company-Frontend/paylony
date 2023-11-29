@@ -1,42 +1,33 @@
-// import { Text } from "../elements/text"
-// import { AuthLayout } from "./authLayout"
 import { useForm } from "react-hook-form"
-// import { InputField } from "./cutormFormField";
-import {
-    Input,
-    initTE,
-  } from "tw-elements";
-import { useEffect } from "react";
 import { Text } from "../global/text";
-
-// import { Btn } from "../elements/btn";
-// import { useDispatch, useSelector } from "react-redux";
-// import { LogInUser } from "../store/authSlice";
-
+import { SavaToLocal_With_navigate } from "./action";
 export const StepOne =()=>{
-    // useEffect(()=>{
-    //     initTE({ Input });
-    // })
-    // const dispatch = useDispatch();
-    // const {LoginError,LoginStatus} = useSelector(state=>state.auth);
     const { 
         register, 
         handleSubmit, 
         formState: { errors } 
     } = useForm();
-    // const SubmitHandler =({
-    //     email,
-    //     password
-    // })=>{
-    //     dispatch(LogInUser({
-    //         email,
-    //         password
-    //     }))   
-    // }
 
-    const submitHandler =(e)=>{
-        e.preventDefault();
-        window.location.replace("/register_two")
+    const SubmitHandler =({
+        email,
+        password,
+        firstName,
+        cpassword,
+        lastName,
+        gender,
+        dob
+    })=>{
+        SavaToLocal_With_navigate(
+            {
+                email,
+                password,
+                gender,
+                firstName,
+                cpassword,
+                lastName,
+                dob   
+            },"/register_two"
+        ) 
     }
 
     return(
@@ -46,9 +37,9 @@ export const StepOne =()=>{
                 value="Enter your personal Information"
             />
             <form 
-                onSubmit={(e)=>submitHandler(e)}
-                className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-4"
-            >
+                onSubmit={handleSubmit(SubmitHandler)}
+                >
+                <div className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-4">
                 {
                     [
                         {
@@ -86,6 +77,13 @@ export const StepOne =()=>{
                             error:errors.password,
                             placeHold:"Enter password"
 
+                        },{
+                            title:"cpassword",
+                            labelName:"Confirm Password",
+                            type:"password",
+                            error:errors.cpassword,
+                            placeHold:"Confirm password"
+
                         }
                     ].map((option,index)=>{
                         const{
@@ -98,7 +96,6 @@ export const StepOne =()=>{
                         return(
                             <div 
                                 className="flex flex-col items-start w-full" 
-                                data-te-input-wrapper-init
                                 key={index}
                             >
                                 
@@ -111,6 +108,9 @@ export const StepOne =()=>{
                                     type={type}
                                     required
                                     name={title}
+                                    {...register(
+                                        `${title}`
+                                    )}
                                     className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.72rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                     id={`exampleFormControlInput1${index}`}
                                     placeholder={placeHold} 
@@ -119,7 +119,44 @@ export const StepOne =()=>{
                         )
                 })
             }
-            <div>
+            <div className="flex flex-col mb-3">
+                <label
+                    className={`mb-2 text-sm font-medium text-start`}
+                    htmlFor="gender">
+                    gender
+                </label>
+                <select
+                    className="text-start rounded-md p-4 border text-xs mb-4"
+                    name="gender"
+                    {...register(
+                        `gender`
+                    )
+                }
+                >
+            {  
+                    [
+                        {
+                            name:"Female",
+                            id:"f"
+                        },{
+                            name:"Male",
+                            id:"m"
+                        }
+                    ].map((option,index)=>{
+                        return(
+                            <option 
+                                value={option.id}
+                                    key={index}
+                                    >
+                                {option.name.toUpperCase()}
+                            </option>
+                        )
+                    })
+                }
+                </select>
+            </div>
+            </div>
+            <div className="flex justify-end items-end">
             <button
               data-te-stepper-head-ref
                 type="submit"
