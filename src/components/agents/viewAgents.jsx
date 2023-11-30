@@ -4,6 +4,7 @@ import { DashBoardLayout } from "../global/dashboardLayout";
 import {useGetAllAgentsQuery} from "../../store/apiSlice"
 import { toast } from "react-toastify";
 import { Text } from "../global/text";
+import Spinner from "../global/spinner";
 
 export const ViewAgent =()=>{
     const{
@@ -23,12 +24,7 @@ export const ViewAgent =()=>{
         <AgentLayout title="View Agents">
             {
                 isLoading ? (
-                    <div className="m-auto">
-                        <Text
-                            style="text-sm text-center"
-                            value="Fetching Request..."
-                        />
-                    </div>
+                    <Spinner/>
                     ):(
                         <TableLayout
                             createBtnAction={()=>window.location.replace("/personalInfo")}

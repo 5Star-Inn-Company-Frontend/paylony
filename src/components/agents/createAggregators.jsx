@@ -73,7 +73,11 @@ export const AggregatorsDetails =()=>{
                 status,
                 data
             }=error
-            toast.error(data?.message)
+            if(data?.error){
+                toast.error(data?.error)
+            }else{
+                toast.error(data?.message)
+            }
             console.log(error)
         })
     }

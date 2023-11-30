@@ -43,6 +43,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import store from './store';
 import { AggregatorsDetails } from './components/agents/createAggregators';
 import { ViewAggregators } from './components/agents/viewAggregators';
+import { ProtectedRoute } from './components/global/protectedRoute';
 
 
 function App() {
@@ -57,6 +58,11 @@ function App() {
              <Route exact path="/register_three" element={ <Auth_Acc/>}/>
              <Route exact path="/register_four" element={ <Auth_Upload/>}/>
             <Route exact path="/reset" element={ <Reset/>}/>
+            <Route
+              element={
+                  <ProtectedRoute/>
+              }
+          >
             <Route exact path="/" element={ <DashbaordMainView/>}/>
             <Route exact path="/personalInfo" element={ <PersonalInfo/>}/>
             <Route exact path="/businessInfo" element={ <BusinessInfo/>}/>
@@ -92,6 +98,7 @@ function App() {
             <Route exact path="/report-main_wallet" element={ <MainWalletHistory/>}/>
             <Route exact path="/report-overview" element={ <Overview/>}/>
             {/* <Route exact path="/viewAggregators" element={ <ViewAggregators/>}/> */}
+            </Route>
           </Routes>
        </Router>
     </Provider>

@@ -83,7 +83,11 @@ export const DocUpload =()=>{
                 status,
                 data
             }=error
+            if(data?.error){
+                toast.error(data?.error)
+            }else{
             toast.error(data?.message)
+            }
             console.log(error)
         })
     }

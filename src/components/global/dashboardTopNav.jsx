@@ -1,9 +1,12 @@
 import { Text } from "./text"
+import LetteredAvatar from 'react-lettered-avatar';
 import logo from "../../assets/Paylony logo 1.png"
 import { AiOutlineUser } from "react-icons/ai";
 export const DashBoardTopNav =()=>{
+    const user = JSON.parse(localStorage.getItem('paylonyToken'))
+    console.log(user)
     return(
-        <div className="flex flex-row justify-between w-full py-2 px-4 items-center bg-white shadow">
+        <div className="flex flex-row justify-between w-full py-2 px-4 items-center bg-bodyCl ">
             <div className="flex items-center">
                 <div className="me-2 hamburger">
                     <div
@@ -30,19 +33,26 @@ export const DashBoardTopNav =()=>{
                     <img 
                         src={logo}
                         alt="object not found"
-                        className="w-16 h-12"
+                        className="w-12 h-12"
                     />
                 </div>
             </div>
             <div className="flex flex-row items-center">
-                <div className="w-fit p-2 me-2">
-                    <button
-                        type="button"
-                        onClick={()=>window.location.replace("/login")}
-                        data-te-ripple-init
-                        className=" bg-purple w-fit px-6 py-2 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-sm leading-normal">
-                        Sign Out
-                    </button> 
+                <div className="w-fit me-2 lg:block xl:block md:block sm:hidden xs:hidden xxs:hidden">
+                    <Text
+                        style="text-sm text-start text-black"
+                        value={`Hello! ${user?.first_name}`}
+                    />
+                </div>
+                <div className="w-fit me-2">
+                    <LetteredAvatar
+                        backgroundColor="brown"
+                        color="white"
+                        size={34}
+                        className="text-sm"
+                        fontSize="0.5rem"
+                        name={user?.first_name}
+                    />
                 </div>
                 <div className="w-fit border rounded-full p-2 me-2">
                     <AiOutlineUser size="1rem" color="black"/>

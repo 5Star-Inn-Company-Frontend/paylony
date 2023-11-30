@@ -139,22 +139,7 @@ const auth_Slice = createSlice({
        LoginError:'',
        userLoaded:localStorage.getItem('paylonyToken')?true:false,
     },
-    reducers:{
-        LogOutUser(state, action){
-            localStorage.removeItem('paylonyToken');
-            return {
-                ...state,
-                forgetStatus:'',
-                userdata:{},
-                registerStatus:'',
-                registerError:'',
-                LoginStatus:'',
-                createAccountStatus:'',
-                LoginError:'',
-                userLoaded:false
-            }
-        }
-    },
+    reducers:{ },
 
     extraReducers:(builder)=>{
         
