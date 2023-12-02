@@ -63,7 +63,7 @@ export const TotalInformation =()=>{
                     }=info
                     return(
                         <div 
-                            className="px-4 py-8 rounded-md bg-bodyCl  flex flex-col justify-between"
+                            className="px-4 py-8 rounded-md bg-cl  flex flex-col justify-between"
                             key={index}
                         >
                             <div className="flex items-center mb-2">

@@ -121,6 +121,7 @@ export const ForgetPassword = createAsyncThunk(
             );
             return response?.data
         }catch(err){
+            console.log(err)
             return rejectWithValue(
                 err.response?.data?.message
             )

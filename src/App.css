@@ -5,6 +5,12 @@
 .bg-bodyCl{
   background:#f2f3f8;
 }
+input,select{
+  background:white!important;
+}
+.bg-cl{
+  background: rgba(250, 250, 250, var(--surface-alpha, 1));
+}
 body{
   background:#f2f3f8;
 }

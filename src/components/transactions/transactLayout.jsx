@@ -19,7 +19,7 @@ export const TransactLayout =({
                     <li className=" text-sm text-neutral-500 dark:text-neutral-400">{title}</li>
                 </ol>
             </nav>
-            <div className="w-full bg-white rounded-sm border">
+            <div className="w-full rounded-sm border bg-cl">
                 {children}
             </div>
         </div>

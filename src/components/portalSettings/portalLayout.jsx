@@ -32,7 +32,7 @@ export const PortalLayout =({
                         <li className="text-sm text-neutral-500 dark:text-neutral-400">{title}</li>
                     </ol>
                 </nav>
-                <div className="w-full border rounded-sm p-4">
+                <div className="w-full border rounded-sm p-4 bg-cl">
                     {children}
                 </div>
             </div>

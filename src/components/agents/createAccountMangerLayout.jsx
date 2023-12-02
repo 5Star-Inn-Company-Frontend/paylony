@@ -11,7 +11,7 @@ export const CreateAccountManagerLayout =({
         
         <DashBoardLayout>
         <AgentLayout title="Create Account manger">
-                <div className="flex flex-wrap bg-white py-8 w-full">
+                <div className="flex flex-wrap py-8 w-full">
                     <div className="lg:w-60 xl:w-60 md:w-60 sm:w-full xs:w-full xxs:w-full  me-4">
                         <ul
                             className="relative m-0 list-none px-[0.2rem]"

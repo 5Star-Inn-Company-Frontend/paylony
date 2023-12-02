@@ -6,7 +6,7 @@ export const DashBoardTopNav =()=>{
     const user = JSON.parse(localStorage.getItem('paylonyToken'))
     console.log(user)
     return(
-        <div className="flex flex-row justify-between w-full py-2 px-4 items-center bg-bodyCl ">
+        <div className="flex flex-row justify-between w-full py-2 px-4 items-center bg-cl ">
             <div className="flex items-center">
                 <div className="me-2 hamburger">
                     <div
@@ -33,7 +33,7 @@ export const DashBoardTopNav =()=>{
                     <img 
                         src={logo}
                         alt="object not found"
-                        className="w-12 h-12"
+                        className="h-12"
                     />
                 </div>
             </div>

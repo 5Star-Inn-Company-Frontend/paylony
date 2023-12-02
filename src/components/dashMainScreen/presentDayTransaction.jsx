@@ -41,7 +41,7 @@ export const PTransaction =()=>{
                             </div>
                         </div>
                         <div 
-                            className="flex flex-col justify-between bg-white p-4 rounded-md h-[10rem]"
+                            className="flex flex-col justify-between bg-cl border p-4 rounded-md h-[10rem]"
                         >
                             <Text
                                 style="text-lg text-start font-semibold"
@@ -82,7 +82,7 @@ export const PTransaction =()=>{
                             </div>
                         </div>
                         <div 
-                            className="flex flex-col justify-center  bg-white p-4 h-[10rem] rounded-md"
+                            className="flex flex-col justify-center p-4 h-[10rem] rounded-md border bg-cl"
                         >
                             <Text
                                 style="text-lg text-start font-semibold"
