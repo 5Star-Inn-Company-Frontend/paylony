@@ -9,7 +9,7 @@ const Spinner = () => {
         <div className={classes.spinner_container}>
             <FadeLoader
                 color={color}
-                size={23}
+                size={20}
                 aria-label="Loading Spinner"
                 data-testid="loader"
             />

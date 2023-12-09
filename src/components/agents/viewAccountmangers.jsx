@@ -1,5 +1,6 @@
 import { AgentLayout } from "./agentLayout"
 import { TableLayout } from "./tableLayout";
+import { toast } from "react-toastify";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { useGetAllManagersQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
@@ -14,7 +15,9 @@ export const ViewAccountMangers =()=>{
     console.log(managersData)
     const data =[];
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-
+    if(isError){
+        toast.error(error?.data?.message)
+    }
     return(
         <DashBoardLayout>
         <AgentLayout title="View Acc Managers">

@@ -33,8 +33,10 @@ export const AllTerminal =()=>{
         })
     }
     console.log(terminalData)
-    const data =[];
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
+    if(isError){
+        toast.error(error?.data?.message)
+    }
     return(
         <DashBoardLayout>
         <TerminalLayout title="All Terminals">

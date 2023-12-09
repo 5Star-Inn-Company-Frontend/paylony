@@ -1,4 +1,5 @@
 import { AgentLayout } from "./agentLayout"
+import { toast } from "react-toastify";
 import { TableLayout } from "./tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { useGetAllAggregatorsQuery } from "../../store/apiSlice";
@@ -13,7 +14,9 @@ export const ViewAggregators =()=>{
     console.log(aggregatorsData)
     const data =[];
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-
+    if(isError){
+        toast.error(error?.data?.message)
+    }
     return(
         <DashBoardLayout>
         <AgentLayout title="View Aggregators">

@@ -2,6 +2,7 @@ import { useGetAllTransactionQuery } from "../../store/apiSlice";
 import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import Spinner from "../global/spinner";
+import { toast } from "react-toastify";
 import { TransactLayout } from "./transactLayout";
 
 export const AdminTransactionHistory =()=>{
@@ -13,6 +14,9 @@ export const AdminTransactionHistory =()=>{
     }= useGetAllTransactionQuery();
     const data =[];
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
+    if(isError){
+        toast.error(error?.data?.message)
+    }
     return(
         <DashBoardLayout>
         <TransactLayout title="Admin Transaction History">
