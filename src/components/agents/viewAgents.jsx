@@ -5,8 +5,13 @@ import {useGetAllAgentsQuery} from "../../store/apiSlice"
 import { toast } from "react-toastify";
 import { Text } from "../global/text";
 import Spinner from "../global/spinner";
+import { useState } from "react";
 
 export const ViewAgent =()=>{
+    const[
+        actionData,
+        setActionData
+    ]= useState([]);
     const{
         data:agentData,
         isLoading,
@@ -16,6 +21,11 @@ export const ViewAgent =()=>{
     console.log(agentData)
     const data =[];
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
+    const handleInputChange =(e)=>{
+        console.log(e.target.value)
+        // const filtereddata = agentData?.find((data)=>data.name?.toLowerCase().includes(e))
+        // setActionData(filtereddata)
+    }
     if(isError){
         toast.error(error)
     }
@@ -27,6 +37,7 @@ export const ViewAgent =()=>{
                     <Spinner/>
                     ):(
                         <TableLayout
+                            handleInputChange={(e)=>handleInputChange(e)}
                             createBtnAction={()=>window.location.replace("/personalInfo")}
                             createBtnText="Create Agent"
                             headerData={[

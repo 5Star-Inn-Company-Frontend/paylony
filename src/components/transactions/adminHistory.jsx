@@ -1,40 +1,93 @@
+import { useGetAllTransactionQuery } from "../../store/apiSlice";
 import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
+import Spinner from "../global/spinner";
 import { TransactLayout } from "./transactLayout";
 
 export const AdminTransactionHistory =()=>{
+    const{
+        data:transactData,
+        isLoading:transactIsLoading,
+        isError,
+        error
+    }= useGetAllTransactionQuery();
     const data =[];
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
     return(
         <DashBoardLayout>
         <TransactLayout title="Admin Transaction History">
+        {
+                transactIsLoading ? (
+                    <Spinner/>
+                    ):(
             <TableLayout
                 hideCreateAction={true}
                 headerData={[
-                    "Terminal ID","Transaction Ref","Transaction Amount","Status","Transaction Time","Mode","Info","Type","Action"
+                    "s/n",
+                    "User",
+                    "business",
+                    "pos_id",
+                    "title",
+                    "service",
+                    "description",
+                    "narration",
+                    "amount",
+                    "discount",
+                    "cashback",
+                    "fee",
+                    "total",
+                    "init_bal",
+                    "new_bal",
+                    "from",
+                    "to",
+                    "profit",
+                    "sys_fee",
+                    "agg_share",
+                    "sh_share",
+                    "trx",
+                    "ref",
+                    "type",
+                    "status_code",
+                    "status_desc",
+                    "gateway_response",
+                    "status",
+                    "created_at",
+                    "updated_at"
                 ]}
-                data={data}
+                data={transactData?.data}
             >
             {
-                data?.map((info,index)=>{
+                transactData?.data?.map((info,index)=>{
                     const{
-                        id,
-                        title,
-                        remark,
-                        // token,
-                        // server_response,
-                        server,
-                        new_balance,
-                        prev_balance,
-                        type,
-                        status,
-                        recipient,
-                        amount,
-                        commission,
-                        charges,
-                        reference,
-                        created_at,
-                        updated_at,
+                        user,
+                    business,
+                    pos_id,
+                    title,
+                    service,
+                    description,
+                    narration,
+                    amount,
+                    discount,
+                    cashback,
+                    fee,
+                    total,
+                    init_bal,
+                    new_bal,
+                    from,
+                    to,
+                    profit,
+                    sys_fee,
+                    agg_share,
+                    sh_share,
+                    trx,
+                    ref,
+                    type,
+                    status_code,
+                    status_desc,
+                    gateway_response,
+                    status,
+                    created_at,
+                    updated_at
                     }=info
                     return(
                         <tr 
@@ -44,21 +97,33 @@ export const AdminTransactionHistory =()=>{
                             <td className={bodyStyle}>{index+1}</td>
                             {
                                 [
-                                    id,
-                                    title,
-                                    remark,
-                                    // token,
-                                    // server_response?.status,
-                                    server,
-                                    new_balance,
-                                    prev_balance,
-                                    type,
-                                    status,
-                                    recipient,
-                                    amount,
-                                    commission,
-                                    charges,
-                                    reference
+                                    user?.first_name,
+                    business?.business_name,
+                    pos_id,
+                    title,
+                    service,
+                    description,
+                    narration,
+                    amount,
+                    discount,
+                    cashback,
+                    fee,
+                    total,
+                    init_bal,
+                    new_bal,
+                    from,
+                    to,
+                    profit,
+                    sys_fee,
+                    agg_share,
+                    sh_share,
+                    trx,
+                    ref,
+                    type,
+                    status_code,
+                    status_desc,
+                    gateway_response,
+                    status,
                                 ].map((body,index)=>{
                                     return  (
                                         <td className={bodyStyle} key={index}>{body}</td>
@@ -81,6 +146,7 @@ export const AdminTransactionHistory =()=>{
             )
         }
             </TableLayout>
+            )}
         </TransactLayout>
         </DashBoardLayout>
     )

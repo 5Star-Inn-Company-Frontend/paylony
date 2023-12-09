@@ -2,9 +2,16 @@ import { DashBoardLayout } from "./dashboardLayout"
 import { PTransaction } from "../dashMainScreen/presentDayTransaction"
 import { Text } from "./text"
 import { TotalInformation } from "../dashMainScreen/totalDetails"
+import { useGetAllDashboardQuery } from "../../store/apiSlice"
 
 export const DashbaordMainView =()=>{
     const user = JSON.parse(localStorage.getItem('paylonyToken'))
+    const{
+        data:dasboardData,
+        isLoading:dasboardIsLoading,
+        isError,
+        error
+    }= useGetAllDashboardQuery();
     return(
     <>
        <DashBoardLayout>
@@ -18,8 +25,8 @@ export const DashbaordMainView =()=>{
                     value={`Hello ${user?.first_name}`}
                 />
             </div> 
-            <TotalInformation/>
-            <PTransaction/>
+            <TotalInformation data={dasboardData?.data}/>
+            <PTransaction data={dasboardData?.data}/>
        </DashBoardLayout>
     </>
     )

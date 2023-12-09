@@ -3,7 +3,7 @@ import icon3 from "../../assets/Frame 1000002437 (2).png"
 import icon4 from "../../assets/Frame 1000002437 (3).png"
 import { Text } from "../global/text"
 import { TopAgent } from "./topAgentChart"
-export const PTransaction =()=>{
+export const PTransaction =({data})=>{
     return(
         <div className="grid my-8 lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-4">
             <div>
@@ -36,7 +36,7 @@ export const PTransaction =()=>{
                             <div>
                                 <Text
                                     style="text-4xl font-semibold text-start text-white"
-                                    value="30"
+                                    value={data?.transactions?.todays_total_successful_transaction}
                                 />
                             </div>
                         </div>
@@ -77,7 +77,7 @@ export const PTransaction =()=>{
                             <div>
                                 <Text
                                     style="text-4xl font-semibold text-start text-white"
-                                    value="30"
+                                    value={data?.transactions?.todays_total_failed_transaction}
                                 />
                             </div>
                         </div>
@@ -92,7 +92,7 @@ export const PTransaction =()=>{
                     </div>
                 </div>
             </div>
-            <div className="bg-white p-6 rounded-md">
+            <div className="bg-white pt-6 px-6 rounded-md">
                 <div className="flex flex-wrap items-center">
                     <span className="me-2">Top Performing agent.</span>
                     <span>. October 2023</span>

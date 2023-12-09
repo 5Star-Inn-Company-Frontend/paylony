@@ -4,6 +4,7 @@ import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { TableDropDown } from "../global/dropdown";
 import { TerminalLayout } from "./terminalLayout";
+import Spinner from "../global/spinner";
 
 export const AllTerminal =()=>{
     const{
@@ -23,7 +24,11 @@ export const AllTerminal =()=>{
                 status,
                 data
             }=error
-            toast.error(data?.message)
+            if(data?.error){
+                toast.error(data?.error)
+            }else{
+             toast.error(data?.message)
+            }
             console.log(error)
         })
     }
@@ -33,6 +38,10 @@ export const AllTerminal =()=>{
     return(
         <DashBoardLayout>
         <TerminalLayout title="All Terminals">
+        {
+                terminalIsLoading ? (
+                    <Spinner/>
+                    ):(
             <TableLayout
                 createBtnAction={()=>window.location.replace("/add_terminal")}
                 createBtnText="Add Terminal"
@@ -169,6 +178,7 @@ export const AllTerminal =()=>{
             )
         }
             </TableLayout>
+        )}
         </TerminalLayout>
         </DashBoardLayout>
     )

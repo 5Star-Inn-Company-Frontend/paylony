@@ -8,49 +8,49 @@ import img3 from "../../assets/Group 1 (2).png"
 import img4 from "../../assets/Group 1 (3).png"
 import { Text } from "../global/text"
 
-export const TotalInformation =()=>{
+export const TotalInformation =({data})=>{
     return(
         <div className="grid lg:grid-cols-4 xl:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 xxs:grid-cols-1 gap-4">
             {
                 [
                     {
                         title:"Total Profiled Merchant",
-                        amount:"30",
+                        amount:data?.merchants?.total_merchants,
                         icon:icon1,
                         img:img1
                     },{
                         title:"Total Active Merchant",
-                        amount:"40",
+                        amount:data?.merchants?.total_active_merchants,
                         icon:icon2,
                         img:img2
                     },{
-                        title:"Merchant Actively Transacting",
-                        amount:"10",
+                        title:"Total Transactions",
+                        amount:data?.transactions?.total_transaction,
                         icon:icon3,
                         img:img3
                     },{
                         title:"Aggregiated Wallet Balance",
-                        amount:"20",
+                        amount:"null",
                         icon:icon4,
                         img:img4
                     },{
                         title:"Total Transaction Volume",
-                        amount:"$200",
+                        amount:data?.transactions?.total_transaction_volume,
                         icon:icon1,
                         img:img1
                     },{
-                        title:"Total Transaction Count",
-                        amount:"10",
+                        title:"Total dasboardion Count",
+                        amount:"null",
                         icon:icon2,
                         img:img2
                     },{
-                        title:"Successful Transaction volume",
-                        amount:"$250",
+                        title:"Successful transaction volume",
+                        amount:data?.transactions?.total_successful_transaction_volume,
                         icon:icon3,
                         img:img3
                     },{
-                        title:"Successful Transaction Count",
-                        amount:"10",
+                        title:"Successful dasboardion Count",
+                        amount:"null",
                         icon:icon4,
                         img:img4
                     }

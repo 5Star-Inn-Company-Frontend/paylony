@@ -23,6 +23,22 @@ export const idCardApi = createApi({
     }),
 });
 
+export const dashboardApi = createApi({
+    reducerPath:"dashboardApi",
+    baseQuery: fetchBaseQuery({
+        baseUrl:baseUrl,
+        prepareHeaders: (headers, {getState})=>{
+            headers.set( "Authorization",`Bearer Bearer ${user?.authorization?.token}`)
+            return headers
+        }
+    }),
+    endpoints:(builder)=>({
+        getAllDashboard: builder.query({
+            query: ()=> "/api/v1/dashboard",
+        }),
+    }),
+});
+
 export const businessTypeApi = createApi({
     reducerPath:"businessTypeApi",
     baseQuery:  fetchBaseQuery({
@@ -171,6 +187,39 @@ export const aggregatorsApi = createApi({
     }),
 });
 
+export const admintransactApi = createApi({
+    reducerPath:"admintransactApi",
+    baseQuery:  fetchBaseQuery({
+        baseUrl:baseUrl,
+        tagTypes : ['admintransact'],
+        prepareHeaders: (headers, {getState})=>{
+            headers.set( "Authorization",`Bearer Bearer ${user?.authorization?.token}`)
+            return headers
+        }
+    }),
+    endpoints:(builder)=>({
+        getAllTransaction: builder.query({
+            query: ()=> "/api/v1/transactions",
+            providesTags :['admintransact']
+        }),
+        createTransaction: builder.mutation({
+            query: (todo)=> {
+                return {
+                    url:`/api/v1/transactions`,
+                    method:'POST',
+                    headers:{
+                        "Accept":'application/json',
+                    },
+                    body:todo.body,
+                    formData : true
+                }
+            },
+            invalidatesTags :['admintransact']
+        }),
+    }),
+});
+
+
 
 
 export const terminalsApi = createApi({
@@ -234,7 +283,9 @@ export const terminalsApi = createApi({
 export const {useGetAllBanksQuery} = banksApi;
 export const {useLogOutMutation} = logOutApi;
 export const {useGetAllIdCardQuery} = idCardApi;
+export const {useGetAllDashboardQuery} = dashboardApi;
 export const {useGetAllAgentsQuery,useCreateAgentMutation} = agentApi;
+export const {useGetAllTransactionQuery,useCreateTransactionMutation} = admintransactApi;
 export const {useGetAllManagersQuery,useCreateManagersMutation} = managersApi;
 export const {useGetAllAggregatorsQuery,useCreateAggregatorsMutation} = aggregatorsApi;
 export const {useGetAllTerminalsQuery,useCreateTerminalsMutation,useDeleteTerminalsMutation,useUpdateTerminalsMutation} = terminalsApi;

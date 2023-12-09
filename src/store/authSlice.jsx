@@ -39,7 +39,6 @@ export const registerUser = createAsyncThunk(
         }=itemStored;
 
         
-        console.log("dispatchedii");
         const response = await axios.post(
             `${apiBaseUrl}auth/register`,{
                 "id_card_front" :IdCardFront,
@@ -115,15 +114,24 @@ export const ForgetPassword = createAsyncThunk(
     },{rejectWithValue}) =>{
         try{
             const response = await axios.post(
-                `${apiBaseUrl}/reset-password-request`,{
+                `${apiBaseUrl}auth/forgot-password`,{
                     email
                 }
             );
             return response?.data
         }catch(err){
+            const{
+                error,
+                message
+            }=err.response?.data
             console.log(err)
+            if(error){
+                return rejectWithValue(
+                    error
+                )
+            }
             return rejectWithValue(
-                err.response?.data?.message
+                message
             )
         }
     }
@@ -135,6 +143,7 @@ const auth_Slice = createSlice({
         userdata:localStorage.getItem('paylonyToken') ? JSON.parse(localStorage.getItem('paylonyToken')):{},
         registerStatus:'',
         accountData:{},
+        forgetStatus:'',
         registerError:'',
        LoginStatus:'',
        LoginError:'',
@@ -181,21 +190,12 @@ const auth_Slice = createSlice({
         });
         builder.addCase(ForgetPassword.fulfilled,(state, action)=>{
             const{
-                status,
-                message
+                message,
             }=action.payload;
-            if(status){
-                   toast(message)
-                return{
-                    ...state,
-                    forgetStatus:'success'
-                }
-            }else{
-                toast.error(message)
-                return{
-                    ...state,
-                    forgetStatus:'failed'
-                }
+            toast(message)
+            return{
+                ...state,
+                forgetStatus:'success'
             }
         })
         builder.addCase(ForgetPassword.rejected,(state, action)=>{

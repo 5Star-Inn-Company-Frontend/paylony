@@ -24,7 +24,7 @@ export const DashBoardLayout =({children})=>{
                             <Nav 
                                 style="fixed bg-cl left-0 top-0 z-[1035] relative  desktopNav h-screen w-60 overflow-hidden dark:bg-zinc-800"/>
                         </div>
-                        <div className="w-full lg:p-8 xl:p-8 md:p-8 sm:p-8 xs:p-4 xxs:p-4 xxxs:p-4 h-screen overflow-auto">
+                        <div className="w-full lg:p-8 xl:p-8 md:p-8 sm:p-8 xs:p-4 xxs:p-4 xxxs:p-4 h-screen overflow-auto pb-0">
                             {children}
                         </div>
                     </div>
