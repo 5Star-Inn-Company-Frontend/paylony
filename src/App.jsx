@@ -29,8 +29,8 @@ import { AgentStateCount } from './components/report&Analytics/agentStateCount';
 import { RevenueWalletHistory } from './components/report&Analytics/revenueWalletHistory';
 import { MainWalletHistory } from './components/report&Analytics/mainWalletHistory';
 import { Overview } from './components/report&Analytics/overView';
-import { AllUsers } from './components/portalSettings/users';
-import { AddUsers } from './components/portalSettings/AddUsers';
+import { AllRoles } from './components/portalSettings/roles';
+import { AddRoles } from './components/portalSettings/AddRoles';
 import { Auth_Personanl } from './pages/auth_personal';
 import { Auth_Business } from './pages/auth_business';
 import { Auth_Acc } from './pages/auth_acc';
@@ -44,6 +44,11 @@ import store from './store';
 import { AggregatorsDetails } from './components/agents/createAggregators';
 import { ViewAggregators } from './components/agents/viewAggregators';
 import { ProtectedRoute } from './components/global/protectedRoute';
+import { TransactionHistory } from './components/transactions/transactHistory';
+import { TicketsDetails } from './components/report&Analytics/ticketsDetails';
+import { UpdateRoles } from './components/portalSettings/updateRole';
+import { AssignRoles } from './components/portalSettings/assign_revoke_Roles';
+import { AllPermissions } from './components/portalSettings/permissions';
 
 
 function App() {
@@ -77,14 +82,19 @@ function App() {
             <Route exact path="/transact-admin" element={ <AdminTransactionHistory/>}/>
             <Route exact path="/transact-bet" element={ <BetTransactionHistory/>}/>
             <Route exact path="/transact-vas" element={ <VasTransactionHistory/>}/>
+            {/* <Route exact path="/transact-cashout" element={ <TransactionHistory/>}/> */}
             <Route exact path="/transact-refund" element={ <RefundTransactionHistory/>}/>
             <Route exact path="/all_terminals" element={ <AllTerminal/>}/>
             <Route exact path="/add_terminal" element={ <AddTerminalInventory/>}/>
-            <Route exact path="/all_users" element={ <AllUsers/>}/>
-            <Route exact path="/add_users" element={ <AddUsers/>}/>
+            <Route exact path="/all_roles" element={ <AllRoles/>}/>
+            <Route exact path="/all_permissions" element={ <AllPermissions/>}/>
+            <Route exact path="/add_roles" element={ <AddRoles/>}/>
+            <Route exact path="/portal/:action/:id" element={ <AssignRoles/>}/>
+            <Route exact path="/portal/update_roles/:id" element={ <UpdateRoles/>}/>
             <Route exact path="/report-transaction_summary" element={ <CurrentMonthCharges/>}/>
             <Route exact path="/report-system_monitor" element={ <SystemMonitor/>}/>
             <Route exact path="/report-ticket" element={ <Tickets/>}/>
+            <Route exact path="/report-ticket_details/:status" element={ <TicketsDetails/>}/>
             <Route exact path="/report-performance_count" element={ <PerformanceReport/>}/>
             <Route exact path="/report-terminal_count" element={ <TerminalReport/>}/>
             <Route exact path="/report-dispute_count" element={ <DisputeCount/>}/>

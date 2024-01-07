@@ -3,6 +3,7 @@ import { PTransaction } from "../dashMainScreen/presentDayTransaction"
 import { Text } from "./text"
 import { TotalInformation } from "../dashMainScreen/totalDetails"
 import { useGetAllDashboardQuery } from "../../store/apiSlice"
+import { toast } from "react-toastify"
 
 export const DashbaordMainView =()=>{
     const user = JSON.parse(localStorage.getItem('paylonyToken'))
@@ -12,6 +13,18 @@ export const DashbaordMainView =()=>{
         isError,
         error
     }= useGetAllDashboardQuery();
+    if(isError){
+        const{
+            status,
+            data
+        }=error
+        if(data?.error){
+            toast.error(data?.error)
+        }else{
+         toast.error(data?.message)
+        }
+        console.log(error)
+    }
     return(
     <>
        <DashBoardLayout>
@@ -25,8 +38,8 @@ export const DashbaordMainView =()=>{
                     value={`Hello ${user?.first_name}`}
                 />
             </div> 
-            <TotalInformation data={dasboardData?.data}/>
-            <PTransaction data={dasboardData?.data}/>
+            <TotalInformation data={dasboardData?.data} isLoading={dasboardIsLoading}/>
+            <PTransaction data={dasboardData?.data} isLoading={dasboardIsLoading}/>
        </DashBoardLayout>
     </>
     )

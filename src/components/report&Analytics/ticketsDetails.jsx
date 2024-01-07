@@ -1,18 +1,22 @@
-import { AgentLayout } from "./agentLayout"
-import { TableLayout } from "./tableLayout";
-import { DashBoardLayout } from "../global/dashboardLayout";
-import {useGetAllAgentsQuery} from "../../store/apiSlice"
+import { ReportLayout } from "./reportLayout"
+import { Text } from "../global/text"
 import { toast } from "react-toastify";
+import { useGetTicketDetailsQuery} from "../../store/apiSlice";
 import Spinner from "../global/spinner";
+import { useParams } from "react-router-dom";
+import { TableLayout } from "../agents/tableLayout";
 import { useEffect, useState } from "react";
-
-export const ViewAgent =()=>{
+export const TicketsDetails =()=>{
     const{
-        data:agentData,
+        status
+    }= useParams()
+    const{
+        data:ticketData,
         isLoading,
         isError,
         error
-    }= useGetAllAgentsQuery();
+    } = useGetTicketDetailsQuery(status);
+    console.log(ticketData)
 
     const[
         actionData,
@@ -20,38 +24,26 @@ export const ViewAgent =()=>{
     ]= useState([]);
 
     useEffect(()=>{
-        if(agentData){
-            setActionData(agentData?.data)
+        if(ticketData){
+            setActionData(ticketData?.data)
         }
-    },[agentData])
+    },[ticketData])
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
     const handleInputChange =(e)=>{
-        const filtereddata = agentData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e.target.value))
+        const filtereddata = ticketData?.data?.filter((data)=>data.title?.toLowerCase().includes(e.target.value))
         setActionData(filtereddata)
     }
 
     const SortDataAction=(action)=>{
         let filteredData;
         switch(action){
-            case 'name':(
-                filteredData = agentData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
-            )
-            break;
-            case 'email':(
-                filteredData = agentData?.data?.sort((a, b)=> (a.email < b.email) ? -1 : (a.email > b.email) ? 1 : 0)
-            )
-            break;
-            case 'agent_type':(
-                filteredData = agentData?.data?.sort((a, b)=> (a.agent_type < b.agent_type ) ? -1 : (a.agent_type > b.agent_type) ? 1 : 0)
-            )
-            break;
             case 'date':(
-                filteredData = agentData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
+                filteredData = ticketData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
             )
             break;
             default:(
-                filteredData = agentData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
+                filteredData = ticketData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
             )
             break;
         }
@@ -70,37 +62,24 @@ export const ViewAgent =()=>{
         }
         console.log(error)
     }
-
     return(
-        <DashBoardLayout>
-        <AgentLayout title="View Agents">
+        <ReportLayout title="Tickets Detais">
             {
                 isLoading ? (
                     <Spinner/>
                     ):(
                         <TableLayout
-                            createBtnAction={()=>window.location.replace("/personalInfo")}
-                            createBtnText="Create Agent"
                             handleInputChange={(e)=>handleInputChange(e)}
+                            hideCreateAction={true}
                             sortButton={[
                                 {
-                                    title:"Name",
-                                    action:"name"
-                                },{
-                                    title:"Email",
-                                    action:"email"
-                                },{
-                                    title:"Agent type",
-                                    action:"agent_type"
-                                },{
                                     title:"Date",
                                     action:"date"
                                 },
                             ]}
                             SortDataAction={SortDataAction}
                             headerData={[
-                                "s/n","first_name","last_name","email","Date of birth","gender","Residential Address","State","Agent Type","User Type",
-                                "Account Status","Created At","Updated At"
+                                "s/n","User Id","assignee id","ticket id","title","description","status","Created At","Updated At"
                             ]}
                             data={actionData}
                         >
@@ -108,19 +87,14 @@ export const ViewAgent =()=>{
                             actionData?.map((info,index)=>{
                                 const{
                                     id,
-                                    first_name,
-                                    last_name,
-                                    email,
-                                    dob,
-                                    gender,
-                                    residential_address,
-                                    state,
-                                    agent_type,
-                                    user_type,
-                                    business,
+                                    user_id,
+                                    assignee_id,
+                                    ticket_id,
+                                    title,
+                                    description,
+                                    status,
                                     created_at,
                                     updated_at,
-                                    account_status
                                 }=info
                                 return(
                                     <tr 
@@ -131,16 +105,12 @@ export const ViewAgent =()=>{
                                         {
                                             [
                                             //    id,
-                                                first_name,
-                                                last_name,
-                                                email,
-                                                dob,
-                                                gender,
-                                                residential_address,
-                                                state,
-                                                agent_type,
-                                                user_type,
-                                                account_status
+                                                user_id,
+                                                assignee_id,
+                                                ticket_id,
+                                                title,
+                                                description,
+                                                status
                                             ].map((body,index)=>{
                                                 return  (
                                                     <td className={bodyStyle} key={index}>{body}</td>
@@ -165,7 +135,6 @@ export const ViewAgent =()=>{
                     </TableLayout>
                 )
             }
-        </AgentLayout>
-        </DashBoardLayout>
+        </ReportLayout>
     )
 }

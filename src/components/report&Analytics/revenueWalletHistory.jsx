@@ -1,16 +1,102 @@
+import { toast } from "react-toastify";
 import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { ReportLayout } from "./reportLayout";
+import Spinner from "../global/spinner";
+import { useGetRevenueWalletQuery } from "../../store/apiSlice";
+import { useEffect, useState } from "react";
 
 export const RevenueWalletHistory =()=>{
-    const data =[];
+    const{
+        data:walletHistoryData,
+        isLoading,
+        isError,
+        error
+    }= useGetRevenueWalletQuery();
+    
+    const[
+        actionData,
+        setActionData
+    ]= useState([]);
+
+    useEffect(()=>{
+        if(walletHistoryData){
+            setActionData(walletHistoryData?.data)
+        }
+    },[walletHistoryData])
+
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
+    const data =[];
+    const handleInputChange =(e)=>{
+        const filtereddata = walletHistoryData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e.target.value))
+        setActionData(filtereddata)
+    }
+
+    const SortDataAction=(action)=>{
+        let filteredData;
+        switch(action){
+            case 'name':(
+                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
+            )
+            break;
+            case 'email':(
+                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.email < b.email) ? -1 : (a.email > b.email) ? 1 : 0)
+            )
+            break;
+            case 'agent_type':(
+                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.agent_type < b.agent_type ) ? -1 : (a.agent_type > b.agent_type) ? 1 : 0)
+            )
+            break;
+            case 'date':(
+                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
+            )
+            break;
+            default:(
+                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
+            )
+            break;
+        }
+        setActionData( filteredData)
+    }
+
+    if(isError){
+        const{
+            status,
+            data
+        }=error
+        if(data?.error){
+            toast.error(data?.error)
+        }else{
+         toast.error(data?.message)
+        }
+        console.log(error)
+    }
     return(
         <DashBoardLayout>
-        <ReportLayout title="Main Wallet History">
+        <ReportLayout title="Revenue Wallet History">
+        {
+            isLoading ? (
+            <Spinner/>
+            ):(
             <TableLayout
                 hideCreateAction={true}
-                hideFilter={true}
+                handleInputChange={(e)=>handleInputChange(e)}
+                sortButton={[
+                    {
+                        title:"Name",
+                        action:"name"
+                    },{
+                        title:"Email",
+                        action:"email"
+                    },{
+                        title:"User Types",
+                        action:"user_type"
+                    },{
+                        title:"Date",
+                        action:"date"
+                    },
+                ]}
+                SortDataAction={SortDataAction}
                 headerData={[
                     "Balance Before","Amount","Balance After","Reference","Source","Description","Creation Date","Type","Action"
                 ]}
@@ -81,7 +167,9 @@ export const RevenueWalletHistory =()=>{
                 }
             )
         }
-            </TableLayout>
+        </TableLayout>
+        )
+        }
         </ReportLayout>
         </DashBoardLayout>
     )

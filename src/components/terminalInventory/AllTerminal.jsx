@@ -1,10 +1,11 @@
-import { toast } from "react-toastify";
+ import { toast } from "react-toastify";
 import { useDeleteTerminalsMutation, useGetAllTerminalsQuery } from "../../store/apiSlice";
 import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { TableDropDown } from "../global/dropdown";
 import { TerminalLayout } from "./terminalLayout";
 import Spinner from "../global/spinner";
+import { useEffect, useState } from "react";
 
 export const AllTerminal =()=>{
     const{
@@ -13,7 +14,9 @@ export const AllTerminal =()=>{
         isError,
         error
     }= useGetAllTerminalsQuery();
+
     const [deleteTerminals, {isLoading}] = useDeleteTerminalsMutation()
+
     const deleteAction =(id)=>{
         deleteTerminals({
             id:id
@@ -32,10 +35,54 @@ export const AllTerminal =()=>{
             console.log(error)
         })
     }
-    console.log(terminalData)
+    
+    const[
+        actionData,
+        setActionData
+    ]= useState([]);
+
+    useEffect(()=>{
+        if(agentData){
+            setActionData(agentData?.data)
+        }
+    },[agentData])
+
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
+    const handleInputChange =(e)=>{
+        const filtereddata = terminalData?.data?.filter((data)=>data.name?.toLowerCase().includes(e.target.value))
+        setActionData(filtereddata)
+    }
+
+    const SortDataAction =(action)=>{
+        let filteredData;
+        switch(action){
+            case 'name':(
+                filteredData =terminalData?.data?.sort((a, b)=> (a.name < b.name ) ? -1 : (a.name > b.name) ? 1 : 0)
+            )
+            break;
+            case 'date':(
+                filteredData =terminalData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
+            )
+            break;
+            default:(
+                filteredData =terminalData?.data?.sort((a, b)=> (a.name < b.name ) ? -1 : (a.name > b.name) ? 1 : 0)
+            )
+            break;
+        }
+        setActionData( filteredData)
+    }
+
     if(isError){
-        toast.error(error?.data?.message)
+        const{
+            status,
+            data
+        }=error
+        if(data?.error){
+            toast.error(data?.error)
+        }else{
+         toast.error(data?.message)
+        }
+        console.log(error)
     }
     return(
         <DashBoardLayout>
@@ -46,6 +93,17 @@ export const AllTerminal =()=>{
                     ):(
             <TableLayout
                 createBtnAction={()=>window.location.replace("/add_terminal")}
+                handleInputChange={(e)=>handleInputChange(e)}
+                sortButton={[
+                    {
+                        title:"Name",
+                        action:"name"
+                    },{
+                        title:"Date",
+                        action:"date"
+                    },
+                ]}
+                SortDataAction={SortDataAction}
                 createBtnText="Add Terminal"
                 headerData={[
                     "s/n",
@@ -68,22 +126,22 @@ export const AllTerminal =()=>{
                     "Payout_status",
                     "Payout_Fee",
                     "Fee Type",
-                "Flat Fee",
+                    "Flat Fee",
                     "Fee Cent",
                     "Fee Cap",
                     "cta",
                     "Paf",
-                 "Fee Bearer",
+                    "Fee Bearer",
                     "Status",
                     "Date_assigned",
                     "Created_at",
                     "Updated_at",
                     "Actions"
                 ]}
-                data={terminalData?.data}
+                data={ actionData}
             >
             {
-                terminalData?.data?.map((info,index)=>{
+                 actionData?.map((info,index)=>{
                     const{
                         id,
                         business_id,
@@ -167,12 +225,12 @@ export const AllTerminal =()=>{
                                 }
                             </td>
                             <td>
-                                <TableDropDown
+                                {/* <TableDropDown
                                     list={[{
                                         dropTitle:isLoading?"please wait...":"delete",
                                         action:deleteAction(id)
                                     }]}
-                                />
+                                /> */}
                             </td>
                         </tr>
                     )

@@ -3,7 +3,8 @@ export const TableLayout =({
     children,
     data,
     hideCreateAction,
-    hideFilter,
+    sortButton,
+    SortDataAction,
     hideheaderActions,
     createBtnAction,
     createBtnText,
@@ -12,7 +13,7 @@ export const TableLayout =({
     filterOptions,
     handleInputChange
 })=>{
-    const headStyle = "px-6 py-4"
+    const headStyle = "px-6 py-2"
     return(
         <div className="lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 xxs:px-2 xxxs">
             {
@@ -54,17 +55,29 @@ export const TableLayout =({
                             />
                         </div>
                         {
-                            !hideFilter &&(
+                            sortButton &&(
                                 <div className="flex items-center mb-1">
-                                    <label htmlFor="sort" className="w-fit me-1">Filter By :</label>
+                                    <label htmlFor="sort" className="w-fit me-1">Sort By :</label>
                                     <select 
                                         name="sort"
                                         onSelect={filterAction}
+                                        onChange={(e)=>SortDataAction(e.target.value)}
                                         className="border bg-bodyCl px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal"
                                     >
                                         {
-                                            ["Date Created -From","Date Created -To","Manager","Aggregator","State","Government","Name","Type"].map((op,index)=>{
-                                                return <option key={index}>{op}</option>
+                                            sortButton?.map((op,index)=>{
+                                                const{
+                                                    title,
+                                                    action
+                                                }=op;
+                                                return (
+                                                    <option 
+                                                        key={index}
+                                                        value={action}
+                                                    >
+                                                        { title}
+                                                    </option>
+                                                )
                                             })
                                         }
                                     </select>
@@ -87,7 +100,7 @@ export const TableLayout =({
                                             <tr>
                                                 {
                                                     headerData.map((head,index)=>{
-                                                        return  <th scope="col" key={index} className={headStyle}>{head}</th>
+                                                        return  <th scope="col" key={index} className={headStyle}>{head.toString().toUpperCase()}</th>
                                                     })
                                                 }
                                             </tr>

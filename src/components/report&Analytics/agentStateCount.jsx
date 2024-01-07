@@ -1,43 +1,51 @@
+import { toast } from "react-toastify";
 import { TableLayout } from "../agents/tableLayout"
+import Spinner from "../global/spinner"
 import { ReportLayout } from "./reportLayout"
+import { useGetAgentStateCountQuery } from "../../store/apiSlice";
 
 export const AgentStateCount =()=>{
+    const{
+        data:stateCountData,
+        isLoading,
+        isError,
+        error
+    }= useGetAgentStateCountQuery();
+
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const data =[
-        {
-            title:"Adamawa",
-            value:"50"
-        },{
-            title:"Oyo",
-            value:"5"
-        },{
-            title:"Oshun",
-            value:"6"
-        },{
-            title:"Kwara",
-            value:"233"
-        },{
-            title:"Ondo",
-            value:"7"
-        },{
-            title:"Lagos",
-            value:"23"
+
+    if(isError){
+        const{
+            status,
+            data
+        }=error
+        if(data?.error){
+            toast.error(data?.error)
+        }else{
+         toast.error(data?.message)
         }
-    ]
+        console.log(error)
+    }
     return(
         <ReportLayout title="Agent State Count">
+        {
+            isLoading ? (
+            <Spinner/>
+            ):(
             <TableLayout
                 hideheaderActions={true}
                 headerData={[
-                    "State","Agent Count"
+                    'S/n',
+                    "State",
+                    "Agent Count"
                 ]}
-                data={data}
+                data={stateCountData?.data}
             >
             {
-                data?.map((info,index)=>{
+                stateCountData?.data?.map((info,index)=>{
                     const{
-                        title,
-                        value
+                        state,
+                       agent_count
                     }=info
                     return(
                         <tr 
@@ -47,8 +55,8 @@ export const AgentStateCount =()=>{
                             <td className={bodyStyle}>{index+1}</td>
                                 {
                                     [
-                                        title,
-                                        value
+                                        state,
+                                        agent_count
                                     ].map((body,index)=>{
                                         return  (
                                             <td className={bodyStyle} key={index}>{body}</td>
@@ -61,6 +69,8 @@ export const AgentStateCount =()=>{
                     )
                 }
             </TableLayout>
+            )
+        }
         </ReportLayout>
     )
 }

@@ -1,29 +1,43 @@
 import { ReportLayout } from "./reportLayout"
 import icon from "../../assets/ticket.png"
 import { Text } from "../global/text"
+import { toast } from "react-toastify";
+import { useGetTicketQuery } from "../../store/apiSlice";
+import Spinner from "../global/spinner";
+import { useNavigate } from "react-router-dom";
 export const Tickets =()=>{
+    const{
+        data:ticketData,
+        isLoading,
+        isError,
+        error
+    }= useGetTicketQuery();
+    console.log(ticketData)
+    
+    if(isError){
+        const{
+            status,
+            data
+        }=error
+        if(data?.error){
+            toast.error(data?.error)
+        }else{
+         toast.error(data?.message)
+        }
+        console.log(error)
+    }
     return(
         <ReportLayout title="Tickets">
+            {
+                isLoading ? (
+                    <Spinner/>
+                    ):(
             <div className="grid lg:grid-cols-4 xl:grid-cols-4 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-1 xxs:grid-cols-1 gap-4">
                 {
-                    [
-                        {
-                            title:"Open Tickets",
-                            value:"30"
-                        },{
-                            title:"closed Tickets",
-                            value:"3"
-                        },{
-                            title:"Resolved Tickets",
-                            value:"27"
-                        },{
-                            title:"On Hold Tickets",
-                            value:"0"
-                        }
-                    ].map((tick,index)=>{
+                    ticketData?.data?.map((tick,index)=>{
                             const{
-                                title,
-                                value
+                                status,
+                                ticket_count
                             }=tick
                             return(
                                 <div 
@@ -41,19 +55,20 @@ export const Tickets =()=>{
                                         <div>
                                             <Text
                                                 style="text-lg text-start"
-                                                value={title}
+                                                value={status}
                                             />
                                         </div>
                                     </div>
                                     <div>
                                         <Text
                                             style="text-4xl font-semibold text-start"
-                                            value={value}
+                                            value={ticket_count}
                                         />
                                     </div>
                                      <div>
                                         <div
                                             data-te-ripple-init
+                                            onClick={()=>window.location.replace(`/report-ticket_details/${status}`)}
                                             className="border w-full bg-bodyCl px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal">
                                             View Tickets
                                         </div>
@@ -64,6 +79,8 @@ export const Tickets =()=>{
                     )
                 }
             </div>
+           )
+        }
         </ReportLayout>
     )
 }

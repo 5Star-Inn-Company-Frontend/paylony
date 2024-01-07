@@ -32,7 +32,7 @@ export const TerminalLayout =({
                         <li className="text-sm text-neutral-500 dark:text-neutral-400">{title}</li>
                     </ol>
                 </nav>
-                <div className="w-full p-4 rounded-sm border bg-cl">
+                <div className="w-full p-4 rounded-sm bg-cl">
                     {children}
                 </div>
             </div>

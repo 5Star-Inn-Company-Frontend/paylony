@@ -29,7 +29,7 @@ export const AgentLayout =({
                     <li className="text-sm  text-sm ">{title}</li>
                 </ol>
             </nav>
-            <div className="w-full  border rounded-sm bg-cl">
+            <div className="w-full  rounded-sm bg-cl">
                 {children}
             </div>
         </div>

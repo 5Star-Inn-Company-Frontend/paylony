@@ -1,10 +1,31 @@
+import { toast } from "react-toastify";
+import { useGetCashOutQuery } from "../../store/apiSlice";
 import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { TransactLayout } from "./transactLayout";
 
 export const TransactionHistory =()=>{
+    const{
+        data:transactData,
+        isLoading:transactIsLoading,
+        isError,
+        error
+    }= useGetCashOutQuery();
     const data =[];
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
+    if(isError){
+        const{
+            status,
+            data
+        }=error
+        if(data?.error){
+            toast.error(data?.error)
+        }else{
+         toast.error(data?.message)
+        }
+        console.log(error)
+    }
+    console.log(transactData);
     return(
         <DashBoardLayout>
         <TransactLayout title="Transaction History">

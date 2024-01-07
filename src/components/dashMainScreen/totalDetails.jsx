@@ -7,8 +7,16 @@ import img2 from "../../assets/Group 1 (1).png"
 import img3 from "../../assets/Group 1 (2).png"
 import img4 from "../../assets/Group 1 (3).png"
 import { Text } from "../global/text"
+import {
+    Ripple,
+    initTE,
+  } from "tw-elements";
+import { useEffect } from "react"
 
-export const TotalInformation =({data})=>{
+export const TotalInformation =({data,isLoading})=>{
+    useEffect(()=>{
+        initTE({ Ripple });
+    })
     return(
         <div className="grid lg:grid-cols-4 xl:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 xxs:grid-cols-1 gap-4">
             {
@@ -82,10 +90,20 @@ export const TotalInformation =({data})=>{
                                 </div>
                             </div>
                             <div className="mb-2">
-                                <Text
-                                    style="text-xl font-semibold text-start"
-                                    value={amount}
-                                />
+                                {
+                                    isLoading?(
+                                        <div className="animate-pulse">
+                                            <span
+                                                className="inline-block min-h-[0.7em] w-full flex-auto justify-start items-start cursor-wait bg-current align-middle opacity-40">
+                                            </span>
+                                        </div>
+                                        ):( 
+                                        <Text
+                                            style="text-xl font-semibold text-start"
+                                            value={amount}
+                                        />
+                                        )
+                                }
                             </div>
                             <div>
                                 <img 

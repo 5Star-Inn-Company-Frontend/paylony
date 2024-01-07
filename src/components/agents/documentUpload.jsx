@@ -94,9 +94,10 @@ export const DocUpload =()=>{
     return(
         <CreateViewLayout title="Document Upload">
             <form 
-                onSubmit={handleSubmit(SubmitHandler)}
-                className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-8"
-            >
+                onSubmit={handleSubmit(SubmitHandler)} >
+                <div 
+                        className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-8"
+                >
                 <div 
                     className="flex flex-col items-start w-full"
                 >
@@ -173,6 +174,7 @@ export const DocUpload =()=>{
                         })}
                          />
                 </div>
+            </div>
             <div className="flex justify-end items-end">
             {
                 isLoading?(

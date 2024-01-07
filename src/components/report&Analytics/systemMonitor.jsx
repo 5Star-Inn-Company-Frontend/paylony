@@ -1,5 +1,6 @@
 import { ReportLayout } from "./reportLayout"
 import { TableLayout } from "../agents/tableLayout"
+import { Text } from "../global/text"
 
 export const SystemMonitor =()=>{
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
@@ -9,7 +10,7 @@ export const SystemMonitor =()=>{
     return(
         <ReportLayout title="System Monitor">
             <Text
-                style="text-2xl text-start mb-4"
+                style="text-xl text-start mb-4"
                 value="Cashout Status (%)"
             />
             <TableLayout

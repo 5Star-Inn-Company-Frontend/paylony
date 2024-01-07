@@ -149,7 +149,13 @@ const auth_Slice = createSlice({
        LoginError:'',
        userLoaded:localStorage.getItem('paylonyToken')?true:false,
     },
-    reducers:{ },
+    reducers:{ 
+        logOutUser(state,action){
+            localStorage.removeItem('paylonyToken');
+            localStorage.removeItem('lastLoginTime')
+            window.location.replace("/login");
+        }
+    },
 
     extraReducers:(builder)=>{
         
@@ -220,10 +226,21 @@ const auth_Slice = createSlice({
                 }=action.payload;
                 toast(message)
                 localStorage.setItem(
-                        'paylonyToken',
-                        JSON.stringify(data)
-                    )
-                window.location.replace("/");
+                    'paylonyToken',
+                    JSON.stringify(data)
+                )
+                localStorage.setItem(
+                    'lastLoginTime',
+                    new Date()
+                )
+                if(
+                    localStorage.getItem(
+                        'lastLoginTime'
+                    ) !==null
+                ){
+                    window.location.replace("/");
+                }
+
                 return{
                     ...state,
                     userdata:data,
@@ -243,6 +260,6 @@ const auth_Slice = createSlice({
 })
 
 export const {
-    LogOutUser
+    logOutUser
 } = auth_Slice.actions;
 export default auth_Slice;
