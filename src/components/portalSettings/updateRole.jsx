@@ -23,6 +23,7 @@ export const UpdateRoles=()=>{
             name:formdata
         }).unwrap().then((payload)=>{
             toast(payload?.message)
+            window.location.replace("/all_roles");
         }).catch((error)=>{
             const{
                 status,

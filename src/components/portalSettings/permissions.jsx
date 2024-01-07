@@ -12,7 +12,7 @@ export const AllPermissions =()=>{
         isError,
         error
     }= useGetAllPermissionsQuery();
-
+    const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
     if(isError){
         const{
             status,
@@ -36,7 +36,7 @@ export const AllPermissions =()=>{
                 <TableLayout
                     hideheaderActions={true}
                     headerData={[
-                        "Name","Guard name","created at","updated at"
+                        "S/N","Name","Guard name","created at","updated at"
                     ]}
                     data={ permissionsData?.data}
                 >

@@ -15,7 +15,8 @@ export const AddRoles=()=>{
         var formdata = new FormData();
         formdata.append("name", Name)
         createRoles(formdata).unwrap().then((payload)=>{
-            toast(payload?.message)
+            toast(payload?.message);
+            window.location.replace("/all_roles");
         }).catch((error)=>{
             const{
                 status,

@@ -42,10 +42,10 @@ export const AllTerminal =()=>{
     ]= useState([]);
 
     useEffect(()=>{
-        if(agentData){
-            setActionData(agentData?.data)
+        if(terminalData){
+            setActionData(terminalData?.data)
         }
-    },[agentData])
+    },[terminalData])
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
     const handleInputChange =(e)=>{
