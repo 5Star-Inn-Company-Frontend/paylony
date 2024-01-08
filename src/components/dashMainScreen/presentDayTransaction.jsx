@@ -26,7 +26,7 @@ export const PTransaction =({data,isLoading})=>{
                 >
                     <div className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-4">
                         <div 
-                            className="flex flex-col p-4 bg-pmain rounded-md  h-[10rem]"
+                            className="flex flex-col p-4 bg-purple rounded-md  h-[10rem]"
                         >
                             <div className="flex items-center mb-4">
                                 <div className="me-2">

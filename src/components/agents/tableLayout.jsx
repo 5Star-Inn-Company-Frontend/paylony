@@ -15,7 +15,7 @@ export const TableLayout =({
 })=>{
     const headStyle = "px-6 py-2"
     return(
-        <div className="lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 xxs:px-2 xxxs">
+        <div className="lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 xxs:px-2 xxxs bg-white">
             {
                 !hideheaderActions &&(
                 <div className="flex flex-wrap justify-between mb-2">
@@ -96,7 +96,7 @@ export const TableLayout =({
                                 {
                                     headerData &&(
                                         <thead
-                                            className="border-b font-light border bg-bodyCl">
+                                            className="border-b font-light border bg-white">
                                             <tr>
                                                 {
                                                     headerData.map((head,index)=>{

@@ -36,7 +36,7 @@ export const AllPermissions =()=>{
                 <TableLayout
                     hideheaderActions={true}
                     headerData={[
-                        "S/N","Name","Guard name","created at","updated at"
+                        "S/N","Name","Guard name"
                     ]}
                     data={ permissionsData?.data}
                 >
@@ -65,16 +65,6 @@ export const AllPermissions =()=>{
                                             )
                                     })
                                 }
-                                <td className={bodyStyle}>{
-                                        new Date(created_at)
-                                        .toLocaleString()
-                                    }
-                                </td>
-                                <td className={bodyStyle}>{
-                                        new Date(updated_at)
-                                        .toLocaleString()
-                                    }
-                                </td>
                             </tr>
                         )
                     }

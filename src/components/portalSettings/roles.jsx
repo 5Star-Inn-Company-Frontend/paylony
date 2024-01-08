@@ -47,26 +47,12 @@ export const AllRoles =()=>{
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
     const handleInputChange =(e)=>{
-        const filtereddata = rolesData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e.target.value))
+        const filtereddata = rolesData?.data?.filter((data)=>data.name?.toLowerCase().includes(e.target.value))
         setActionData(filtereddata)
     }
 
     const SortDataAction=(action)=>{
-        let filteredData;
-        switch(action){
-            case 'name':(
-                filteredData =terminalData?.data?.sort((a, b)=> (a.name < b.name ) ? -1 : (a.name > b.name) ? 1 : 0)
-            )
-            break;
-            case 'date':(
-                filteredData =terminalData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
-            )
-            break;
-            default:(
-                filteredData =terminalData?.data?.sort((a, b)=> (a.name < b.name ) ? -1 : (a.name > b.name) ? 1 : 0)
-            )
-            break;
-        }
+        let filteredData=terminalData?.data?.sort((a, b)=> (a.name < b.name ) ? -1 : (a.name > b.name) ? 1 : 0);
         setActionData( filteredData)
     }
 
@@ -94,17 +80,14 @@ export const AllRoles =()=>{
                     createBtnAction={()=>window.location.replace("/add_roles")}
                     createBtnText="Add Roles"
                     headerData={[
-                        "Name","Guard name","created at","updated at","Action"
+                        "S/n","Name","Guard name","Action"
                     ]}
                     handleInputChange={(e)=>handleInputChange(e)}
                     sortButton={[
                         {
                             title:"Name",
                             action:"name"
-                        },{
-                            title:"Date",
-                            action:"date"
-                        },
+                        }
                     ]}
                     SortDataAction={SortDataAction}
                     data={ actionData}
@@ -114,9 +97,7 @@ export const AllRoles =()=>{
                         const{
                             id,
                             name,
-                            guard_name,
-                            created_at,
-                            updated_at,
+                            guard_name
                         }=info
                         return(
                             <tr 
@@ -134,22 +115,12 @@ export const AllRoles =()=>{
                                             )
                                     })
                                 }
-                                <td className={bodyStyle}>{
-                                        new Date(created_at)
-                                        .toLocaleString()
-                                    }
-                                </td>
-                                <td className={bodyStyle}>{
-                                        new Date(updated_at)
-                                        .toLocaleString()
-                                    }
-                                </td>
                                 <td>
-                                    {/* <TableDropDown
+                                    <TableDropDown
                                         list={[
                                             {
                                                 dropTitle:deleteIsLoading?"please wait...":"delete",
-                                                action:deleteAction(id)
+                                                action:()=>deleteAction(id)
                                             },{
                                                 dropTitle:"update",
                                                 action:()=>window.location.replace(`/portal/update_roles/${id}`)
@@ -167,7 +138,7 @@ export const AllRoles =()=>{
                                                 }
                                             }
                                         ]}
-                                    /> */}
+                                    />
                                 </td>
                             </tr>
                         )

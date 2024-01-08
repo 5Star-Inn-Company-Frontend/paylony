@@ -4,7 +4,7 @@ import logo from "../../assets/Paylony logo 1.png"
 import { AiOutlineUser } from "react-icons/ai";
 export const DashBoardTopNav =()=>{
     const user = JSON.parse(localStorage.getItem('paylonyToken'))
-    console.log(user)
+    // console.log(user)
     return(
         <div className="flex flex-row justify-between w-full py-2 px-4 items-center bg-cl ">
             <div className="flex items-center">

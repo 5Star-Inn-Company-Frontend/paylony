@@ -3,7 +3,7 @@
   background:rgba(250, 250, 250, var(--surface-alpha, 1));
 }
 .bg-bodyCl{
-  background:#f2f3f8;
+  background:hsl(230, 30%, 96%)!important;
 }
 input,select{
   background:white!important;
@@ -13,9 +13,6 @@ input,select{
 }
 body{
   background:#f2f3f8;
-}
-.bg-purple{
-  background-color: #4a2950;
 }
 .bg-mixed-grey{
   background-color: rgba(153, 155, 163, 0.1);
@@ -30,8 +27,8 @@ body{
     position:relative;
     height: 20rem;
 }
-.bg-pmain{
-  background-color: #854FFF;
+.bg-purple{
+  background-color: #854FFF!important;
 }
 .bg-violet{
   background-color:  #CA22EF;
@@ -83,7 +80,4 @@ body{
 }
 .authLayout{
   background:rgba(250, 250, 250, var(--surface-alpha, 1));
-}
-.bg-purple{
-  background-color: #854FFF;
 }

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 export const ProtectedRoute = () => {
@@ -8,15 +9,14 @@ export const ProtectedRoute = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        const sessionTimeout = user?.authorization?.expires_in;
+        const sessionTimeout = user?.authorization?.expires_in/3;
         const lastLoginTime = new Date(localStorage.getItem(
             'lastLoginTime'
         ));
         const checkTimeout =()=>{
             const currentTime = new Date();
             const elapsedTime = currentTime.getTime() - lastLoginTime.getTime()
-            console.log(elapsedTime ,sessionTimeout)
-            if(elapsedTime >= (sessionTimeout - 5000)){
+            if(elapsedTime  >= (sessionTimeout - 5000)){
                 Swal.fire({
                     icon: "warning",
                     title: "Session Time out",

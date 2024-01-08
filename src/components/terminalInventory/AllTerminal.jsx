@@ -107,9 +107,9 @@ export const AllTerminal =()=>{
                 createBtnText="Add Terminal"
                 headerData={[
                     "s/n",
-                    "Id",
-                    "Business ID",
-                    "User_ID",
+                    // "Id",
+                    // "Business ID",
+                    // "User_ID",
                     "Serial Number",
                     "POS Type",
                     "Name",
@@ -134,8 +134,8 @@ export const AllTerminal =()=>{
                     "Fee Bearer",
                     "Status",
                     "Date_assigned",
-                    "Created_at",
-                    "Updated_at",
+                    // "Created_at",
+                    // "Updated_at",
                     "Actions"
                 ]}
                 data={ actionData}
@@ -181,9 +181,9 @@ export const AllTerminal =()=>{
                             <td className={bodyStyle}>{index+1}</td>
                             {
                                 [
-                                    id,
-                                    business_id,
-                                    user_id,
+                                    // id,
+                                    // business_id,
+                                    // user_id,
                                     serial_number,
                                     pos_type,
                                     name,
@@ -206,8 +206,7 @@ export const AllTerminal =()=>{
                                     cta,
                                     paf,
                                     feeBearer,
-                                    status,
-                                    date_assigned
+                                    status
                                 ].map((body,index)=>{
                                     return  (
                                         <td className={bodyStyle} key={index}>{body}</td>
@@ -219,18 +218,18 @@ export const AllTerminal =()=>{
                                     .toLocaleString()
                                 }
                             </td>
-                            <td className={bodyStyle}>{
+                            {/* <td className={bodyStyle}>{
                                     new Date(updated_at)
                                     .toLocaleString()
                                 }
-                            </td>
+                            </td> */}
                             <td>
-                                {/* <TableDropDown
+                                <TableDropDown
                                     list={[{
                                         dropTitle:isLoading?"please wait...":"delete",
-                                        action:deleteAction(id)
+                                        action:()=>deleteAction(id)
                                     }]}
-                                /> */}
+                                />
                             </td>
                         </tr>
                     )

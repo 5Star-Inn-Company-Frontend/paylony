@@ -43,6 +43,7 @@ export const StepThree =()=>{
         btype,
         id_card_type_id
     })=>{
+        console.log(bank,id_card_type_id,btype)
         SavaToLocal_With_navigate(
             {
                 AccountNumber,
@@ -141,6 +142,7 @@ export const StepThree =()=>{
                 <select
                     className="text-start rounded-md p-4 border text-xs mb-4"
                     name="id_card_type_id"
+                    required
                     {...register(
                         `id_card_type_id`
                     )
@@ -168,6 +170,7 @@ export const StepThree =()=>{
                 </label>
                 <select
                     className="text-start rounded-md p-4 border text-xs mb-4"
+                    required
                     name="bank"
                     {...register(
                         `bank`
@@ -196,6 +199,7 @@ export const StepThree =()=>{
                 </label>
                 <select
                     className="text-start rounded-md p-4 border text-xs mb-4"
+                    required
                     name="btype"
                     {...register(
                         `btype`

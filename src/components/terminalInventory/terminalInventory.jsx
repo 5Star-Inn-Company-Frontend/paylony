@@ -5,58 +5,58 @@ import {
   } from "tw-elements";
 import { useEffect } from "react";
 import { TerminalLayout } from "./terminalLayout";
-import { useCreateTerminalsMutation, useGetAllBusinessTypeQuery } from "../../store/apiSlice";
+import { useCreateTerminalsMutation, useGetAllAggregatorsQuery, useGetAllBusinessTypeQuery } from "../../store/apiSlice";
 import { toast } from "react-toastify";
 export const AddTerminalInventory=()=>{
-    const [createTerminals, {isLoading}] = useCreateTerminalsMutation()
+    const [createTerminals, {isLoading}] = useCreateTerminalsMutation();
+
     const{
         data:business_Data,
         isLoading:business_IsLoading,
         isError:business_IsError,
         error:business_Error
     }= useGetAllBusinessTypeQuery();
+    const{
+        data:aggregatorsData,
+        isLoading:aggregatorsIsLoading,
+        isError,
+        error
+    }= useGetAllAggregatorsQuery();
     const { 
         register, 
         handleSubmit, 
         formState: { errors } 
     } = useForm();
     const user = JSON.parse(localStorage.getItem('paylonyToken'))
-    console.log("user",user)
     const SubmitHandler =({
-        id,
-        business_id,
         serial_number,
         pos_type,
         name,
         terminal_sim,
         type,
         balance,
-        cashback,
-        mid_id,
         statehead,
         aggregator,
         location,
-        trans_pin,
-        default_pin,
         payout_status,
         payout_fee,
         feeType,
         flatFee,
         feeCent,
         feeCap,
-        cta,
         paf,
         feeBearer,
+        aggregators,
         status,
-        date_assigned
     })=>{
         
         var formdata = new FormData();
         [
             {
-                title:"id",
-                value:id
-            },{
+                title:"aggregator",
+                value:aggregators
+            },
+           {
                 title:"business_id",
                 value:user?.business?.id
             },{
@@ -81,60 +81,39 @@ export const AddTerminalInventory=()=>{
                 title:"balance",
                 value:balance
             },{
-                title:"cashback",
-                value:cashback
-            },{
-                title:" mid_id",
-                value: mid_id
-            },{
                 title:"statehead",
                 value:statehead
-            },{
-                title:"aggregator",
-                value:aggregator
             },{
                 title:"Location",
                 value:location
             },{
-                title:"trans_pin",
-                value:trans_pin
-            },{
-                title:"default_pin",
-                value:default_pin
-            },{
                 title:"payout_status",
-                value:payout_status
+                value:!payout_status?"":payout_status
             },{
                 title:"payout_fee",
-                value:payout_fee
+                value:!payout_fee?"20":payout_fee
             },{
                 title:"feeType",
                 value:feeType
             },{
                 title:"flatFee",
-                value:flatFee
+                value:!flatFee?"100":flatFee
             },{
                 title:"feeCent",
                 value:feeCent
             },{
                 title:"feeCap",
-                value:feeCap
-            },{
-                title:"cta",
-                value:cta
+                value:!feeCap?"100":feeCap
             },{
                 title:"paf",
-                value:paf
+                value:!paf ?"50":paf
             },{
                 title:"feeBearer",
                 value:feeBearer
             },{
                 title:"status",
                 value:status
-            },{
-                title:"date_assigned",
-                value:date_assigned
-            }
+            },
         ].forEach((arr)=>{
             const{
                 title,
@@ -164,28 +143,182 @@ export const AddTerminalInventory=()=>{
         <TerminalLayout title="Terminal">
             <form onSubmit={handleSubmit(SubmitHandler)}>
                 <div className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 xxs:grid-cols-1 gap-4">
-                    <div className="flex flex-col mb-3">
+                    <div className="flex flex-col">
                         <label
                             className={`mb-2 text-sm font-medium text-start`}
-                            htmlFor="business_id">
-                            Business
+                            htmlFor="pos_type">
+                            POS TYPE 
                         </label>
                         <select
-                            className="text-start rounded-md p-4 border text-xs mb-4"
-                            name="business_id"
+                            required
+                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            name="pos_type"
                             {...register(
-                                `business_id`
+                                `pos_type`
+                            )
+                        }
+                        >
+                            <option value={"MP35P"}>MP35P</option>
+                            <option value={"K11"}>K11</option>
+                            <option value={"T1"}>T1</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className={`mb-2 text-sm font-medium text-start`}
+                            htmlFor="status">
+                            Status
+                        </label>
+                        <select
+                            required
+                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            name="status"
+                            {...register(
+                                `status`
+                            )
+                        }
+                        >
+                            <option value={"active"}>active</option>
+                            <option value={"inactive"}>inactive</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className={`mb-2 text-sm font-medium text-start`}
+                            htmlFor="payout_status">
+                            Payout Status
+                        </label>
+                        <select
+                            required
+                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            name="payout_status"
+                            {...register(
+                                `payout_status`
+                            )
+                        }
+                        >
+                            <option value={"1"}>enable</option>
+                            <option value={"0"}>disable</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className={`mb-2 text-sm font-medium text-start`}
+                            htmlFor="bills_status">
+                            Bills Status
+                        </label>
+                        <select
+                            required
+                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            name="bills_status"
+                            {...register(
+                                `bills_status`
+                            )
+                        }
+                        >
+                            <option value={"1"}>enable</option>
+                            <option value={"0"}>disable</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className={`mb-2 text-sm font-medium text-start`}
+                            htmlFor="card_transfer_status">
+                            Card Transfer Status
+                        </label>
+                        <select
+                            required
+                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            name="card_transfer_status"
+                            {...register(
+                                `card_transfer_status`
+                            )
+                        }
+                        >
+                            <option value={"1"}>enable</option>
+                            <option value={"0"}>disable</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className={`mb-2 text-sm font-medium text-start`}
+                            htmlFor="feeBearer">
+                            Payout Status
+                        </label>
+                        <select
+                            required
+                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            name="feeBearer"
+                            {...register(
+                                `feeBearer`
+                            )
+                        }
+                        >
+                            <option value={"agent"}>agent</option>
+                            <option value={"customer"}>customer</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className={`mb-2 text-sm font-medium text-start`}
+                            htmlFor="feeType">
+                            Fee Type
+                        </label>
+                        <select
+                            required
+                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            name="feeType"
+                            {...register(
+                                `feeType`
+                            )
+                        }
+                        >
+                            <option value={"percent"}>percent</option>
+                            <option value={"flat"}>flat</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className={`mb-2 text-sm font-medium text-start`}
+                            htmlFor="type">
+                            Type
+                        </label>
+                        <select
+                            required
+                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            name="type"
+                            {...register(
+                                `type`
+                            )
+                        }
+                        >
+                            <option value={"agent"}>agent</option>
+                            <option value={"merchant"}>merchant</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className={`mb-2 text-sm font-medium text-start`}
+                            htmlFor="aggregators">
+                            Aggregators
+                        </label>
+                        <select
+                            required
+                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            name="aggregators"
+                            {...register(
+                                `aggregators`
                             )
                         }
                         >
                         {  
-                            business_Data?.data?.map((option,index)=>{
+                            aggregatorsData?.data?.map((option,index)=>{
                                 return(
                                     <option 
                                         value={option.id}
                                             key={index}
                                             >
-                                        {option.name.toUpperCase()}
+                                        {option.first_name.toUpperCase()}
                                     </option>
                                 )
                             })
@@ -195,30 +328,18 @@ export const AddTerminalInventory=()=>{
                     {
                         [
                             {
-                                title:"id",
-                                labelName:"id",
-                                type:"text",
-                                error:errors.id,
-                                placeHold:"id",
-
-                            },{
                                 title:"serial_number",
-                                labelName:"serial_number",
+                                labelName:"serial number",
                                 type:"text",
+                                required:true,
                                 error:errors.serial_number,
                                 placeHold:"Enter serial_number",
-
-                            },{
-                                title:"pos_type",
-                                labelName:"Pos Type",
-                                type:"text",
-                                error:errors.pos_type,
-                                placeHold:"Enter PosType"
 
                             },
                             {
                                 title:"name",
                                 labelName:"name",
+                                required:true,
                                 type:"text",
                                 error:errors.name,
                                 placeHold:"Enter name",
@@ -226,124 +347,62 @@ export const AddTerminalInventory=()=>{
                             },{
                                 title:"balance",
                                 labelName:"Balance",
+                                required:true,
                                 type:"number",
                                 error:errors.balance,
                                 placeHold:""
 
                             },{
                                 title:"terminal_sim",
-                                labelName:"terminal_sim",
+                                required:false,
+                                labelName:"terminal sim",
                                 type:"text",
                                 error:errors.terminal_sim,
                                 placeHold:""
 
                             },{
-                                title:"type",
-                                labelName:"type",
-                                type:"text",
-                                error:errors.type,
-                                placeHold:""
-
-                            },{
-                                title:"feeBearer",
-                                labelName:"feeBearer",
-                                type:"text",
-                                error:errors.feeBearer,
-                                placeHold:""
-
-                            },{
-                                title:"cashback",
-                                labelName:"cashback",
-                                type:"text",
-                                error:errors.cashback,
-                                placeHold:""
-
-                            },{
-                                title:"mid_id",
-                                labelName:"mid_id",
-                                type:"number",
-                                error:errors.mid_id,
-                                placeHold:""
-
-                            },{
                                 title:"paf",
                                 labelName:"paf",
+                                required:false,
                                 type:"text",
                                 error:errors.paf,
-                                placeHold:""
+                                placeHold:"50"
 
                             },{
                                 title:"feeCap",
-                                labelName:"feeCap",
+                                labelName:"fee Cap",
                                 type:"text",
+                                required:false,
                                 error:errors.feeCap,
-                                placeHold:""
+                                placeHold:"100"
 
                             },{
                                 title:"feeCent",
-                                labelName:"feeCent",
+                                labelName:"fee Cent",
+                                required:true,
                                 type:"text",
                                 error:errors.feeCent,
                                 placeHold:""
 
                             },{
-                                title:"cta",
-                                labelName:"cta",
-                                type:"text",
-                                error:errors.cta,
-                                placeHold:""
-
-                            },{
-                                title:"status",
-                                labelName:"status",
-                                type:"text",
-                                error:errors.status,
-                                placeHold:""
-
-                            },{
-                                title:"date_assigned",
-                                labelName:"date_assigned",
-                                type:"date",
-                                error:errors.date_assigned,
-                                placeHold:""
-
-                            },{
                                 title:"flatFee",
-                                labelName:"flatFee",
+                                required:false,
+                                labelName:"flat Fee",
                                 type:"text",
                                 error:errors.flatFee,
-                                placeHold:""
+                                placeHold:"100"
 
                             },{
                                 title:"payout_fee",
-                                labelName:"payout_fee",
-                                type:"text",
+                                labelName:"payout fee",
+                                required:false,
+                                type:"number",
                                 error:errors.payout_fee,
-                                placeHold:""
-
-                            },{
-                                title:"payout_status",
-                                labelName:"payout_status",
-                                type:"text",
-                                error:errors.payout_status,
-                                placeHold:""
-
-                            },{
-                                title:"default_pin",
-                                labelName:"default_pin",
-                                type:"number",
-                                error:errors.default_pin,
-                                placeHold:""
-
-                            },{
-                                title:"trans_pin",
-                                labelName:"trans_pin",
-                                type:"number",
-                                error:errors.trans_pin,
-                                placeHold:""
+                                placeHold:"20"
 
                             },{
                                 title:"location",
+                                required:true,
                                 labelName:"location",
                                 type:"text",
                                 error:errors.location,
@@ -351,16 +410,10 @@ export const AddTerminalInventory=()=>{
 
                             },{
                                 title:"statehead",
-                                labelName:"statehead",
+                                labelName:"state head",
                                 type:"number",
+                                required:false,
                                 error:errors.statehead,
-                                placeHold:""
-
-                            },{
-                                title:"aggregator",
-                                labelName:"aggregator",
-                                type:"number",
-                                error:errors.aggregator,
                                 placeHold:""
 
                             }
@@ -369,6 +422,7 @@ export const AddTerminalInventory=()=>{
                                 title,
                                 labelName,
                                 placeHold,
+                                required,
                                 type,
                                 error
                             }=option;
@@ -379,17 +433,17 @@ export const AddTerminalInventory=()=>{
                                 >
                                     <label
                                         htmlFor={`exampleFormControlInput1${index}`}
-                                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
-                                        >{labelName}
+                                        className="mb-2 pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black font-medium transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                                        >{labelName.toUpperCase()}
                                     </label>
                                     <input
                                         type={type}
-                                        required
+                                        required={required}
                                         name={title}
                                         {...register(
                                             `${title}`
                                         )}
-                                        className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.72rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.42rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                         id={`exampleFormControlInput1${index}`}
                                         placeholder={placeHold} 
                                     />
@@ -404,14 +458,14 @@ export const AddTerminalInventory=()=>{
                             <button
                                 type="button"
                                 data-te-ripple-init
-                                className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                                className=" bg-purple w-fit px-8 py-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
                                 Please wait...
                             </button> 
                         ):(
                             <button
                                 type="submit"
                                 data-te-ripple-init
-                                className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                                className=" bg-purple w-fit px-8  py-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
                                 Submit
                             </button>
                         )
