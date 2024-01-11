@@ -37,14 +37,14 @@ export const PersonalInfo =()=>{
                         [
                             {
                                 title:"first_name",
-                                labelName:"first Name",
+                                labelName:"First Name",
                                 type:"text",
                                 error:errors.first_name,
                                 placeHold:"Enter first Name",
 
                             },{
                                 title:"last_name",
-                                labelName:"last Name",
+                                labelName:"Last Name",
                                 type:"text",
                                 error:errors.last_name,
                                 placeHold:"Enter last Name"
@@ -94,7 +94,7 @@ export const PersonalInfo =()=>{
                                 >
                                     <label
                                         htmlFor={`exampleFormControlInput1${index}`}
-                                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black mb-2 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                                         >{labelName}
                                     </label>
                                     <input
@@ -104,7 +104,7 @@ export const PersonalInfo =()=>{
                                         {...register(
                                             `${title}`
                                         )}
-                                        className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.72rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.42rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                         id={`exampleFormControlInput1${index}`}
                                         placeholder={placeHold} 
                                     />
@@ -116,10 +116,10 @@ export const PersonalInfo =()=>{
                         <label
                             className={`mb-2 text-sm font-medium text-start`}
                             htmlFor="gender">
-                            gender
+                            Gender
                         </label>
                         <select
-                            className="text-start rounded-md p-4 border text-xs mb-4"
+                            className="text-start rounded-md p-[0.62rem] border text-xs mb-4"
                             name="gender"
                             {...register(
                                 `gender`
@@ -153,8 +153,8 @@ export const PersonalInfo =()=>{
                     <button
                         type="submit"
                         data-te-ripple-init
-                        className=" bg-purple px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                        Submit
+                        className=" bg-purple px-12 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                        Next
                     </button>
                 </div>
             </form>

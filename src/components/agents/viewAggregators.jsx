@@ -1,10 +1,10 @@
 import { AgentLayout } from "./agentLayout"
-import { toast } from "react-toastify";
 import { TableLayout } from "./tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { useGetAllAggregatorsQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 export const ViewAggregators =()=>{
     const{
         data:aggregatorsData,
@@ -18,6 +18,16 @@ export const ViewAggregators =()=>{
         setActionData
     ]= useState([]);
 
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState("firstname");
+
+    const[
+        filterData,
+        setFilterData
+    ]= useState("");
+
     useEffect(()=>{
         if(aggregatorsData){
             setActionData(aggregatorsData?.data)
@@ -25,37 +35,24 @@ export const ViewAggregators =()=>{
     },[aggregatorsData])
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-
-    const handleInputChange =(e)=>{
-        const filtereddata = aggregatorsData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e.target.value))
-        setActionData(filtereddata)
-    }
-    
-    const SortDataAction=(action)=>{
-        let filteredData;
-        switch(action){
-            case 'name':(
-                filteredData = aggregatorsData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
-            )
+    const handleInputChange =(e,tobeFilterBy)=>{
+        let filterDdata;
+        switch(tobeFilterBy){
+            case "firstname": filterDdata = aggregatorsData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
             break;
-            case 'email':(
-                filteredData = aggregatorsData?.data?.sort((a, b)=> (a.email < b.email) ? -1 : (a.email > b.email) ? 1 : 0)
-            )
+            case "id": filterDdata = aggregatorsData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
             break;
-            case 'account_status':(
-                filteredData = aggregatorsData?.data?.sort((a, b)=> (a.account_status < b.account_status ) ? -1 : (a.account_status > b.account_status) ? 1 : 0)
-            )
+            case "lastname": filterDdata = aggregatorsData?.data?.filter((data)=>data.last_name?.toLowerCase().includes(e))
             break;
-            case 'date':(
-                filteredData = aggregatorsData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
-            )
+            case "email": filterDdata = aggregatorsData?.data?.filter((data)=>data.email?.toLowerCase().includes(e))
             break;
-            default:(
-                filteredData = aggregatorsData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
-            )
+            case "date": filterDdata = aggregatorsData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
             break;
+            case "username": filterDdata = aggregatorsData?.data?.filter((data)=>data.username?.toLowerCase().includes(e))
+            break;
+            default : filterDdata = aggregatorsData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
         }
-        setActionData( filteredData)
+        setActionData(filterDdata)
     }
 
     if(isError){
@@ -64,9 +61,17 @@ export const ViewAggregators =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }
         console.log(error)
     }
@@ -78,41 +83,47 @@ export const ViewAggregators =()=>{
                     <Spinner/>
                     ):(
                         <TableLayout
-                            handleInputChange={(e)=>handleInputChange(e)}
                             createBtnAction={()=>window.location.replace("/create_aggregators")}
                             createBtnText="Create Aggregators"
+                            handleInputChange={handleInputChange}
                             sortButton={[
                                 {
-                                    title:"Name",
-                                    action:"name"
+                                    title:"First Name",
+                                    action:"firstname"
                                 },{
                                     title:"Email",
                                     action:"email"
                                 },{
-                                    title:"Status",
-                                    action:"account_status"
+                                    title:"Id",
+                                    action:"id"
                                 },{
                                     title:"Date",
                                     action:"date"
-                                },
+                                },{
+                                    title:"UserName",
+                                    action:"username"
+                                }
                             ]}
-                            SortDataAction={SortDataAction}
+                            filterData={filterData}
+                            setFilterData={setFilterData}
+                            filterBy={filterBy}
+                            setFilterBy={setFilterBy}
+                            inputPlaceHolder={`Search aggregator `}
                             headerData={[
                                 "s/n",
-                                // "id",
-                                "first_name",
-                                "last_name",
+                                "id",
+                                "first name",
+                                "last name",
                                 "username",
                                 "email",
                                 "dob",
                                 "gender",
-                                "residential_address",
+                                "residential address",
                                 "state",
                                 // "agent_type",
                                 // "user_type",
-                                "account_status",
-                                "created_at",
-                                "updated_at",
+                                "account status",
+                                "created at",
                             ]}
                             data={actionData}
                         >
@@ -142,7 +153,7 @@ export const ViewAggregators =()=>{
                                         <td className={bodyStyle}>{index+1}</td>
                                         {
                                             [
-                                                // id,
+                                                id,
                                                 first_name,
                                                 last_name,
                                                 username,
@@ -162,11 +173,6 @@ export const ViewAggregators =()=>{
                                         }
                                         <td className={bodyStyle}>{
                                                 new Date(created_at)
-                                                .toLocaleString()
-                                            }
-                                        </td>
-                                        <td className={bodyStyle}>{
-                                                new Date(updated_at)
                                                 .toLocaleString()
                                             }
                                         </td>

@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form"
 import { PortalLayout } from "./portalLayout";
 import { useAssignRolesMutation,useRevokeRolesMutation } from "../../store/apiSlice";
-import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Text } from "../global/text";
+import toast from "react-hot-toast";
 export const AssignRoles=()=>{
     const [assignRoles, {isLoading:assignIsLoading}] = useAssignRolesMutation();
     const [revokeRoles, {isLoading:revokeIsLoading}] = useRevokeRolesMutation();
@@ -22,7 +22,11 @@ export const AssignRoles=()=>{
         if(e!==""){
             const itemPresent = assignedPeople.includes(e);
             if(itemPresent){
-                toast.warning("Item already exist");
+                toast.error("Item already exist",{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
                 return
             } 
             setAssignedPeople((prev)=>{ 
@@ -33,7 +37,6 @@ export const AssignRoles=()=>{
             })
         }
 
-        console.log(e,assignedPeople)
     }
 
     const{
@@ -66,31 +69,61 @@ export const AssignRoles=()=>{
         })
         if(action === "assign"){
             assignRoles(formdata).unwrap().then((payload)=>{
-                toast(payload?.message)
+                toast.success(payload?.message,{
+                    style:{
+                        background:"#ecfdf5",
+                    },
+                    iconTheme:{
+                        primary:"#6ee7b7"
+                    }
+                })
             }).catch((error)=>{
                 const{
                     status,
                     data
                 }=error
                 if(data?.error){
-                    toast.error(data?.error)
+                    toast.error(data?.error,{
+                        style:{
+                            background:"#fff1f2"
+                        }
+                    })
                 }else{
-                toast.error(data?.message)
+                    toast.error(data?.message,{
+                        style:{
+                            background:"#fff1f2"
+                        }
+                    })
                 }
                 console.log(error)
             })
         }else{
             revokeRoles(formdata).unwrap().then((payload)=>{
-                toast(payload?.message)
+                toast.success(payload?.message,{
+                    style:{
+                        background:"#ecfdf5",
+                    },
+                    iconTheme:{
+                        primary:"#6ee7b7"
+                    }
+                })
             }).catch((error)=>{
                 const{
                     status,
                     data
                 }=error
                 if(data?.error){
-                    toast.error(data?.error)
+                    toast.error(data?.error,{
+                        style:{
+                            background:"#fff1f2"
+                        }
+                    })
                 }else{
-                toast.error(data?.message)
+                    toast.error(data?.message,{
+                        style:{
+                            background:"#fff1f2"
+                        }
+                    })
                 }
                 console.log(error)
             })

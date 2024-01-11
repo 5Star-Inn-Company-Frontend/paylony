@@ -1,8 +1,8 @@
 import { ReportLayout } from "./reportLayout"
 import { TableLayout } from "../agents/tableLayout"
-import { toast } from "react-toastify";
 import { useGetDisputeQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
+import toast from "react-hot-toast";
 
 export const DisputeCount =()=>{
     const{
@@ -25,9 +25,17 @@ export const DisputeCount =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }
         console.log(error)
     }

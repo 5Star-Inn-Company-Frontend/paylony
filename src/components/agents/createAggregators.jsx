@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form"
 import { CreateAccountManagerLayout } from "./createAccountMangerLayout";
 import { useCreateAggregatorsMutation } from "../../store/apiSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 export const AggregatorsDetails =()=>{
     const [createAggregators, {isLoading}] = useCreateAggregatorsMutation()
     const { 
@@ -67,16 +67,31 @@ export const AggregatorsDetails =()=>{
         createAggregators({
             body:formdata
         }).unwrap().then((payload)=>{
-            toast(payload?.message)
+            toast.success(payload?.message,{
+                style:{
+                    background:"#ecfdf5",
+                },
+                iconTheme:{
+                    primary:"#6ee7b7"
+                }
+            })
         }).catch((error)=>{
             const{
                 status,
                 data
             }=error
             if(data?.error){
-                toast.error(data?.error)
+                toast.error(data?.error,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }else{
-                toast.error(data?.message)
+                toast.error(data?.message,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }
             console.log(error)
         })

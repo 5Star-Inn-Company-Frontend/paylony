@@ -14,7 +14,7 @@ export const AgentLayout =({
                     >
                     </li>
                     <li>
-                    <span className="text-sm mx-2 text-neutral-500 dark:text-neutral-400 text-primary">/</span>
+                    <span className="text-sm mx-2 text-neutral-500 dark:text-neutral-400 text-primary">{">"}</span>
                     </li>
                     <li>
                     <a
@@ -24,7 +24,7 @@ export const AgentLayout =({
                     >
                     </li>
                     <li>
-                    <span className="text-xs  mx-2 text-neutral-500 dark:text-neutral-400 text-primary">/</span>
+                    <span className="text-xs  mx-2 text-neutral-500 dark:text-neutral-400 text-primary">{">"}</span>
                     </li>
                     <li className="text-sm  text-sm ">{title}</li>
                 </ol>

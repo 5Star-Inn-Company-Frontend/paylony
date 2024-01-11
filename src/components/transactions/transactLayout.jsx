@@ -14,7 +14,7 @@ export const TransactLayout =({
                     >
                     </li>
                     <li>
-                    <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary">/</span>
+                    <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary">{">"}</span>
                     </li>
                     <li className=" text-sm text-neutral-500 dark:text-neutral-400">{title}</li>
                 </ol>

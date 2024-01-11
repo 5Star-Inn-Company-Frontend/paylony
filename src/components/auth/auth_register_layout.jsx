@@ -80,7 +80,7 @@ export const Auth_Register_Layout =({title,children})=>{
             </div>
             <div className="flex items-center m-auto w-fit my-8">
                 <span className="me-1 text-sm font-medium">Already an account?</span>
-                <Link to="/login" className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700">SigIn here?</Link>
+                <Link to="/login" className="text-purple transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700">SigIn here?</Link>
             </div>
         </div>
     )

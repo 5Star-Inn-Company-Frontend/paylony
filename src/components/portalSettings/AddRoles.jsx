@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { PortalLayout } from "./portalLayout";
 import { useCreateRolesMutation } from "../../store/apiSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 export const AddRoles=()=>{
     const [createRoles, {isLoading}] = useCreateRolesMutation()
     const { 
@@ -15,7 +15,14 @@ export const AddRoles=()=>{
         var formdata = new FormData();
         formdata.append("name", Name)
         createRoles(formdata).unwrap().then((payload)=>{
-            toast(payload?.message);
+            toast.success(payload?.message,{
+                style:{
+                    background:"#ecfdf5",
+                },
+                iconTheme:{
+                    primary:"#6ee7b7"
+                }
+            })
             window.location.replace("/all_roles");
         }).catch((error)=>{
             const{
@@ -23,9 +30,17 @@ export const AddRoles=()=>{
                 data
             }=error
             if(data?.error){
-                toast.error(data?.error)
+                toast.error(data?.error,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }else{
-             toast.error(data?.message)
+                toast.error(data?.message,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }
             console.log(error)
         })

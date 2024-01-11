@@ -1,11 +1,10 @@
 import { ReportLayout } from "./reportLayout"
-import { Text } from "../global/text"
-import { toast } from "react-toastify";
 import { useGetTicketDetailsQuery} from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import { useParams } from "react-router-dom";
 import { TableLayout } from "../agents/tableLayout";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 export const TicketsDetails =()=>{
     const{
         status
@@ -23,6 +22,16 @@ export const TicketsDetails =()=>{
         setActionData
     ]= useState([]);
 
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState("firstname");
+
+    const[
+        filterData,
+        setFilterData
+    ]= useState("");
+
     useEffect(()=>{
         if(ticketData){
             setActionData(ticketData?.data)
@@ -30,24 +39,24 @@ export const TicketsDetails =()=>{
     },[ticketData])
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e)=>{
-        const filtereddata = ticketData?.data?.filter((data)=>data.title?.toLowerCase().includes(e.target.value))
-        setActionData(filtereddata)
-    }
-
-    const SortDataAction=(action)=>{
-        let filteredData;
-        switch(action){
-            case 'date':(
-                filteredData = ticketData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
-            )
+    const handleInputChange =(e,tobeFilterBy)=>{
+        let filterDdata;
+        switch(tobeFilterBy){
+            case "user_id": filterDdata = ticketData?.data?.filter((data)=>data.user_id?.toLowerCase().includes(e))
             break;
-            default:(
-                filteredData = ticketData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
-            )
+            case "id": filterDdata = ticketData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
             break;
+            case "assignee_id": filterDdata = ticketData?.data?.filter((data)=>data.assignee_id?.toLowerCase().includes(e))
+            break;
+            case "ticket_id": filterDdata = ticketData?.data?.filter((data)=>data.ticket_id?.toLowerCase().includes(e))
+            break;
+            case "date": filterDdata = ticketData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
+            break;
+            case "status": filterDdata = ticketData?.data?.filter((data)=>data.status?.toLowerCase().includes(e))
+            break;
+            default : filterDdata = ticketData?.data?.filter((data)=>data.user_id?.toLowerCase().includes(e))
         }
-        setActionData( filteredData)
+        setActionData(filterDdata)
     }
 
     if(isError){
@@ -56,9 +65,17 @@ export const TicketsDetails =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }
         console.log(error)
     }
@@ -69,17 +86,36 @@ export const TicketsDetails =()=>{
                     <Spinner/>
                     ):(
                         <TableLayout
-                            handleInputChange={(e)=>handleInputChange(e)}
                             hideCreateAction={true}
+                            handleInputChange={handleInputChange}
                             sortButton={[
                                 {
+                                    title:"User Id",
+                                    action:" user_id"
+                                },{
+                                    title:"Assignee Id",
+                                    action:"assignee_id"
+                                },{
+                                    title:"Id",
+                                    action:"id"
+                                },{
                                     title:"Date",
                                     action:"date"
-                                },
+                                },{
+                                    title:"Ticket Id",
+                                    action:"ticket_id"
+                                },{
+                                    title:"Status",
+                                    action:"status"
+                                }
                             ]}
-                            SortDataAction={SortDataAction}
+                            filterData={filterData}
+                            setFilterData={setFilterData}
+                            filterBy={filterBy}
+                            setFilterBy={setFilterBy}
+                            inputPlaceHolder={`Search details by ${filterBy}`}
                             headerData={[
-                                "s/n","User Id","assignee id","ticket id","title","description","status","Created At","Updated At"
+                                "s/n","Id","User Id","assignee id","ticket id","title","description","status","Created At"
                             ]}
                             data={actionData}
                         >
@@ -93,8 +129,7 @@ export const TicketsDetails =()=>{
                                     title,
                                     description,
                                     status,
-                                    created_at,
-                                    updated_at,
+                                    created_at
                                 }=info
                                 return(
                                     <tr 
@@ -104,7 +139,7 @@ export const TicketsDetails =()=>{
                                         <td className={bodyStyle}>{index+1}</td>
                                         {
                                             [
-                                            //    id,
+                                                id,
                                                 user_id,
                                                 assignee_id,
                                                 ticket_id,
@@ -119,11 +154,6 @@ export const TicketsDetails =()=>{
                                         }
                                         <td className={bodyStyle}>{
                                                 new Date(created_at)
-                                                .toLocaleString()
-                                            }
-                                        </td>
-                                        <td className={bodyStyle}>{
-                                                new Date(updated_at)
                                                 .toLocaleString()
                                             }
                                         </td>

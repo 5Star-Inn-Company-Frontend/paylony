@@ -2,8 +2,8 @@ import { DashBoardLayout } from "../global/dashboardLayout";
 import { PortalLayout } from "./portalLayout";
 import Spinner from "../global/spinner";
 import { TableLayout } from "../agents/tableLayout";
-import { toast } from "react-toastify";
 import { useGetAllPermissionsQuery } from "../../store/apiSlice";
+import toast from "react-hot-toast";
 
 export const AllPermissions =()=>{
     const{
@@ -19,9 +19,17 @@ export const AllPermissions =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }
         console.log(error)
     }

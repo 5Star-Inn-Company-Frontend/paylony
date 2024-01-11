@@ -1,10 +1,10 @@
 import { AgentLayout } from "./agentLayout"
 import { TableLayout } from "./tableLayout";
-import { toast } from "react-toastify";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { useGetAllManagersQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export const ViewAccountMangers =()=>{
     const{
@@ -19,6 +19,16 @@ export const ViewAccountMangers =()=>{
         setActionData
     ]= useState([]);
 
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState("firstname");
+
+    const[
+        filterData,
+        setFilterData
+    ]= useState("");
+
     useEffect(()=>{
         if(managersData){
             setActionData(managersData?.data)
@@ -26,37 +36,24 @@ export const ViewAccountMangers =()=>{
     },[managersData])
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-
-    const handleInputChange =(e)=>{
-        const filtereddata = managersData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e.target.value))
-        setActionData(filtereddata)
-    }
-    
-    const SortDataAction=(action)=>{
-        let filteredData;
-        switch(action){
-            case 'name':(
-                filteredData = managersData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
-            )
+    const handleInputChange =(e,tobeFilterBy)=>{
+        let filterDdata;
+        switch(tobeFilterBy){
+            case "firstname": filterDdata = managersData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
             break;
-            case 'email':(
-                filteredData = managersData?.data?.sort((a, b)=> (a.email < b.email) ? -1 : (a.email > b.email) ? 1 : 0)
-            )
+            case "id": filterDdata = managersData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
             break;
-            case 'user_type':(
-                filteredData = managersData?.data?.sort((a, b)=> (a.user_type < b.user_type ) ? -1 : (a.user_type > b.user_type) ? 1 : 0)
-            )
+            case "lastname": filterDdata = managersData?.data?.filter((data)=>data.last_name?.toLowerCase().includes(e))
             break;
-            case 'date':(
-                filteredData = managersData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
-            )
+            case "email": filterDdata = managersData?.data?.filter((data)=>data.email?.toLowerCase().includes(e))
             break;
-            default:(
-                filteredData = managersData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
-            )
+            case "date": filterDdata = managersData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
             break;
+            case "user_type": filterDdata = managersData?.data?.filter((data)=>data.user_type?.toLowerCase().includes(e))
+            break;
+            default : filterDdata = managersData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
         }
-        setActionData( filteredData)
+        setActionData(filterDdata)
     }
 
     if(isError){
@@ -65,9 +62,17 @@ export const ViewAccountMangers =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }
         console.log(error)
     }
@@ -81,26 +86,34 @@ export const ViewAccountMangers =()=>{
                         <TableLayout
                             createBtnAction={()=>window.location.replace("/loginDetails")}
                             createBtnText="Create Managers"
-                            handleInputChange={(e)=>handleInputChange(e)}
+                            handleInputChange={handleInputChange}
                             sortButton={[
                                 {
-                                    title:"Name",
-                                    action:"name"
+                                    title:"First Name",
+                                    action:"firstname"
                                 },{
                                     title:"Email",
                                     action:"email"
                                 },{
-                                    title:"User Types",
-                                    action:"user_type"
+                                    title:"Id",
+                                    action:"id"
                                 },{
                                     title:"Date",
                                     action:"date"
-                                },
+                                },{
+                                    title:"User type",
+                                    action:"user_type"
+                                }
                             ]}
-                            SortDataAction={SortDataAction}
+                            filterData={filterData}
+                            setFilterData={setFilterData}
+                            filterBy={filterBy}
+                            downloadAction={"managers"}
+                            setFilterBy={setFilterBy}
+                            inputPlaceHolder={`Search account managers `}
                             headerData={[
-                                "s/n","first_name","last_name","email","Date of birth","gender","Residential Address","State","User Type",
-                                "Account Status","Created At","Updated At"
+                                "s/n","id","first name","last name","email","Date of birth","gender","Residential Address","State","User Type",
+                                "Account Status","Created At"
                             ]}
                             data={actionData}
                         >
@@ -129,7 +142,7 @@ export const ViewAccountMangers =()=>{
                                         <td className={bodyStyle}>{index+1}</td>
                                         {
                                             [
-                                                // id,
+                                                id,
                                                 first_name,
                                                 last_name,
                                                 email,
@@ -148,11 +161,6 @@ export const ViewAccountMangers =()=>{
                                         }
                                         <td className={bodyStyle}>{
                                                 new Date(created_at)
-                                                .toLocaleString()
-                                            }
-                                        </td>
-                                        <td className={bodyStyle}>{
-                                                new Date(updated_at)
                                                 .toLocaleString()
                                             }
                                         </td>

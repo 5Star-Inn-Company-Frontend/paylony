@@ -1,10 +1,10 @@
-import { toast } from "react-toastify";
 import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { ReportLayout } from "./reportLayout";
 import Spinner from "../global/spinner";
 import { useGetRevenueWalletQuery } from "../../store/apiSlice";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export const RevenueWalletHistory =()=>{
     const{
@@ -13,11 +13,21 @@ export const RevenueWalletHistory =()=>{
         isError,
         error
     }= useGetRevenueWalletQuery();
-    
+    const data=[]
     const[
         actionData,
         setActionData
     ]= useState([]);
+
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState("firstname");
+
+    const[
+        filterData,
+        setFilterData
+    ]= useState("");
 
     useEffect(()=>{
         if(walletHistoryData){
@@ -26,37 +36,25 @@ export const RevenueWalletHistory =()=>{
     },[walletHistoryData])
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const data =[];
-    const handleInputChange =(e)=>{
-        const filtereddata = walletHistoryData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e.target.value))
-        setActionData(filtereddata)
-    }
-
-    const SortDataAction=(action)=>{
-        let filteredData;
-        switch(action){
-            case 'name':(
-                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
-            )
+    const handleInputChange =(e,tobeFilterBy)=>{
+        let filterDdata;
+        console.log(tobeFilterBy)
+        switch(tobeFilterBy){
+            case "firstname": filterDdata = walletHistoryData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
             break;
-            case 'email':(
-                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.email < b.email) ? -1 : (a.email > b.email) ? 1 : 0)
-            )
+            case "id": filterDdata = walletHistoryData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
             break;
-            case 'agent_type':(
-                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.agent_type < b.agent_type ) ? -1 : (a.agent_type > b.agent_type) ? 1 : 0)
-            )
+            case "lastname": filterDdata = walletHistoryData?.data?.filter((data)=>data.last_name?.toLowerCase().includes(e))
             break;
-            case 'date':(
-                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
-            )
+            case "email": filterDdata = walletHistoryData?.data?.filter((data)=>data.email?.toLowerCase().includes(e))
             break;
-            default:(
-                filteredData = walletHistoryData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
-            )
+            case "date": filterDdata = walletHistoryData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
             break;
+            case "agent_type": filterDdata = walletHistoryData?.data?.filter((data)=>data.agent_type?.toLowerCase().includes(e))
+            break;
+            default : filterDdata = walletHistoryData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
         }
-        setActionData( filteredData)
+        setActionData(filterDdata)
     }
 
     if(isError){
@@ -65,9 +63,17 @@ export const RevenueWalletHistory =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }
         console.log(error)
     }
@@ -80,23 +86,30 @@ export const RevenueWalletHistory =()=>{
             ):(
             <TableLayout
                 hideCreateAction={true}
-                handleInputChange={(e)=>handleInputChange(e)}
+                handleInputChange={handleInputChange}
                 sortButton={[
                     {
-                        title:"Name",
-                        action:"name"
+                        title:"First Name",
+                        action:"firstname"
                     },{
                         title:"Email",
                         action:"email"
                     },{
-                        title:"User Types",
-                        action:"user_type"
+                        title:"Id",
+                        action:"id"
                     },{
                         title:"Date",
                         action:"date"
-                    },
+                    },{
+                        title:"Agent type",
+                        action:"agent_type"
+                    }
                 ]}
-                SortDataAction={SortDataAction}
+                filterData={filterData}
+                setFilterData={setFilterData}
+                filterBy={filterBy}
+                setFilterBy={setFilterBy}
+                inputPlaceHolder={`Search revenue wallet history by ${filterBy}`}
                 headerData={[
                     "Balance Before","Amount","Balance After","Reference","Source","Description","Creation Date","Type","Action"
                 ]}

@@ -2,9 +2,9 @@ import { AgentLayout } from "./agentLayout"
 import { TableLayout } from "./tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import {useGetAllAgentsQuery} from "../../store/apiSlice"
-import { toast } from "react-toastify";
 import Spinner from "../global/spinner";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export const ViewAgent =()=>{
     const{
@@ -19,6 +19,16 @@ export const ViewAgent =()=>{
         setActionData
     ]= useState([]);
 
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState("firstname");
+
+    const[
+        filterData,
+        setFilterData
+    ]= useState("");
+
     useEffect(()=>{
         if(agentData){
             setActionData(agentData?.data)
@@ -26,36 +36,25 @@ export const ViewAgent =()=>{
     },[agentData])
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e)=>{
-        const filtereddata = agentData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e.target.value))
-        setActionData(filtereddata)
-    }
-
-    const SortDataAction=(action)=>{
-        let filteredData;
-        switch(action){
-            case 'name':(
-                filteredData = agentData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
-            )
+    const handleInputChange =(e,tobeFilterBy)=>{
+        let filterDdata;
+        console.log(tobeFilterBy)
+        switch(tobeFilterBy){
+            case "firstname": filterDdata = agentData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
             break;
-            case 'email':(
-                filteredData = agentData?.data?.sort((a, b)=> (a.email < b.email) ? -1 : (a.email > b.email) ? 1 : 0)
-            )
+            case "id": filterDdata = agentData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
             break;
-            case 'agent_type':(
-                filteredData = agentData?.data?.sort((a, b)=> (a.agent_type < b.agent_type ) ? -1 : (a.agent_type > b.agent_type) ? 1 : 0)
-            )
+            case "lastname": filterDdata = agentData?.data?.filter((data)=>data.last_name?.toLowerCase().includes(e))
             break;
-            case 'date':(
-                filteredData = agentData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
-            )
+            case "email": filterDdata = agentData?.data?.filter((data)=>data.email?.toLowerCase().includes(e))
             break;
-            default:(
-                filteredData = agentData?.data?.sort((a, b)=> (a.first_name < b.first_name ) ? -1 : (a.first_name > b.first_name) ? 1 : 0)
-            )
+            case "date": filterDdata = agentData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
             break;
+            case "agent_type": filterDdata = agentData?.data?.filter((data)=>data.agent_type?.toLowerCase().includes(e))
+            break;
+            default : filterDdata = agentData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
         }
-        setActionData( filteredData)
+        setActionData(filterDdata)
     }
 
     if(isError){
@@ -64,9 +63,17 @@ export const ViewAgent =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }
         console.log(error)
     }
@@ -81,26 +88,34 @@ export const ViewAgent =()=>{
                         <TableLayout
                             createBtnAction={()=>window.location.replace("/personalInfo")}
                             createBtnText="Create Agent"
-                            handleInputChange={(e)=>handleInputChange(e)}
+                            handleInputChange={handleInputChange}
+                            downloadAction={"agents"}
                             sortButton={[
                                 {
-                                    title:"Name",
-                                    action:"name"
+                                    title:"First Name",
+                                    action:"firstname"
                                 },{
                                     title:"Email",
                                     action:"email"
                                 },{
-                                    title:"Agent type",
-                                    action:"agent_type"
+                                    title:"Id",
+                                    action:"id"
                                 },{
                                     title:"Date",
                                     action:"date"
-                                },
+                                },{
+                                    title:"Agent type",
+                                    action:"agent_type"
+                                }
                             ]}
-                            SortDataAction={SortDataAction}
+                            filterData={filterData}
+                            setFilterData={setFilterData}
+                            filterBy={filterBy}
+                            setFilterBy={setFilterBy}
+                            inputPlaceHolder={`Search agent`}
                             headerData={[
-                                "s/n","first_name","last_name","email","Date of birth","gender","Residential Address","State","Agent Type","User Type",
-                                "Account Status","Created At","Updated At"
+                                "s/n","id","first name","last name","email","Date of birth","gender","Residential Address","State","Agent Type","User Type",
+                                "Account Status","Created At"
                             ]}
                             data={actionData}
                         >
@@ -130,7 +145,7 @@ export const ViewAgent =()=>{
                                         <td className={bodyStyle}>{index+1}</td>
                                         {
                                             [
-                                            //    id,
+                                               id,
                                                 first_name,
                                                 last_name,
                                                 email,
@@ -149,11 +164,6 @@ export const ViewAgent =()=>{
                                         }
                                         <td className={bodyStyle}>{
                                                 new Date(created_at)
-                                                .toLocaleString()
-                                            }
-                                        </td>
-                                        <td className={bodyStyle}>{
-                                                new Date(updated_at)
                                                 .toLocaleString()
                                             }
                                         </td>

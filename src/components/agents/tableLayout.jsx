@@ -1,18 +1,76 @@
+import toast from "react-hot-toast";
+import { baseUrl } from "../../store/apiSlice";
+import axios from "axios";
+import { useState } from "react";
+
 export const TableLayout =({
     headerData,
     children,
     data,
     hideCreateAction,
     sortButton,
-    SortDataAction,
     hideheaderActions,
     createBtnAction,
     createBtnText,
-    dowwnloadAction,
-    filterAction,
-    filterOptions,
-    handleInputChange
+    downloadAction,
+    filterData,
+    setFilterData,
+    filterBy,
+    setFilterBy,
+    inputPlaceHolder,
+    handleInputChange,
 })=>{
+    const[
+        isLoading,
+        setIsLoading
+    ]=useState(false);
+    const user = JSON.parse(localStorage.getItem('paylonyToken'));
+    
+    const triggerExcelExport = async(data)=>{
+        const headers ={
+            'Content-Type':'multipart/form-data',
+            "Authorization":`Bearer Bearer ${user?.authorization?.token}`
+        };
+        const config ={
+            method: 'POST',
+            url:`${baseUrl}/api/v1/export`,
+            responseType:'arraybuffer',
+            data:data,
+            headers
+        }
+        try{
+            setIsLoading(true);
+            const response = await axios(config);
+            const outputFilename = `${Date.now()}_paylony_${downloadAction}.xls`;
+            const url = URL.createObjectURL(
+                new Blob([
+                    response?.data
+                ])
+            );
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download',outputFilename);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setIsLoading(false)
+        }catch(error){
+            setIsLoading(false)
+            toast.error(
+                error?.data?.message,
+                {
+                    style:{
+                        background:"#fff1f2"
+                    }
+                }
+            )
+        }
+    }
+    const exportToExcel =()=>{
+        var formdata = new FormData();
+        formdata.append("data_type", downloadAction);
+        triggerExcelExport(formdata)
+    }
     const headStyle = "px-6 py-2"
     return(
         <div className="lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 xxs:px-2 xxxs bg-white">
@@ -36,33 +94,54 @@ export const TableLayout =({
                             )
                         }
                         <div>
-                            <div
-                                data-te-ripple-init
-                                onClick={dowwnloadAction}
-                                className="border bg-bodyCl px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal">
-                                Download
-                            </div>
+                            { 
+                                downloadAction &&(
+                                    isLoading?(
+                                        <div
+                                            data-te-ripple-init
+                                            className="border bg-gray-100 px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal">
+                                            exporting...
+                                        </div>
+                                    ):(
+                                        <div
+                                            data-te-ripple-init
+                                            onClick={()=>exportToExcel()}
+                                            className="border cursor-pointer bg-gray-100 px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal">
+                                            Export excel
+                                        </div>
+                                    )
+                                )
+                            }
                         </div>
                     </div>
                     <div className="flex flex-wrap items-center">
                         <div className="mb-1 lg:w-60 xl:w-60 md:w-60 sm:w-60 xs:w-full xxs:w-full me-4">
                             <input
                                 type="search"
-                                className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                                className="text-xs text-gray-600 relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.55rem] text-base font-normal leading-[1.6] outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
                                 id="exampleSearch"
-                                onChange={handleInputChange}
-                                placeholder="Type query" 
+                                onChange={(e)=>{
+                                    setFilterData(()=>e.target.value);
+                                    handleInputChange(e.target.value,filterBy)
+                                    }
+                                }
+                                placeholder={inputPlaceHolder}
                             />
                         </div>
                         {
                             sortButton &&(
                                 <div className="flex items-center mb-1">
-                                    <label htmlFor="sort" className="w-fit me-1">Sort By :</label>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="gray" className="w-5 h-5 me-2">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                                    </svg>
+                                    <label htmlFor="sort" className="w-fit me-1 text-sm text-gray">Filter By :</label>
                                     <select 
                                         name="sort"
-                                        onSelect={filterAction}
-                                        onChange={(e)=>SortDataAction(e.target.value)}
-                                        className="border bg-bodyCl px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal"
+                                        onChange={(e)=>{
+                                            setFilterBy(e.target.value)
+                                            handleInputChange(filterData,e.target.value)}
+                                        }
+                                        className="bg-bodyCl  pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal"
                                     >
                                         {
                                             sortButton?.map((op,index)=>{
@@ -125,7 +204,6 @@ export const TableLayout =({
                     </div>
                 )
             }
-            
         </div>
     )
 }

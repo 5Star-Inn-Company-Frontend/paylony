@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
-const baseUrl = "https://patrick.5starcompany.com.ng"
+export const baseUrl = "https://patrick.5starcompany.com.ng"
 const user = JSON.parse(localStorage.getItem('paylonyToken'))
 
 export const mainWalletApi = createApi({
@@ -162,6 +162,22 @@ export const cashOutApi = createApi({
     endpoints:(builder)=>({
         getCashOut: builder.query({
             query: ()=> "/api/v1/cashout-history",
+        }),
+    }),
+});
+
+export const transactHistoryApi = createApi({
+    reducerPath:"transactHistoryApi",
+    baseQuery: fetchBaseQuery({
+        baseUrl:baseUrl,
+        prepareHeaders: (headers, {getState})=>{
+            headers.set( "Authorization",`Bearer Bearer ${user?.authorization?.token}`)
+            return headers
+        }
+    }),
+    endpoints:(builder)=>({
+        getTransactionHistory: builder.query({
+            query: ()=> "/api/v1/transactions",
         }),
     }),
 });
@@ -545,6 +561,7 @@ export const terminalsApi = createApi({
 
 export const {useGetAllBanksQuery} = banksApi;
 export const {useGetCashOutQuery} = cashOutApi;
+export const {useGetTransactionHistoryQuery} = transactHistoryApi;
 export const {useGetTicketQuery,useGetTicketDetailsQuery} = ticketApi;
 export const {useGetDisputeQuery} = disputeApi;
 export const {useGetChargeBackQuery} = chargeBackApi;

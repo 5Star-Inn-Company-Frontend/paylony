@@ -12,7 +12,7 @@ input,select{
   background: rgba(250, 250, 250, var(--surface-alpha, 1));
 }
 body{
-  background:#f2f3f8;
+  background:rgba(250, 250, 250, var(--surface-alpha, 1));
 }
 .bg-mixed-grey{
   background-color: rgba(153, 155, 163, 0.1);

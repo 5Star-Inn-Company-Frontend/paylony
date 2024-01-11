@@ -6,7 +6,8 @@ import {
 import { useEffect } from "react";
 import { TerminalLayout } from "./terminalLayout";
 import { useCreateTerminalsMutation, useGetAllAggregatorsQuery, useGetAllBusinessTypeQuery } from "../../store/apiSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
+
 export const AddTerminalInventory=()=>{
     const [createTerminals, {isLoading}] = useCreateTerminalsMutation();
 
@@ -124,16 +125,31 @@ export const AddTerminalInventory=()=>{
         createTerminals({
             body:formdata
         }).unwrap().then((payload)=>{
-            toast(payload?.message)
+            toast.success(payload?.message,{
+                style:{
+                    background:"#ecfdf5",
+                },
+                iconTheme:{
+                    primary:"#6ee7b7"
+                }
+            })
         }).catch((error)=>{
             const{
                 status,
                 data
             }=error
             if(data?.error){
-                toast.error(data?.error)
+                toast.error(data?.error,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }else{
-             toast.error(data?.message)
+                toast.error(data?.message,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }
             console.log(error)
         })
@@ -147,11 +163,11 @@ export const AddTerminalInventory=()=>{
                         <label
                             className={`mb-2 text-sm font-medium text-start`}
                             htmlFor="pos_type">
-                            POS TYPE 
+                            Pos Type 
                         </label>
                         <select
                             required
-                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            className="text-start rounded-md py-[0.72rem] border text-xs"
                             name="pos_type"
                             {...register(
                                 `pos_type`
@@ -171,7 +187,7 @@ export const AddTerminalInventory=()=>{
                         </label>
                         <select
                             required
-                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            className="text-start rounded-md py-[0.72rem] border text-xs"
                             name="status"
                             {...register(
                                 `status`
@@ -190,7 +206,7 @@ export const AddTerminalInventory=()=>{
                         </label>
                         <select
                             required
-                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            className="text-start rounded-md py-[0.72rem] border text-xs"
                             name="payout_status"
                             {...register(
                                 `payout_status`
@@ -209,7 +225,7 @@ export const AddTerminalInventory=()=>{
                         </label>
                         <select
                             required
-                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            className="text-start rounded-md py-[0.72rem] border text-xs"
                             name="bills_status"
                             {...register(
                                 `bills_status`
@@ -228,7 +244,7 @@ export const AddTerminalInventory=()=>{
                         </label>
                         <select
                             required
-                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            className="text-start rounded-md py-[0.72rem] border text-xs"
                             name="card_transfer_status"
                             {...register(
                                 `card_transfer_status`
@@ -247,7 +263,7 @@ export const AddTerminalInventory=()=>{
                         </label>
                         <select
                             required
-                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            className="text-start rounded-md py-[0.72rem] border text-xs"
                             name="feeBearer"
                             {...register(
                                 `feeBearer`
@@ -266,7 +282,7 @@ export const AddTerminalInventory=()=>{
                         </label>
                         <select
                             required
-                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            className="text-start rounded-md py-[0.72rem] border text-xs"
                             name="feeType"
                             {...register(
                                 `feeType`
@@ -285,7 +301,7 @@ export const AddTerminalInventory=()=>{
                         </label>
                         <select
                             required
-                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            className="text-start rounded-md py-[0.72rem] border text-xs"
                             name="type"
                             {...register(
                                 `type`
@@ -304,7 +320,7 @@ export const AddTerminalInventory=()=>{
                         </label>
                         <select
                             required
-                            className="text-start rounded-md py-[0.72rem] border text-xs mb-4"
+                            className="text-start rounded-md py-[0.72rem] border text-xs"
                             name="aggregators"
                             {...register(
                                 `aggregators`
@@ -329,7 +345,7 @@ export const AddTerminalInventory=()=>{
                         [
                             {
                                 title:"serial_number",
-                                labelName:"serial number",
+                                labelName:"Serial Number",
                                 type:"text",
                                 required:true,
                                 error:errors.serial_number,
@@ -338,7 +354,7 @@ export const AddTerminalInventory=()=>{
                             },
                             {
                                 title:"name",
-                                labelName:"name",
+                                labelName:"Name",
                                 required:true,
                                 type:"text",
                                 error:errors.name,
@@ -355,14 +371,14 @@ export const AddTerminalInventory=()=>{
                             },{
                                 title:"terminal_sim",
                                 required:false,
-                                labelName:"terminal sim",
+                                labelName:"Terminal Sim",
                                 type:"text",
                                 error:errors.terminal_sim,
                                 placeHold:""
 
                             },{
                                 title:"paf",
-                                labelName:"paf",
+                                labelName:"Paf",
                                 required:false,
                                 type:"text",
                                 error:errors.paf,
@@ -370,7 +386,7 @@ export const AddTerminalInventory=()=>{
 
                             },{
                                 title:"feeCap",
-                                labelName:"fee Cap",
+                                labelName:"Fee Cap",
                                 type:"text",
                                 required:false,
                                 error:errors.feeCap,
@@ -378,7 +394,7 @@ export const AddTerminalInventory=()=>{
 
                             },{
                                 title:"feeCent",
-                                labelName:"fee Cent",
+                                labelName:"Fee Cent",
                                 required:true,
                                 type:"text",
                                 error:errors.feeCent,
@@ -387,14 +403,14 @@ export const AddTerminalInventory=()=>{
                             },{
                                 title:"flatFee",
                                 required:false,
-                                labelName:"flat Fee",
+                                labelName:"Flat Fee",
                                 type:"text",
                                 error:errors.flatFee,
                                 placeHold:"100"
 
                             },{
                                 title:"payout_fee",
-                                labelName:"payout fee",
+                                labelName:"Payout fee",
                                 required:false,
                                 type:"number",
                                 error:errors.payout_fee,
@@ -403,14 +419,14 @@ export const AddTerminalInventory=()=>{
                             },{
                                 title:"location",
                                 required:true,
-                                labelName:"location",
+                                labelName:"Location",
                                 type:"text",
                                 error:errors.location,
                                 placeHold:""
 
                             },{
                                 title:"statehead",
-                                labelName:"state head",
+                                labelName:"State Head",
                                 type:"number",
                                 required:false,
                                 error:errors.statehead,
@@ -434,7 +450,7 @@ export const AddTerminalInventory=()=>{
                                     <label
                                         htmlFor={`exampleFormControlInput1${index}`}
                                         className="mb-2 pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black font-medium transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
-                                        >{labelName.toUpperCase()}
+                                        >{labelName}
                                     </label>
                                     <input
                                         type={type}

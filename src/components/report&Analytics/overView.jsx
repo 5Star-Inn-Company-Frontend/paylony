@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import { useGetOverviewReportQuery } from "../../store/apiSlice";
 import { Text } from "../global/text"
 import { CountChart } from "./countChart";
@@ -8,6 +7,7 @@ import {
     initTE,
   } from "tw-elements";
 import { useEffect } from "react"
+import toast from "react-hot-toast";
 
 export const Overview =()=>{
     useEffect(()=>{
@@ -26,9 +26,17 @@ export const Overview =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }
         console.log(error)
     }

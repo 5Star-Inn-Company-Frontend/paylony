@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import  axios  from 'axios';
-import { toast } from 'react-toastify';
 import { apiBaseUrl } from './apiBaseUrl';
+import toast from 'react-hot-toast';
 
 export const registerUser = createAsyncThunk(
     'auth/registerUser', 
@@ -170,7 +170,14 @@ const auth_Slice = createSlice({
             const{
                 message,
             }=action.payload;
-            toast(message)
+            toast.success(message,{
+                style:{
+                    background:"#ecfdf5",
+                },
+                iconTheme:{
+                    primary:"#6ee7b7"
+                }
+            })
             window.location.replace("/login")
             console.log(action?.payload)
             return{
@@ -179,7 +186,11 @@ const auth_Slice = createSlice({
             }
         })
         builder.addCase(registerUser.rejected,(state, action)=>{
-            toast.error(action?.payload)
+            toast.error(action?.payload,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             return{
                 ...state,
                 registerStatus:'rejected',
@@ -198,14 +209,25 @@ const auth_Slice = createSlice({
             const{
                 message,
             }=action.payload;
-            toast(message)
+            toast.success(message,{
+                style:{
+                    background:"#ecfdf5",
+                },
+                iconTheme:{
+                    primary:"#6ee7b7"
+                }
+            })
             return{
                 ...state,
                 forgetStatus:'success'
             }
         })
         builder.addCase(ForgetPassword.rejected,(state, action)=>{
-            toast.error(action?.payload)
+            toast.error(action?.payload,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             return{
                 ...state,
                 forgetStatus:'rejected'
@@ -224,7 +246,14 @@ const auth_Slice = createSlice({
                     data,
                     message
                 }=action.payload;
-                toast(message)
+                toast.success(message,{
+                   style:{
+                        background:"#ecfdf5",
+                    },
+                    iconTheme:{
+                        primary:"#6ee7b7"
+                    }
+                })
                 localStorage.setItem(
                     'paylonyToken',
                     JSON.stringify(data)
@@ -249,7 +278,11 @@ const auth_Slice = createSlice({
 
         })
         builder.addCase(LogInUser.rejected,(state, action)=>{
-           toast.error(action?.payload)
+           toast.error(action?.payload,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             return{
                 ...state,
                LoginStatus:'rejected',

@@ -17,7 +17,7 @@ export const TerminalLayout =({
                         >
                         </li>
                         <li>
-                        <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary">/</span>
+                        <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary">{">"}</span>
                         </li>
                         <li>
                         <a
@@ -27,12 +27,12 @@ export const TerminalLayout =({
                         >
                         </li>
                         <li>
-                        <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary">/</span>
+                        <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary">{">"}</span>
                         </li>
                         <li className="text-sm text-neutral-500 dark:text-neutral-400">{title}</li>
                     </ol>
                 </nav>
-                <div className="w-full p-4 rounded-sm bg-cl">
+                <div className="w-full rounded-sm bg-white">
                     {children}
                 </div>
             </div>

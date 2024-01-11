@@ -3,13 +3,13 @@ import { MapContainer, TileLayer, Marker,Popup} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import L from "leaflet";
 import { Text } from "../global/text"
-import { toast } from "react-toastify";
 import { useGetAgentMapQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png'
 import MarkerClusterGroup from "./react-leaflet-markercluster";
+import toast from "react-hot-toast";
 export const Agent_Map =()=>{
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
@@ -30,9 +30,17 @@ export const Agent_Map =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }
         console.log(error)
     }

@@ -1,4 +1,3 @@
- import { toast } from "react-toastify";
 import { useDeleteTerminalsMutation, useGetAllTerminalsQuery } from "../../store/apiSlice";
 import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
@@ -6,6 +5,7 @@ import { TableDropDown } from "../global/dropdown";
 import { TerminalLayout } from "./terminalLayout";
 import Spinner from "../global/spinner";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export const AllTerminal =()=>{
     const{
@@ -21,16 +21,31 @@ export const AllTerminal =()=>{
         deleteTerminals({
             id:id
         }).unwrap().then((payload)=>{
-            toast(payload?.message)
+            toast.success(payload?.message,{
+                style:{
+                    background:"#ecfdf5",
+                },
+                iconTheme:{
+                    primary:"#6ee7b7"
+                }
+            })
         }).catch((error)=>{
             const{
                 status,
                 data
             }=error
             if(data?.error){
-                toast.error(data?.error)
+                toast.error(data?.error,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }else{
-             toast.error(data?.message)
+                toast.error(data?.message,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }
             console.log(error)
         })
@@ -41,6 +56,16 @@ export const AllTerminal =()=>{
         setActionData
     ]= useState([]);
 
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState("name");
+
+    const[
+        filterData,
+        setFilterData
+    ]= useState("");
+
     useEffect(()=>{
         if(terminalData){
             setActionData(terminalData?.data)
@@ -48,28 +73,21 @@ export const AllTerminal =()=>{
     },[terminalData])
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e)=>{
-        const filtereddata = terminalData?.data?.filter((data)=>data.name?.toLowerCase().includes(e.target.value))
-        setActionData(filtereddata)
-    }
-
-    const SortDataAction =(action)=>{
-        let filteredData;
-        switch(action){
-            case 'name':(
-                filteredData =terminalData?.data?.sort((a, b)=> (a.name < b.name ) ? -1 : (a.name > b.name) ? 1 : 0)
-            )
+    const handleInputChange =(e,tobeFilterBy)=>{
+        let filterDdata;
+        console.log(tobeFilterBy)
+        switch(tobeFilterBy){
+            case "name": filterDdata = terminalData?.data?.filter((data)=>data.name?.toLowerCase().includes(e))
             break;
-            case 'date':(
-                filteredData =terminalData?.data?.sort((a, b)=> (a.created_at < b.created_at ) ? -1 : (a.created_at > b.created_at) ? 1 : 0)
-            )
+            case "id": filterDdata = terminalData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
             break;
-            default:(
-                filteredData =terminalData?.data?.sort((a, b)=> (a.name < b.name ) ? -1 : (a.name > b.name) ? 1 : 0)
-            )
+            case "serial_number": filterDdata = terminalData?.data?.filter((data)=>data.serial_number?.toLowerCase().includes(e))
             break;
+            case "date": filterDdata = terminalData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
+            break;
+            default : filterDdata = terminalData?.data?.filter((data)=>data.name?.toLowerCase().includes(e))
         }
-        setActionData( filteredData)
+        setActionData(filterDdata)
     }
 
     if(isError){
@@ -78,9 +96,17 @@ export const AllTerminal =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }
         console.log(error)
     }
@@ -93,7 +119,7 @@ export const AllTerminal =()=>{
                     ):(
             <TableLayout
                 createBtnAction={()=>window.location.replace("/add_terminal")}
-                handleInputChange={(e)=>handleInputChange(e)}
+                handleInputChange={handleInputChange}
                 sortButton={[
                     {
                         title:"Name",
@@ -101,13 +127,24 @@ export const AllTerminal =()=>{
                     },{
                         title:"Date",
                         action:"date"
-                    },
+                    },{
+                        title:"Id",
+                        action:"id"
+                    },{
+                        title:"Serial Number",
+                        action:"serial_number"
+                    }
                 ]}
-                SortDataAction={SortDataAction}
+                downloadAction={"terminals"}
+                filterData={filterData}
+                setFilterData={setFilterData}
+                filterBy={filterBy}
+                setFilterBy={setFilterBy}
+                inputPlaceHolder={`Search terminal `}
                 createBtnText="Add Terminal"
                 headerData={[
                     "s/n",
-                    // "Id",
+                    "Id",
                     // "Business ID",
                     // "User_ID",
                     "Serial Number",
@@ -181,7 +218,7 @@ export const AllTerminal =()=>{
                             <td className={bodyStyle}>{index+1}</td>
                             {
                                 [
-                                    // id,
+                                    id,
                                     // business_id,
                                     // user_id,
                                     serial_number,

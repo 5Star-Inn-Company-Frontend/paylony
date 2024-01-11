@@ -38,7 +38,6 @@ import { Auth_Upload } from './pages/auth_upload';
 import { Transaction_Map } from './components/report&Analytics/transactionMap';
 import { Agent_Map } from './components/report&Analytics/agentMap';
 import { Provider } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import store from './store';
 import { AggregatorsDetails } from './components/agents/createAggregators';
@@ -49,6 +48,8 @@ import { TicketsDetails } from './components/report&Analytics/ticketsDetails';
 import { UpdateRoles } from './components/portalSettings/updateRole';
 import { AssignRoles } from './components/portalSettings/assign_revoke_Roles';
 import { AllPermissions } from './components/portalSettings/permissions';
+import { Toaster } from 'react-hot-toast';
+import { DisBursementForm } from './components/disbursement/form';
 
 
 function App() {
@@ -80,9 +81,10 @@ function App() {
             <Route exact path="/view_acc_manager" element={ <ViewAccountMangers/>}/>
             <Route exact path="/transact-card" element={ <CardTransactionHistory/>}/>
             <Route exact path="/transact-admin" element={ <AdminTransactionHistory/>}/>
+            <Route exact path="/transact-history" element={ <TransactionHistory/>}/>
             <Route exact path="/transact-bet" element={ <BetTransactionHistory/>}/>
             <Route exact path="/transact-vas" element={ <VasTransactionHistory/>}/>
-            {/* <Route exact path="/transact-cashout" element={ <TransactionHistory/>}/> */}
+            <Route exact path="/wallet_disbursement" element={ <DisBursementForm/>}/>
             <Route exact path="/transact-refund" element={ <RefundTransactionHistory/>}/>
             <Route exact path="/all_terminals" element={ <AllTerminal/>}/>
             <Route exact path="/add_terminal" element={ <AddTerminalInventory/>}/>
@@ -112,7 +114,10 @@ function App() {
           </Routes>
        </Router>
     </Provider>
-    <ToastContainer />
+    <Toaster
+      position="top-center"
+      reverseOrder={false}
+    />
     </>
   )
 }

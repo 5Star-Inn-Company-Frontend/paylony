@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { useState } from "react";
 import {useCreateAgentMutation} from "../../store/apiSlice"
 import { agentStored } from "./action";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 export const DocUpload =()=>{
     const [createAgent, {isLoading}] = useCreateAgentMutation()
@@ -77,16 +77,31 @@ export const DocUpload =()=>{
         createAgent({
             body:formdata
         }).unwrap().then((payload)=>{
-            toast(payload?.message)
+            toast.success(payload?.message,{
+                style:{
+                    background:"#ecfdf5",
+                },
+                iconTheme:{
+                    primary:"#6ee7b7"
+                }
+            })
         }).catch((error)=>{
             const{
                 status,
                 data
             }=error
             if(data?.error){
-                toast.error(data?.error)
+                toast.error(data?.error,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }else{
-            toast.error(data?.message)
+                toast.error(data?.message,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }
             console.log(error)
         })
@@ -104,7 +119,7 @@ export const DocUpload =()=>{
                     
                     <label
                         htmlFor={`exampleFormControlInput1`}
-                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                      >Utility Bill
                     </label>
                     <input
@@ -123,7 +138,7 @@ export const DocUpload =()=>{
                     
                     <label
                         htmlFor={`exampleFormControlInput2`}
-                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                      >Id Card Front
                     </label>
                     <input
@@ -142,7 +157,7 @@ export const DocUpload =()=>{
                     
                     <label
                         htmlFor={`exampleFormControlInput3`}
-                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                      >Id Card Back
                     </label>
                     <input
@@ -161,7 +176,7 @@ export const DocUpload =()=>{
                     
                     <label
                         htmlFor={`exampleFormControlInput4`}
-                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                      >Passport
                     </label>
                     <input
@@ -181,14 +196,14 @@ export const DocUpload =()=>{
                     <button
                         type="button"
                         data-te-ripple-init
-                        className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                        className=" bg-purple w-fit px-12 p-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
                         Please wait...
                     </button> 
                 ):(
                     <button
                         type="submit"
                         data-te-ripple-init
-                        className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                        className=" bg-purple w-fit px-12 p-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
                         Submit
                     </button>
                 )

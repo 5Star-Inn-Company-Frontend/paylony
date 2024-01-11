@@ -1,8 +1,9 @@
 import { ReportLayout } from "./reportLayout"
 import { TableLayout } from "../agents/tableLayout"
-import { toast } from "react-toastify";
 import Spinner from "../global/spinner";
 import { useGetAgentCurrentMonthTargetQuery } from "../../store/apiSlice";
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 export const CurrentMonthCharges =()=>{
     const{
@@ -11,44 +12,105 @@ export const CurrentMonthCharges =()=>{
         isError,
         error
     }= useGetAgentCurrentMonthTargetQuery();
-    console.log(chargeData)
-    const data =[];
+    const[
+        actionData,
+        setActionData
+    ]= useState([]);
+
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState("business_name");
+
+    const[
+        filterData,
+        setFilterData
+    ]= useState("");
+
+    useEffect(()=>{
+        if(chargeData){
+            setActionData(chargeData?.data)
+        }
+    },[chargeData])
+
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e)=>{
-        console.log(e.target.value)
-        // const filtereddata = agentData?.find((data)=>data.name?.toLowerCase().includes(e))
-        // setActionData(filtereddata)
+    const handleInputChange =(e,tobeFilterBy)=>{
+        let filterDdata;
+        console.log(tobeFilterBy)
+        switch(tobeFilterBy){
+            case "business_name": filterDdata = chargeData?.data?.filter((data)=>data.business_name?.toLowerCase().includes(e))
+            break;
+            case "terminal_id": filterDdata = chargeData?.data?.filter((data)=>data?.terminal_id?.toLowerCase().includes(e))
+            break;
+            case "user_id": filterDdata = chargeData?.data?.filter((data)=>data.user_id?.toLowerCase().includes(e))
+            break;
+            case "business_email": filterDdata = chargeData?.data?.filter((data)=>data.business_email?.toLowerCase().includes(e))
+            break;
+            default : filterDdata = chargeData?.data?.filter((data)=>data.business_name?.toLowerCase().includes(e))
+        }
+        setActionData(filterDdata)
     }
+
     if(isError){
         const{
             status,
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }
         console.log(error)
     }
     return(
-        <ReportLayout title="Agents Currents Moth Charges">
+        <ReportLayout title="Agents Current Month Charges">
         {
             isLoading ? (
                 <Spinner/>
                 ):(
             <TableLayout
-
-                hideCreateAction={true}
+            hideCreateAction={true}
+            handleInputChange={handleInputChange}
+            sortButton={[
+                {
+                    title:"Business name",
+                    action:"business_name"
+                },{
+                    title:"Business email",
+                    action:"business_email"
+                },{
+                    title:"Terminal id",
+                    action:"terminal_id"
+                },{
+                    title:"User id",
+                    action:"user_id"
+                }
+            ]}
+            filterData={filterData}
+            setFilterData={setFilterData}
+            filterBy={filterBy}
+            downloadAction={"transactions"}
+            setFilterBy={setFilterBy}
+            inputPlaceHolder={`Search by ${filterBy}`}
                 headerData={[
-                    "Terminal Id","Business Name", "Business Email","Business Phone","Total Balance"
+                    "s/n","Terminal Id","User Id","Business Name", "Business Email","Business Phone","Total Balance"
                 ]}
-                data={chargeData?.data}
+                data={ actionData}
             >
             {
-                chargeData?.data?.map((info,index)=>{
+                 actionData?.map((info,index)=>{
                     const{
                         terminal_id,
+                        user_id,
                         business_name,
                         business_email,
                         business_phone,
@@ -63,6 +125,7 @@ export const CurrentMonthCharges =()=>{
                                 {
                                     [
                                         terminal_id,
+                                        user_id,
                                         business_name,
                                         business_email,
                                         business_phone,

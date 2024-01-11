@@ -24,41 +24,49 @@ export const TotalInformation =({data,isLoading})=>{
                     {
                         title:"Total Profiled Merchant",
                         amount:data?.merchants?.total_merchants,
+                        bg:"bg-white",
                         icon:icon1,
                         img:img1
                     },{
                         title:"Total Active Merchant",
                         amount:data?.merchants?.total_active_merchants,
+                        bg:"bg-white",
                         icon:icon2,
                         img:img2
                     },{
                         title:"Total Transactions",
-                        amount:data?.transactions?.total_transaction,
+                        amount:data?.transactions?.total_transaction_count,
+                        bg:"bg-white",
                         icon:icon3,
                         img:img3
                     },{
                         title:"Aggregiated Wallet Balance",
-                        amount:"null",
+                        amount:data?.aggregated_wallent_balance,
+                        bg:"bg-white",
                         icon:icon4,
                         img:img4
                     },{
                         title:"Total Transaction Volume",
-                        amount:data?.transactions?.total_transaction_volume,
+                        amount:`${data?.transactions?.total_transaction_volume}`,
+                        bg:"bg-[#FAF9FF]",
                         icon:icon1,
                         img:img1
                     },{
-                        title:"Total dasboardion Count",
-                        amount:"null",
+                        title:"Total transaction Count",
+                        amount:`${data?.transactions?.total_transaction_count}`,
+                        bg:"bg-[#FBFFFC]",
                         icon:icon2,
                         img:img2
                     },{
                         title:"Successful transaction volume",
                         amount:data?.transactions?.total_successful_transaction_volume,
                         icon:icon3,
+                        bg:"bg-white",
                         img:img3
                     },{
-                        title:"Successful dasboardion Count",
-                        amount:"null",
+                        title:"Successful transaction Count",
+                        amount:data?.transactions?.total_successful_transaction_count,
+                        bg:"bg-[#F8FBFF]",
                         icon:icon4,
                         img:img4
                     }
@@ -66,12 +74,13 @@ export const TotalInformation =({data,isLoading})=>{
                     const{
                         title,
                         amount,
+                        bg,
                         icon,
                         img
                     }=info
                     return(
                         <div 
-                            className="px-4 py-8 rounded-md bg-cl  flex flex-col justify-between"
+                            className={`px-4 py-8 rounded-md ${bg}  flex flex-col justify-between`}
                             key={index}
                         >
                             <div className="flex items-center mb-2">
@@ -84,7 +93,7 @@ export const TotalInformation =({data,isLoading})=>{
                                 </div>
                                 <div>
                                     <Text
-                                        style="text-sm text-start"
+                                        style="text-md text-start"
                                         value={title}
                                     />
                                 </div>

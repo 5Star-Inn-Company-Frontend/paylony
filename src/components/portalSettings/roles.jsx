@@ -5,7 +5,7 @@ import Spinner from "../global/spinner";
 import { TableLayout } from "../agents/tableLayout";
 import { TableDropDown } from "../global/dropdown";
 import { useDeleteRolesMutation, useGetAllRolesQuery } from "../../store/apiSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 export const AllRoles =()=>{
     const{
@@ -19,16 +19,31 @@ export const AllRoles =()=>{
 
     const deleteAction =(id)=>{
         deleteRoles(id).unwrap().then((payload)=>{
-            toast(payload?.message)
+            toast.success(payload?.message,{
+                style:{
+                    background:"#ecfdf5",
+                },
+                iconTheme:{
+                    primary:"#6ee7b7"
+                }
+            })
         }).catch((error)=>{
             const{
                 status,
                 data
             }=error
             if(data?.error){
-                toast.error(data?.error)
+                toast.error(data?.error,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }else{
-             toast.error(data?.message)
+                toast.error(data?.message,{
+                    style:{
+                        background:"#fff1f2"
+                    }
+                })
             }
             console.log(error)
         })
@@ -39,6 +54,16 @@ export const AllRoles =()=>{
         setActionData
     ]= useState([]);
 
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState("name");
+
+    const[
+        filterData,
+        setFilterData
+    ]= useState("");
+
     useEffect(()=>{
         if(rolesData){
             setActionData(rolesData?.data)
@@ -46,14 +71,19 @@ export const AllRoles =()=>{
     },[rolesData])
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e)=>{
-        const filtereddata = rolesData?.data?.filter((data)=>data.name?.toLowerCase().includes(e.target.value))
-        setActionData(filtereddata)
-    }
-
-    const SortDataAction=(action)=>{
-        let filteredData=terminalData?.data?.sort((a, b)=> (a.name < b.name ) ? -1 : (a.name > b.name) ? 1 : 0);
-        setActionData( filteredData)
+    const handleInputChange =(e,tobeFilterBy)=>{
+        let filterDdata;
+        console.log(tobeFilterBy)
+        switch(tobeFilterBy){
+            case "name": filterDdata = rolesData?.data?.filter((data)=>data.name?.toLowerCase().includes(e))
+            break;
+            case "id": filterDdata = rolesData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
+            break;
+            case "guard_name": filterDdata = rolesData?.data?.filter((data)=>data.guard_name?.toLowerCase().includes(e))
+            break;
+            default : filterDdata = rolesData?.data?.filter((data)=>data.name?.toLowerCase().includes(e))
+        }
+        setActionData(filterDdata)
     }
 
     if(isError){
@@ -62,9 +92,17 @@ export const AllRoles =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#fff1f2"
+                }
+            })
         }
         console.log(error)
     }
@@ -80,16 +118,26 @@ export const AllRoles =()=>{
                     createBtnAction={()=>window.location.replace("/add_roles")}
                     createBtnText="Add Roles"
                     headerData={[
-                        "S/n","Name","Guard name","Action"
+                        "S/n","id","Name","Guard name","Action"
                     ]}
-                    handleInputChange={(e)=>handleInputChange(e)}
-                    sortButton={[
-                        {
-                            title:"Name",
-                            action:"name"
-                        }
-                    ]}
-                    SortDataAction={SortDataAction}
+                    handleInputChange={handleInputChange}
+                            sortButton={[
+                                {
+                                    title:"Name",
+                                    action:"name"
+                                },{
+                                    title:"Guard Name",
+                                    action:"guard_name"
+                                },{
+                                    title:"Id",
+                                    action:"id"
+                                }
+                            ]}
+                            filterData={filterData}
+                            setFilterData={setFilterData}
+                            filterBy={filterBy}
+                            setFilterBy={setFilterBy}
+                            inputPlaceHolder={`Search role `}
                     data={ actionData}
                 >
                 {
@@ -107,6 +155,7 @@ export const AllRoles =()=>{
                                 <td className={bodyStyle}>{index+1}</td>
                                 {
                                     [
+                                        id,
                                         name,
                                         guard_name
                                     ].map((body,index)=>{

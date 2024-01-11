@@ -1,10 +1,10 @@
 import { ReportLayout } from "./reportLayout"
 import icon from "../../assets/ticket.png"
 import { Text } from "../global/text"
-import { toast } from "react-toastify";
 import { useGetTicketQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 export const Tickets =()=>{
     const{
         data:ticketData,
@@ -20,9 +20,17 @@ export const Tickets =()=>{
             data
         }=error
         if(data?.error){
-            toast.error(data?.error)
+            toast.error(data?.error,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }else{
-         toast.error(data?.message)
+            toast.error(data?.message,{
+                style:{
+                    background:"#f87171"
+                }
+            })
         }
         console.log(error)
     }

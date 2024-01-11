@@ -179,7 +179,7 @@ export const BusinessInfo =()=>{
                                 >
                                     <label
                                         htmlFor={`exampleFormControlInput1${index}`}
-                                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] mb-2 text-black transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                                         >{labelName}
                                     </label>
                                     <input
@@ -189,7 +189,7 @@ export const BusinessInfo =()=>{
                                         {...register(
                                             `${title}`
                                         )}
-                                        className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.72rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                        className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.42rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                         id={`exampleFormControlInput1${index}`}
                                         placeholder={placeHold} 
                                     />
@@ -204,7 +204,7 @@ export const BusinessInfo =()=>{
                             ID Card Type
                         </label>
                         <select
-                            className="text-start rounded-md p-4 border text-xs mb-4"
+                            className="text-start rounded-md p-[0.62rem] border text-xs mb-4"
                             name="id_card_type_id"
                             {...register(
                                 `id_card_type_id`
@@ -232,7 +232,7 @@ export const BusinessInfo =()=>{
                             Bank
                         </label>
                         <select
-                            className="text-start rounded-md p-4 border text-xs mb-4"
+                            className="text-start rounded-md p-[0.62rem] border text-xs mb-4"
                             name="bank"
                             {...register(
                                 `bank`
@@ -260,7 +260,7 @@ export const BusinessInfo =()=>{
                             Business Type
                         </label>
                         <select
-                            className="text-start rounded-md p-4 border text-xs mb-4"
+                            className="text-start rounded-md p-[0.62rem] border text-xs mb-4"
                             name="btype"
                             {...register(
                                 `btype`
@@ -286,8 +286,8 @@ export const BusinessInfo =()=>{
                     <button
                         type="submit"
                         data-te-ripple-init
-                        className=" bg-purple px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                        Submit
+                        className=" bg-purple px-12 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                        Next
                     </button>
                 </div>
             </form>

@@ -1,27 +1,40 @@
+import { useCreateAggregatorsMutation } from "../../store/apiSlice";
 import { useForm } from "react-hook-form"
-import { PortalLayout } from "./portalLayout";
-import { useUpdateRolesMutation } from "../../store/apiSlice";
-import { useParams } from "react-router-dom";
-import toast from "react-hot-toast";
-export const UpdateRoles=()=>{
-    const [updateRoles, {isLoading}] = useUpdateRolesMutation();
-    
-    const{
-        id
-    }=useParams();
+import { DisburseMentLayout } from "./layout";
+export const DisBursementForm =()=>{
+    const [createAggregators, {isLoading}] = useCreateAggregatorsMutation()
     const { 
         register, 
         handleSubmit, 
         formState: { errors } 
     } = useForm();
+
     const SubmitHandler =({
-        Name
+        Remarks,
+        password,
+        Amount,
     })=>{
         var formdata = new FormData();
-        formdata.append("name", Name);
-        updateRoles({
-            id:id,
-            name:formdata
+        [
+            {
+                title:"remark",
+                value: Remarks
+            },{
+                title:"password",
+                value:password
+            },{
+                title:"amount",
+                value: Amount
+            }
+        ].forEach((arr)=>{
+            const{
+                title,
+                value
+            }=arr;
+            formdata.append(title, value)
+        })
+        createAggregators({
+            body:formdata
         }).unwrap().then((payload)=>{
             toast.success(payload?.message,{
                 style:{
@@ -31,7 +44,6 @@ export const UpdateRoles=()=>{
                     primary:"#6ee7b7"
                 }
             })
-            window.location.replace("/all_roles");
         }).catch((error)=>{
             const{
                 status,
@@ -54,17 +66,32 @@ export const UpdateRoles=()=>{
         })
     }
     return(
-        <PortalLayout title="Update Role">
-            <form onSubmit={handleSubmit(SubmitHandler)} className="m-auto py-8 bg-white lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 lg:w-[40%] xl:w-[40%] md:w-[40%] sm:w-ful xs:w-full">
-                <div className="flex flex-col items-center justify-center ">
+        <DisburseMentLayout title="Disbursement">
+            <form onSubmit={handleSubmit(SubmitHandler)}>
+                <div className="flex flex-col lg:w-[50%] xl:w-[50%] md:w-[50%] sm:w-full xs:w-full">
                     {
                         [
                             {
-                                title:"Name",
-                                labelName:"Name",
+                                title:"Amount",
+                                labelName:"Amount",
+                                type:"number",
+                                error:errors.Amount,
+                                placeHold:"Enter Amount",
+
+                            },{
+                                title:"Password",
+                                labelName:"Password",
+                                type:"password",
+                                error:errors.Password,
+                                placeHold:"Enter Password"
+
+                            },
+                            {
+                                title:"Remarks",
+                                labelName:"Remarks",
                                 type:"text",
-                                error:errors.Name,
-                                placeHold:"enter the name of the role",
+                                error:errors.Remarks,
+                                placeHold:"Enter remarks",
 
                             }
                         ].map((option,index)=>{
@@ -82,7 +109,7 @@ export const UpdateRoles=()=>{
                                 >
                                     <label
                                         htmlFor={`exampleFormControlInput1${index}`}
-                                        className="mb-2 font-medium pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                                        className="pointer-events-none text-sm origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black mb-2 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                                         >{labelName}
                                     </label>
                                     <input
@@ -107,20 +134,20 @@ export const UpdateRoles=()=>{
                             <button
                                 type="button"
                                 data-te-ripple-init
-                                className=" bg-purple w-fit px-8 py-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                                className=" bg-purple w-fit px-12 p-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
                                 Please wait...
                             </button> 
                         ):(
                             <button
                                 type="submit"
                                 data-te-ripple-init
-                                className=" bg-purple w-fit px-8 py-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                                className=" bg-purple w-fit px-12 p-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
                                 Submit
                             </button>
                         )
                     }
                 </div>
             </form>
-        </PortalLayout>
+        </DisburseMentLayout>
     )
 }

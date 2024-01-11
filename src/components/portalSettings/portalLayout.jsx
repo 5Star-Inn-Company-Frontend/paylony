@@ -17,7 +17,7 @@ export const PortalLayout =({
                         >
                         </li>
                         <li>
-                        <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary">/</span>
+                        <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary"> {">"}</span>
                         </li>
                         <li>
                         <a
@@ -27,12 +27,12 @@ export const PortalLayout =({
                         >
                         </li>
                         <li>
-                        <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary">/</span>
+                        <span className="text-xs mx-2 text-neutral-500 dark:text-neutral-400 text-primary">{">"}</span>
                         </li>
                         <li className="text-sm text-neutral-500 dark:text-neutral-400">{title}</li>
                     </ol>
                 </nav>
-                <div className="w-full rounded-sm p-4 bg-cl">
+                <div className="w-full rounded-sm bg-cl">
                     {children}
                 </div>
             </div>
