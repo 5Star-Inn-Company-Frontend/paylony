@@ -6,7 +6,7 @@ export const DashBoardTopNav =()=>{
     return(
         <div className="flex flex-row justify-between w-full py-4 px-4 items-center bg-white">
             <div className="flex items-center">
-                <div className="me-2 hamburger p-2 rounded-full">
+                <div className="me-2 hamburger rounded-full">
                     <div
                         id="toggler"
                         className="inline-block text-xs font-medium uppercase leading-tight text-white transition duration-150 ease-in-out hover:shadow-lg  active:shadow-lg"
