@@ -1,4 +1,3 @@
-import { DashBoardLayout } from "../global/dashboardLayout";
 import { PortalLayout } from "./portalLayout";
 import Spinner from "../global/spinner";
 import { TableLayout } from "../agents/tableLayout";
@@ -35,7 +34,6 @@ export const AllPermissions =()=>{
     }
 
     return(
-        <DashBoardLayout>
         <PortalLayout  title="Permissions">
         {
             permissionsIsLoading ? (
@@ -82,6 +80,5 @@ export const AllPermissions =()=>{
             )
         }
         </PortalLayout>
-        </DashBoardLayout>
     )
 }

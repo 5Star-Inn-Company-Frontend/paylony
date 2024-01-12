@@ -1,5 +1,4 @@
 import { TableLayout } from "../agents/tableLayout"
-import { DashBoardLayout } from "../global/dashboardLayout";
 import Spinner from "../global/spinner";
 import { ReportLayout } from "./reportLayout";
 import { useGetMainWalletQuery } from "../../store/apiSlice";
@@ -79,7 +78,6 @@ export const MainWalletHistory =()=>{
         console.log(error)
     }
     return(
-        <DashBoardLayout>
         <ReportLayout title="Main Wallet History">
         {
             isLoading ? (
@@ -185,6 +183,5 @@ export const MainWalletHistory =()=>{
             )
         }
         </ReportLayout>
-        </DashBoardLayout>
     )
 }

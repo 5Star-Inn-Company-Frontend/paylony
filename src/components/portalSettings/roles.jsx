@@ -1,4 +1,3 @@
-import { DashBoardLayout } from "../global/dashboardLayout";
 import { PortalLayout } from "./portalLayout";
 import { useEffect, useState } from "react";
 import Spinner from "../global/spinner";
@@ -108,7 +107,6 @@ export const AllRoles =()=>{
     }
 
     return(
-        <DashBoardLayout>
         <PortalLayout  title="Roles">
         {
             rolesIsLoading ? (
@@ -198,6 +196,5 @@ export const AllRoles =()=>{
             )
         }
         </PortalLayout>
-        </DashBoardLayout>
     )
 }
