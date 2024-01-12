@@ -36,7 +36,7 @@ export const DashBoardTopNav =()=>{
                     />
                 </div>
             </div>
-            <div className="flex flex-row items-center justify-between items-center xl:w-[83%] lg:w-[83%] md:w-[83%] sm:w-[67%] xs:w-[67%] xxs:w-[67%]">
+            <div className="ms-2 flex flex-row items-center justify-between items-center xl:w-[83%] lg:w-[83%] md:w-[83%] sm:w-[67%] xs:w-[67%] xxs:w-[67%]">
                 <div className="w-fit ">
                     <Text
                         style="text-xs text-start text-purple-700 font-semibold"
