@@ -1,8 +1,9 @@
-import { useCreateAggregatorsMutation } from "../../store/apiSlice";
+import {  useDisburseWalletMutation } from "../../store/apiSlice";
 import { useForm } from "react-hook-form"
 import { DisburseMentLayout } from "./layout";
+import toast from "react-hot-toast";
 export const DisBursementForm =()=>{
-    const [createAggregators, {isLoading}] = useCreateAggregatorsMutation()
+    const [disburseWallet, {isLoading}] = useDisburseWalletMutation()
     const { 
         register, 
         handleSubmit, 
@@ -17,7 +18,7 @@ export const DisBursementForm =()=>{
         var formdata = new FormData();
         [
             {
-                title:"remark",
+                title:"description",
                 value: Remarks
             },{
                 title:"password",
@@ -33,7 +34,7 @@ export const DisBursementForm =()=>{
             }=arr;
             formdata.append(title, value)
         })
-        createAggregators({
+        disburseWallet({
             body:formdata
         }).unwrap().then((payload)=>{
             toast.success(payload?.message,{
@@ -79,10 +80,10 @@ export const DisBursementForm =()=>{
                                 placeHold:"Enter Amount",
 
                             },{
-                                title:"Password",
+                                title:"password",
                                 labelName:"Password",
                                 type:"password",
-                                error:errors.Password,
+                                error:errors.password,
                                 placeHold:"Enter Password"
 
                             },

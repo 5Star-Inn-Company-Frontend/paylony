@@ -255,6 +255,13 @@ export const businessTypeApi = createApi({
                 body:todo.body
             }),
         }),
+        disburseWallet: builder.mutation({
+            query: (todo)=> ({
+                url:`/api/v1/business-transaction`,
+                method:'POST',
+                body:todo.body
+            }),
+        }),
     }),
 });
 
@@ -580,4 +587,4 @@ export const {useGetAllManagersQuery,useCreateManagersMutation} = managersApi;
 export const {useGetAllAggregatorsQuery,useCreateAggregatorsMutation} = aggregatorsApi;
 export const {useGetAllRolesQuery,useGetAllPermissionsQuery,useGetSingleRolesQuery,useRevokeRolesMutation,useCreateRolesMutation,useDeleteRolesMutation,useAssignRolesMutation,useUpdateRolesMutation} = rolesApi;
 export const {useGetAllTerminalsQuery,useCreateTerminalsMutation,useDeleteTerminalsMutation,useUpdateTerminalsMutation} = terminalsApi;
-export const {useGetAllBusinessTypeQuery,useGetAllBusinessShowQuery,useDeleteBussinessMutation,useCreateBussinessMutation} = businessTypeApi;
+export const {useGetAllBusinessTypeQuery,useGetAllBusinessShowQuery,useDeleteBussinessMutation,useCreateBussinessMutation,useDisburseWalletMutation} = businessTypeApi;
