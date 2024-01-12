@@ -1,4 +1,4 @@
-import logo from "../../assets/Paylony logo 1.png"
+import logo from "../../assets/Paylony logo 1.svg"
 
 export const AuthLayout =({children,adjHeight,style})=>{
     return(

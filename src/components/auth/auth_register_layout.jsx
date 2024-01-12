@@ -1,4 +1,4 @@
-import logo from "../../assets/Paylony logo 1.png"
+import logo from "../../assets/Paylony logo 1.svg"
 import { AiOutlineAudit, AiOutlineUser, AiTwotoneContainer,AiOutlineToTop } from "react-icons/ai";
 import { Text } from "../global/text";
 import { Link } from "react-router-dom";

@@ -1,26 +1,24 @@
 import { Text } from "./text"
-import LetteredAvatar from 'react-lettered-avatar';
-import logo from "../../assets/Paylony logo 1.png"
-import { AiOutlineUser } from "react-icons/ai";
+import logo from "../../assets/Paylony logo 1.svg"
 export const DashBoardTopNav =()=>{
     const user = JSON.parse(localStorage.getItem('paylonyToken'))
     console.log(user)
     return(
         <div className="flex flex-row justify-between w-full py-4 px-4 items-center bg-white">
             <div className="flex items-center">
-                <div className="me-2 hamburger">
+                <div className="me-2 hamburger p-2 rounded-full">
                     <div
                         id="toggler"
-                        className="inline-block rounded-full border p-1 text-xs font-medium uppercase leading-tight text-white transition duration-150 ease-in-out hover:shadow-lg  active:shadow-lg"
+                        className="inline-block text-xs font-medium uppercase leading-tight text-white transition duration-150 ease-in-out hover:shadow-lg  active:shadow-lg"
                         data-te-sidenav-toggle-ref
                         data-te-target="#full-screen-example"
                         data-te-ripple-init>
-                        <span className="block [&>svg]:h-7 [&>svg]:w-7 [&>svg]:text-black">
+                        <span className="block ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            fill="black"
-                            className="h-[1.5rem] w-[1.5rem">
+                            fill="white"
+                            className="h-5 w-5">
                             <path
                             d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
                              />
@@ -36,7 +34,7 @@ export const DashBoardTopNav =()=>{
                     />
                 </div>
             </div>
-            <div className="ms-2 flex flex-row items-center justify-between items-center xl:w-[83%] lg:w-[83%] md:w-[83%] sm:w-[67%] xs:w-[67%] xxs:w-[67%]">
+            <div className="ms-2 flex flex-row items-center justify-between items-center xl:w-[83%] lg:w-[83%] md:w-[83%] sm:w-[70%] xs:w-[70%] xxs:w-[70%]">
                 <div className="w-fit ">
                     <Text
                         style="text-xs text-start text-purple-700 font-semibold"
@@ -53,7 +51,7 @@ export const DashBoardTopNav =()=>{
                         role="button">
                         <span className="[&>svg]:w-5">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                <path strokeliinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                                <path strokeliinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.970 8.970 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.970 8.970 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                             </svg>
                         </span>
                         <span

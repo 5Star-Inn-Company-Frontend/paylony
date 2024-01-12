@@ -14,7 +14,9 @@ export const DashBoardLayout =({children})=>{
     });
     return(
         <div>
-            <Nav/>
+            <div className="mobileNav">
+                <Nav/>
+            </div>
             <div className="h-full w-full">
                 <DashBoardTopNav/>
                 <div className="flex bg-cl">

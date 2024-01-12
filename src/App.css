@@ -17,6 +17,17 @@ body{
 .bg-mixed-grey{
   background-color: rgba(153, 155, 163, 0.1);
 }
+.hamburger{
+  position:fixed;
+  bottom:2rem;
+  right:2rem;
+  z-index:100;
+  background:#CA22EF;
+  padding:0.6rem 0.7rem 0.2rem 0.7rem;
+}
+.mobileNav{
+  display:none;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -60,6 +71,9 @@ body{
 @media only screen and (max-width:768px){
   .desktopNav{
   display:none !important;
+}
+.mobileNav{
+  display:block;
 }
 .hamburger{
   display:block !important;

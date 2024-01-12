@@ -30,7 +30,7 @@ export const SignIn =()=>{
                 value="Welcome Admin!"
             />
             <Text
-                style="text-center text-sm mb-6 font-medium"
+                style="text-center text-sm mb-6 "
                 value="Access to your Dashboard"
             />
             <form onSubmit={handleSubmit(SubmitHandler)}>
