@@ -80,7 +80,7 @@ export const TicketsDetails =()=>{
         console.log(error)
     }
     return(
-        <ReportLayout title="Tickets Detais">
+        <ReportLayout title="Tickets Details">
             {
                 isLoading ? (
                     <Spinner/>

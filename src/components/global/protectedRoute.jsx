@@ -15,7 +15,7 @@ export const ProtectedRoute = () => {
         ));
         const checkTimeout =()=>{
             const currentTime = new Date();
-            const elapsedTime = currentTime.getTime() - lastLoginTime.getTime()
+            const elapsedTime = currentTime.getTime() - lastLoginTime.getTime();
             if(elapsedTime  >= (sessionTimeout - 5000)){
                 Swal.fire({
                     icon: "warning",

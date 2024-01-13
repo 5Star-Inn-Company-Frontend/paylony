@@ -1,3 +1,5 @@
+import { ChildrenLayout } from "../global/childrenLayout"
+
 export const TransactLayout =({
     title,
     children
@@ -19,9 +21,9 @@ export const TransactLayout =({
                     <li className=" text-sm text-neutral-500 dark:text-neutral-400">{title}</li>
                 </ol>
             </nav>
-            <div className="w-full rounded-sm bg-cl">
+            <ChildrenLayout>
                 {children}
-            </div>
+            </ChildrenLayout>
         </div>
     )
 }

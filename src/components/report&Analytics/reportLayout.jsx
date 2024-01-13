@@ -1,3 +1,4 @@
+import { ChildrenLayout } from "../global/childrenLayout"
 import { DashBoardLayout } from "../global/dashboardLayout"
 
 export const ReportLayout =({
@@ -32,9 +33,9 @@ export const ReportLayout =({
                     <li className="text-sm text-neutral-500 dark:text-neutral-400">{title}</li>
                 </ol>
             </nav>
-            <div className="w-full rounded-sm bg-white lg:p-4 xl:p-4 md:p-4 sm:p-2 xs:p-2">
+            <ChildrenLayout>
                 {children}
-            </div>
+            </ChildrenLayout>
         </div>
         </DashBoardLayout>
     )

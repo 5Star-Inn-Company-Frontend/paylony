@@ -1,7 +1,7 @@
-import icon1 from "../../assets/Frame 1000002437.png"
-import icon2 from "../../assets/Frame 1000002437 (1).png"
-import icon3 from "../../assets/Frame 1000002437 (2).png"
-import icon4 from "../../assets/Frame 1000002437 (3).png"
+import icon1 from "../../assets/Frame 1000002437.svg"
+import icon2 from "../../assets/Frame 1000002437 (1).svg"
+import icon3 from "../../assets/Frame 1000002437 (2).svg"
+import icon4 from "../../assets/Frame 1000002437 (3).svg"
 import img1 from "../../assets/Group 1.svg"
 import img2 from "../../assets/Group 1 (1).svg"
 import img3 from "../../assets/Group 1 (2).svg"
@@ -103,7 +103,7 @@ export const TotalInformation =({data,isLoading})=>{
                                     isLoading?(
                                         <div className="animate-pulse">
                                             <span
-                                                className="inline-block min-h-[0.7em] w-full flex-auto justify-start items-start cursor-wait bg-current align-middle opacity-40">
+                                                className="inline-block min-h-[0.7em] w-full flex-auto justify-start items-start cursor-wait bg-current align-middle opacity-10">
                                             </span>
                                         </div>
                                         ):( 

@@ -10,9 +10,9 @@ export const CreateAccountManagerLayout =({
         
         <DashBoardLayout>
         <AgentLayout title="Create Account manger">
-                <div className="flex flex-col py-8 w-full">
+                <div className="flex flex-col w-full">
                     <div className="w-full">
-                        <div className="w-full px-4">
+                        <div className="w-full">
                             {children}
                         </div>
                     </div>

@@ -128,14 +128,14 @@ export const StepFour =()=>{
                     <button
                         type="button"
                         data-te-ripple-init
-                        className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                        className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium leading-normal text-white inline-block rounded-md leading-normal">
                         Please wait...
                     </button> 
                 ):(
                     <button
                         type="submit"
                         data-te-ripple-init
-                        className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                        className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium leading-normal text-white inline-block rounded-md leading-normal">
                         Submit
                     </button>
                 )

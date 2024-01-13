@@ -71,9 +71,9 @@ export const TableLayout =({
         formdata.append("data_type", downloadAction);
         triggerExcelExport(formdata)
     }
-    const headStyle = "px-6 py-2"
+    const headStyle = ""
     return(
-        <div className="lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 xxs:px-2 xxxs bg-white">
+        <div>
             {
                 !hideheaderActions &&(
                 <div className="flex flex-wrap justify-between mb-2">
@@ -85,7 +85,7 @@ export const TableLayout =({
                                         type="button"
                                         onClick={createBtnAction}
                                         data-te-ripple-init
-                                        className="me-4  bg-purple px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                                        className="me-4  bg-purple px-6 pb-2.5 pt-3 mb-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
                                         {
                                             createBtnText
                                         }
@@ -99,14 +99,14 @@ export const TableLayout =({
                                     isLoading?(
                                         <div
                                             data-te-ripple-init
-                                            className="border bg-gray-100 px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal">
+                                            className="border bg-gray-100 px-6 pb-2.5 pt-3 mb-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal">
                                             exporting...
                                         </div>
                                     ):(
                                         <div
                                             data-te-ripple-init
                                             onClick={()=>exportToExcel()}
-                                            className="border cursor-pointer bg-gray-100 px-6 pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal">
+                                            className="border cursor-pointer bg-gray-100 px-6 pb-2.5 pt-3 mb-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal">
                                             Export excel
                                         </div>
                                     )

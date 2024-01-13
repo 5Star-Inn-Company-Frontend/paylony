@@ -1,3 +1,4 @@
+import { ChildrenLayout } from "../global/childrenLayout"
 import { DashBoardLayout } from "../global/dashboardLayout"
 
 export const DisburseMentLayout =({
@@ -21,9 +22,9 @@ export const DisburseMentLayout =({
                     <li className="text-sm  text-sm ">{title}</li>
                 </ol>
             </nav>
-            <div className="w-full  rounded-sm bg-white lg:p-8 xl:p-8 md:p-8 sm:p-2 xs:p-2">
+            <ChildrenLayout>
                 {children}
-            </div>
+            </ChildrenLayout>
         </DashBoardLayout>
     )
 }

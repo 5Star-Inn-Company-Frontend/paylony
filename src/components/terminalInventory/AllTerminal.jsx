@@ -1,6 +1,5 @@
 import { useDeleteTerminalsMutation, useGetAllTerminalsQuery } from "../../store/apiSlice";
 import { TableLayout } from "../agents/tableLayout";
-import { DashBoardLayout } from "../global/dashboardLayout";
 import { TableDropDown } from "../global/dropdown";
 import { TerminalLayout } from "./terminalLayout";
 import Spinner from "../global/spinner";
@@ -111,7 +110,6 @@ export const AllTerminal =()=>{
         console.log(error)
     }
     return(
-        <DashBoardLayout>
         <TerminalLayout title="All Terminals">
         {
                 terminalIsLoading ? (
@@ -276,6 +274,5 @@ export const AllTerminal =()=>{
             </TableLayout>
         )}
         </TerminalLayout>
-        </DashBoardLayout>
     )
 }

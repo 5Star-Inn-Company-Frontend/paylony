@@ -1,3 +1,5 @@
+import { ChildrenLayout } from "../global/childrenLayout"
+
 export const AgentLayout =({
     title,
     children
@@ -29,9 +31,9 @@ export const AgentLayout =({
                     <li className="text-sm  text-sm ">{title}</li>
                 </ol>
             </nav>
-            <div className="w-full  rounded-sm bg-cl">
+            <ChildrenLayout>
                 {children}
-            </div>
+            </ChildrenLayout>
         </div>
     )
 }

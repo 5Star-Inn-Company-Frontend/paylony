@@ -1,6 +1,6 @@
 
-import icon3 from "../../assets/Frame 1000002437 (2).png"
-import icon4 from "../../assets/Frame 1000002437 (3).png"
+import icon3 from "../../assets/Frame 1000002437 (4).svg"
+import icon4 from "../../assets/Frame 1000002437 (5).svg"
 import { Text } from "../global/text"
 import { TopAgent } from "./topAgentChart"
 import {
@@ -48,7 +48,7 @@ export const PTransaction =({data,isLoading,balance})=>{
                                 isLoading?(
                                     <div className="animate-pulse">
                                         <span
-                                            className="inline-block min-h-[0.7em] w-full flex-auto justify-start items-start cursor-wait bg-current align-middle opacity-40">
+                                            className="inline-block min-h-[0.7em] w-full flex-auto justify-start items-start cursor-wait bg-current align-middle opacity-10">
                                         </span>
                                     </div>
                                     ):( 
@@ -100,7 +100,7 @@ export const PTransaction =({data,isLoading,balance})=>{
                                     isLoading?(
                                         <div className="animate-pulse">
                                             <span
-                                                className="inline-block min-h-[0.7em] w-full flex-auto justify-start items-start cursor-wait bg-current align-middle opacity-40">
+                                                className="inline-block min-h-[0.7em] w-full flex-auto justify-start items-start cursor-wait bg-current align-middle opacity-10">
                                             </span>
                                         </div>
                                         ):( 
