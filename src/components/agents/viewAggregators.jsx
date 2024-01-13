@@ -110,20 +110,20 @@ export const ViewAggregators =()=>{
                             setFilterBy={setFilterBy}
                             inputPlaceHolder={`Search aggregator `}
                             headerData={[
-                                "s/n",
-                                "id",
-                                "first name",
-                                "last name",
-                                "username",
-                                "email",
-                                "dob",
-                                "gender",
-                                "residential address",
-                                "state",
+                                "S/N",
+                                "Id",
+                                "First name",
+                                "Last name",
+                                "Username",
+                                "Email",
+                                "Date of birth",
+                                "Gender",
+                                "Residential address",
+                                "State",
                                 // "agent_type",
                                 // "user_type",
-                                "account status",
-                                "created at",
+                                "Account status",
+                                "Created at",
                             ]}
                             data={actionData}
                         >

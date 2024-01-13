@@ -71,7 +71,7 @@ export const TableLayout =({
         formdata.append("data_type", downloadAction);
         triggerExcelExport(formdata)
     }
-    const headStyle = ""
+    const headStyle = "px-6 py-4"
     return(
         <div>
             {
@@ -179,7 +179,7 @@ export const TableLayout =({
                                             <tr>
                                                 {
                                                     headerData.map((head,index)=>{
-                                                        return  <th scope="col" key={index} className={headStyle}>{head.toString().toUpperCase()}</th>
+                                                        return  <th scope="col" key={index} className={headStyle}>{head}</th>
                                                     })
                                                 }
                                             </tr>

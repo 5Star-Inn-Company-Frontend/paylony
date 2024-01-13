@@ -102,7 +102,7 @@ export const CurrentMonthCharges =()=>{
             setFilterBy={setFilterBy}
             inputPlaceHolder={`Search by ${filterBy}`}
                 headerData={[
-                    "s/n","Terminal Id","User Id","Business Name", "Business Email","Business Phone","Total Balance"
+                    "S/N","Terminal Id","User Id","Business Name", "Business Email","Business Phone","Total Balance"
                 ]}
                 data={ actionData}
             >

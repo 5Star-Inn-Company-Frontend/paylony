@@ -43,7 +43,7 @@ export const AgentStateCount =()=>{
             <TableLayout
                 hideheaderActions={true}
                 headerData={[
-                    'S/n',
+                    'S/N',
                     "State",
                     "Agent Count"
                 ]}

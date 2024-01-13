@@ -109,7 +109,9 @@ export const TransactionHistory =()=>{
                 setFilterBy={setFilterBy}
                 inputPlaceHolder={`Search agent by ${filterBy}`}
                 headerData={[
-                    "s/n","id","user id","user first name","user last name","user type","business id","business name","business user_id","business address","pos id","title","service","description","narration","amount","discount","cashback","fee","total","initial balance","new balance","from","to","profit","system fee","agg_share","sh_share","Transaction","ref","type","status code","status description","gateway response","status","created at"
+                    "S/N",
+                    "Id",
+                    "User id","User first name","User Last name","User type","Business id","Business name","Business user id","Business address","Pos id","Title","Service","Description","Narration","Amount","Discount","Cash back","Fee","Total","Initial balance","New balance","From","To","Profit","System fee","Agg. share","Sh. share","Transaction","Ref","Type","Status code","Status description","Gateway response","Status","Created at"
                 ]}
                 data={actionData}
             >

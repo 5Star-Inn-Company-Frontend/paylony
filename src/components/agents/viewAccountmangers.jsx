@@ -112,8 +112,8 @@ export const ViewAccountMangers =()=>{
                             setFilterBy={setFilterBy}
                             inputPlaceHolder={`Search account managers `}
                             headerData={[
-                                "s/n","id","first name","last name","email","Date of birth","gender","Residential Address","State","User Type",
-                                "Account Status","Created At"
+                                "S/N","Id","First name","Last name","Email","Date of Birth","Gender","Residential address","State","User type",
+                                "Account status","Created at"
                             ]}
                             data={actionData}
                         >

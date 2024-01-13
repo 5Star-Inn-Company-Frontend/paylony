@@ -48,19 +48,18 @@ export const ChargeBackCount =()=>{
             <TableLayout
                 hideheaderActions={true}
                 headerData={[
-                    "S/n",
+                    "S/N",
                     "Agent Code",
                     "Charge back code",
-                    "Resolved Date",
+                    "Resolved date",
                     "Resolution",
                     "Details",
                     "Transaction reference",
-                    "Ticket Id",
+                    "Ticket id",
                     "Type",
                     "Due date",
                     "Status",
-                    "Updated At",
-                    "Created At"
+                    "Created at"
                 ]}
                 data={chargebackData?.data}
             >
@@ -106,11 +105,6 @@ export const ChargeBackCount =()=>{
                                 }
                                  <td className={bodyStyle}>{
                                         new Date(created_at)
-                                        .toLocaleString()
-                                    }
-                                </td>
-                                <td className={bodyStyle}>{
-                                        new Date(updated_at)
                                         .toLocaleString()
                                     }
                                 </td>

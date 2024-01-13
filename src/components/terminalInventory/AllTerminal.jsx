@@ -141,7 +141,7 @@ export const AllTerminal =()=>{
                 inputPlaceHolder={`Search terminal `}
                 createBtnText="Add Terminal"
                 headerData={[
-                    "s/n",
+                    "S/N",
                     "Id",
                     // "Business ID",
                     // "User_ID",
@@ -156,10 +156,10 @@ export const AllTerminal =()=>{
                     "State head",
                     "Aggregator",
                     "location",
-                    "Trans_pin",
-                    "Default_pin",
-                    "Payout_status",
-                    "Payout_Fee",
+                    "Transfer pin",
+                    "Default pin",
+                    "Payout status",
+                    "Payout Fee",
                     "Fee Type",
                     "Flat Fee",
                     "Fee Cent",

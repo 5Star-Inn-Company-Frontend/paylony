@@ -116,7 +116,7 @@ export const AllRoles =()=>{
                     createBtnAction={()=>window.location.replace("/add_roles")}
                     createBtnText="Add Roles"
                     headerData={[
-                        "S/n","id","Name","Guard name","Action"
+                        "S/N","Id","Name","Guard name","Action"
                     ]}
                     handleInputChange={handleInputChange}
                             sortButton={[
