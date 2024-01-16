@@ -3,56 +3,44 @@ import { TableLayout } from "./tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { useGetAllAggregatorsQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 export const ViewAggregators =()=>{
+    
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"first_name",
+        value:""
+    });
+
     const{
         data:aggregatorsData,
         isLoading,
         isError,
         error
-    }= useGetAllAggregatorsQuery();
-
-    const[
-        actionData,
-        setActionData
-    ]= useState([]);
-
-    const[
-        filterBy,
-        setFilterBy
-    ]= useState("firstname");
+    }= useGetAllAggregatorsQuery({
+        filterBy:filterBy
+    });
 
     const[
         filterData,
         setFilterData
-    ]= useState("");
-
-    useEffect(()=>{
-        if(aggregatorsData){
-            setActionData(aggregatorsData?.data)
-        }
-    },[aggregatorsData])
+    ]= useState({
+        title:"first_name",
+        value:""
+    });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e,tobeFilterBy)=>{
-        let filterDdata;
-        switch(tobeFilterBy){
-            case "firstname": filterDdata = aggregatorsData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-            break;
-            case "id": filterDdata = aggregatorsData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
-            break;
-            case "lastname": filterDdata = aggregatorsData?.data?.filter((data)=>data.last_name?.toLowerCase().includes(e))
-            break;
-            case "email": filterDdata = aggregatorsData?.data?.filter((data)=>data.email?.toLowerCase().includes(e))
-            break;
-            case "date": filterDdata = aggregatorsData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
-            break;
-            case "username": filterDdata = aggregatorsData?.data?.filter((data)=>data.username?.toLowerCase().includes(e))
-            break;
-            default : filterDdata = aggregatorsData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-        }
-        setActionData(filterDdata)
+  
+    const handleFilterChange =(e)=>{
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e,
+            }
+        })
     }
 
     if(isError){
@@ -85,28 +73,27 @@ export const ViewAggregators =()=>{
                         <TableLayout
                             createBtnAction={()=>window.location.replace("/create_aggregators")}
                             createBtnText="Create Aggregators"
-                            handleInputChange={handleInputChange}
                             sortButton={[
                                 {
-                                    title:"First Name",
-                                    action:"firstname"
+                                    title:"First name",
+                                    action:"first_name"
+                                },{
+                                    title:"Creation Date",
+                                    action:"created_at"
+                                },{
+                                    title:"Last name",
+                                    action:"last_name"
                                 },{
                                     title:"Email",
                                     action:"email"
                                 },{
                                     title:"Id",
-                                    action:"id"
-                                },{
-                                    title:"Date",
-                                    action:"date"
-                                },{
-                                    title:"UserName",
-                                    action:"username"
-                                }
-                            ]}
+                                    value:"id"
+                                    }
+                                ]}
                             filterData={filterData}
                             setFilterData={setFilterData}
-                            filterBy={filterBy}
+                            handleFilterChange={handleFilterChange}
                             setFilterBy={setFilterBy}
                             inputPlaceHolder={`Search aggregator `}
                             headerData={[
@@ -125,10 +112,10 @@ export const ViewAggregators =()=>{
                                 "Account status",
                                 "Created at",
                             ]}
-                            data={actionData}
+                            data={aggregatorsData?.data}
                         >
                         {
-                            actionData?.map((info,index)=>{
+                            aggregatorsData?.data?.map((info,index)=>{
                                 const{
                                     id,
                                     first_name,
@@ -139,8 +126,6 @@ export const ViewAggregators =()=>{
                                     gender,
                                     residential_address,
                                     state,
-                                    // agent_type,
-                                    // user_type,
                                     account_status,
                                     created_at,
                                     updated_at,
@@ -161,7 +146,7 @@ export const ViewAggregators =()=>{
                                                 dob,
                                                 gender,
                                                 residential_address,
-                                                state,
+                                                state?.name,
                                                 // agent_type,
                                                 // user_type,
                                                 account_status

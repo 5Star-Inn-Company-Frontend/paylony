@@ -3,57 +3,44 @@ import { TableLayout } from "./tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import { useGetAllManagersQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import toast from "react-hot-toast";
 
 export const ViewAccountMangers =()=>{
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"first_name",
+        value:""
+    });
+
     const{
         data:managersData,
         isLoading,
         isError,
         error
-    }= useGetAllManagersQuery();
+    }= useGetAllManagersQuery({
+        filterBy:filterBy
+    });
     
-    const[
-        actionData,
-        setActionData
-    ]= useState([]);
-
-    const[
-        filterBy,
-        setFilterBy
-    ]= useState("firstname");
-
     const[
         filterData,
         setFilterData
-    ]= useState("");
-
-    useEffect(()=>{
-        if(managersData){
-            setActionData(managersData?.data)
-        }
-    },[managersData])
+    ]= useState({
+        title:"first_name",
+        value:""
+    });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e,tobeFilterBy)=>{
-        let filterDdata;
-        switch(tobeFilterBy){
-            case "firstname": filterDdata = managersData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-            break;
-            case "id": filterDdata = managersData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
-            break;
-            case "lastname": filterDdata = managersData?.data?.filter((data)=>data.last_name?.toLowerCase().includes(e))
-            break;
-            case "email": filterDdata = managersData?.data?.filter((data)=>data.email?.toLowerCase().includes(e))
-            break;
-            case "date": filterDdata = managersData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
-            break;
-            case "user_type": filterDdata = managersData?.data?.filter((data)=>data.user_type?.toLowerCase().includes(e))
-            break;
-            default : filterDdata = managersData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-        }
-        setActionData(filterDdata)
+   
+    const handleFilterChange =(e)=>{
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e,
+            }
+        })
     }
 
     if(isError){
@@ -78,7 +65,7 @@ export const ViewAccountMangers =()=>{
     }
     return(
         <DashBoardLayout>
-        <AgentLayout title="View Acc Managers">
+        <AgentLayout title="View Account Managers">
             {
                 isLoading ? (
                     <Spinner/>
@@ -86,39 +73,38 @@ export const ViewAccountMangers =()=>{
                         <TableLayout
                             createBtnAction={()=>window.location.replace("/loginDetails")}
                             createBtnText="Create Managers"
-                            handleInputChange={handleInputChange}
                             sortButton={[
                                 {
-                                    title:"First Name",
-                                    action:"firstname"
+                                    title:"First name",
+                                    action:"first_name"
                                 },{
-                                    title:"Email",
-                                    action:"email"
+                                    title:"Creation Date",
+                                    action:"created_at"
                                 },{
-                                    title:"Id",
-                                    action:"id"
+                                    title:"Last name",
+                                    action:"last_name"
                                 },{
-                                    title:"Date",
-                                    action:"date"
-                                },{
-                                    title:"User type",
+                                    title:"User Type",
                                     action:"user_type"
-                                }
-                            ]}
+                                },{
+                                    title:"Status",
+                                    value:"status"
+                                    }
+                                ]}
                             filterData={filterData}
                             setFilterData={setFilterData}
-                            filterBy={filterBy}
                             downloadAction={"managers"}
                             setFilterBy={setFilterBy}
+                            handleFilterChange={handleFilterChange}
                             inputPlaceHolder={`Search account managers `}
                             headerData={[
                                 "S/N","Id","First name","Last name","Email","Date of Birth","Gender","Residential address","State","User type",
                                 "Account status","Created at"
                             ]}
-                            data={actionData}
+                            data={managersData?.data}
                         >
                         {
-                            actionData?.map((info,index)=>{
+                            managersData?.data.map((info,index)=>{
                                 const{
                                     id,
                                     first_name,
@@ -149,7 +135,7 @@ export const ViewAccountMangers =()=>{
                                                 dob,
                                                 gender,
                                                 residential_address,
-                                                state,
+                                                state?.name,
                                                 // agent_type,
                                                 user_type,
                                                 account_status

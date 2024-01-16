@@ -3,16 +3,27 @@ import { TableLayout } from "../agents/tableLayout";
 import { TableDropDown } from "../global/dropdown";
 import { TerminalLayout } from "./terminalLayout";
 import Spinner from "../global/spinner";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 export const AllTerminal =()=>{
+    
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"name",
+        value:""
+    });
+
     const{
         data:terminalData,
         isLoading:terminalIsLoading,
         isError,
         error
-    }= useGetAllTerminalsQuery();
+    }= useGetAllTerminalsQuery({
+        filterBy:filterBy
+    });
 
     const [deleteTerminals, {isLoading}] = useDeleteTerminalsMutation()
 
@@ -51,42 +62,22 @@ export const AllTerminal =()=>{
     }
     
     const[
-        actionData,
-        setActionData
-    ]= useState([]);
-
-    const[
-        filterBy,
-        setFilterBy
-    ]= useState("name");
-
-    const[
         filterData,
         setFilterData
-    ]= useState("");
-
-    useEffect(()=>{
-        if(terminalData){
-            setActionData(terminalData?.data)
-        }
-    },[terminalData])
+    ]= useState({
+        title:"name",
+        value:""
+    });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e,tobeFilterBy)=>{
-        let filterDdata;
-        console.log(tobeFilterBy)
-        switch(tobeFilterBy){
-            case "name": filterDdata = terminalData?.data?.filter((data)=>data.name?.toLowerCase().includes(e))
-            break;
-            case "id": filterDdata = terminalData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
-            break;
-            case "serial_number": filterDdata = terminalData?.data?.filter((data)=>data.serial_number?.toLowerCase().includes(e))
-            break;
-            case "date": filterDdata = terminalData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
-            break;
-            default : filterDdata = terminalData?.data?.filter((data)=>data.name?.toLowerCase().includes(e))
-        }
-        setActionData(filterDdata)
+   
+    const handleFilterChange =(e)=>{
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e,
+            }
+        })
     }
 
     if(isError){
@@ -104,7 +95,7 @@ export const AllTerminal =()=>{
             toast.error(data?.message,{
                 style:{
                     background:"#fff1f2"
-                }
+                }   
             })
         }
         console.log(error)
@@ -117,7 +108,7 @@ export const AllTerminal =()=>{
                     ):(
             <TableLayout
                 createBtnAction={()=>window.location.replace("/add_terminal")}
-                handleInputChange={handleInputChange}
+                handleFilterChange={handleFilterChange}
                 sortButton={[
                     {
                         title:"Name",
@@ -136,7 +127,6 @@ export const AllTerminal =()=>{
                 downloadAction={"terminals"}
                 filterData={filterData}
                 setFilterData={setFilterData}
-                filterBy={filterBy}
                 setFilterBy={setFilterBy}
                 inputPlaceHolder={`Search terminal `}
                 createBtnText="Add Terminal"
@@ -173,10 +163,10 @@ export const AllTerminal =()=>{
                     // "Updated_at",
                     "Actions"
                 ]}
-                data={ actionData}
+                data={terminalData?.data}
             >
             {
-                 actionData?.map((info,index)=>{
+                 terminalData?.data?.map((info,index)=>{
                     const{
                         id,
                         business_id,

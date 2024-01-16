@@ -1,30 +1,20 @@
 import { useState } from "react"
 import { BarChart } from "../global/barchat";
-export const TopAgent=()=>{
-    const agentdata=[
-        {
-            name:"Magodo POS",
-            number:50
-        },{
-            name:"Femi POS",
-            number:20
-        },{
-            name:"Otti POS",
-            number:10
-        }
-    ]
+export const TopAgent=({
+    agentdata
+})=>{
     const [
         userData
     ] = useState({
-        labels:agentdata?.map(
-            (data)=>data.name
+        labels:agentdata?.top_performing_terminal?.map(
+            (data)=>data.terminal_name
         ),
         datasets:[{
             label:"Agent chart",
             borderColor: '#854FFF',
             backgroundColor: '#854FFF',
-            data:agentdata?.map(
-                (data)=>data.number
+            data:agentdata?.top_performing_terminal?.map(
+                (data)=>data.transaction_count
             )
         }]
     });

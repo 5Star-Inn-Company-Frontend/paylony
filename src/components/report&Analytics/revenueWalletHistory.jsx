@@ -2,58 +2,45 @@ import { TableLayout } from "../agents/tableLayout";
 import { ReportLayout } from "./reportLayout";
 import Spinner from "../global/spinner";
 import { useGetRevenueWalletQuery } from "../../store/apiSlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 export const RevenueWalletHistory =()=>{
+    
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"reference",
+        value:""
+    });
+
     const{
         data:walletHistoryData,
         isLoading,
         isError,
         error
-    }= useGetRevenueWalletQuery();
-    const data=[]
-    const[
-        actionData,
-        setActionData
-    ]= useState([]);
-
-    const[
-        filterBy,
-        setFilterBy
-    ]= useState("firstname");
-
+    }= useGetRevenueWalletQuery({
+        filterBy:filterBy
+    });
+    
     const[
         filterData,
         setFilterData
-    ]= useState("");
-
-    useEffect(()=>{
-        if(walletHistoryData){
-            setActionData(walletHistoryData?.data)
-        }
-    },[walletHistoryData])
+    ]= useState({
+        title:"reference",
+        value:""
+    });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e,tobeFilterBy)=>{
-        let filterDdata;
-        console.log(tobeFilterBy)
-        switch(tobeFilterBy){
-            case "firstname": filterDdata = walletHistoryData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-            break;
-            case "id": filterDdata = walletHistoryData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
-            break;
-            case "lastname": filterDdata = walletHistoryData?.data?.filter((data)=>data.last_name?.toLowerCase().includes(e))
-            break;
-            case "email": filterDdata = walletHistoryData?.data?.filter((data)=>data.email?.toLowerCase().includes(e))
-            break;
-            case "date": filterDdata = walletHistoryData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
-            break;
-            case "agent_type": filterDdata = walletHistoryData?.data?.filter((data)=>data.agent_type?.toLowerCase().includes(e))
-            break;
-            default : filterDdata = walletHistoryData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-        }
-        setActionData(filterDdata)
+
+    const handleFilterChange =(e)=>{
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e,
+            }
+        })
     }
 
     if(isError){
@@ -84,55 +71,50 @@ export const RevenueWalletHistory =()=>{
             ):(
             <TableLayout
                 hideCreateAction={true}
-                handleInputChange={handleInputChange}
+                handleFilterChange={handleFilterChange}
                 sortButton={[
                     {
-                        title:"First Name",
-                        action:"firstname"
+                        title:"Reference",
+                        action:"reference"
                     },{
-                        title:"Email",
-                        action:"email"
+                        title:"Terminal Id",
+                        action:"terminal_id"
+                    },{
+                        title:"Amount",
+                        action:"amount"
                     },{
                         title:"Id",
                         action:"id"
                     },{
-                        title:"Date",
-                        action:"date"
+                        title:"Creation Date",
+                        action:"creation_date"
                     },{
-                        title:"Agent type",
-                        action:"agent_type"
+                        title:"Source",
+                        action:"source"
                     }
                 ]}
                 filterData={filterData}
                 setFilterData={setFilterData}
-                filterBy={filterBy}
                 setFilterBy={setFilterBy}
-                inputPlaceHolder={`Search revenue wallet history by ${filterBy}`}
+                inputPlaceHolder={`Search revenue wallet history`}
                 headerData={[
-                    "Balance Before","Amount","Balance After","Reference","Source","Description","Creation Date","Type","Action"
+                   "S/n","Id" ,"Balance Before","Amount","Balance After","Reference","Channel","Description","Transaction type","Creation Date"
                 ]}
-                data={data}
+                data={walletHistoryData?.data}
             >
             {
-                data?.map((info,index)=>{
+                walletHistoryData?.data?.map((info,index)=>{
                     const{
                         id,
-                        title,
-                        remark,
-                        // token,
-                        // server_response,
-                        server,
-                        new_balance,
-                        prev_balance,
-                        type,
-                        status,
-                        recipient,
+                        terminal_id,
+                        balance_before,
                         amount,
-                        commission,
-                        charges,
+                        balance_after,
                         reference,
-                        created_at,
-                        updated_at,
+                        channel,
+                        source,
+                        transaction_type,
+                        creation_date
                     }=info
                     return(
                         <tr 
@@ -143,20 +125,14 @@ export const RevenueWalletHistory =()=>{
                             {
                                 [
                                     id,
-                                    title,
-                                    remark,
-                                    // token,
-                                    // server_response?.status,
-                                    server,
-                                    new_balance,
-                                    prev_balance,
-                                    type,
-                                    status,
-                                    recipient,
+                                    terminal_id,
+                                    balance_before,
                                     amount,
-                                    commission,
-                                    charges,
-                                    reference
+                                    balance_after,
+                                    reference,
+                                    channel,
+                                    source,
+                                    transaction_type
                                 ].map((body,index)=>{
                                     return  (
                                         <td className={bodyStyle} key={index}>{body}</td>
@@ -164,12 +140,7 @@ export const RevenueWalletHistory =()=>{
                                 })
                             }
                             <td className={bodyStyle}>{
-                                    new Date(created_at)
-                                    .toLocaleString()
-                                }
-                            </td>
-                            <td className={bodyStyle}>{
-                                    new Date(updated_at)
+                                    new Date( creation_date)
                                     .toLocaleString()
                                 }
                             </td>

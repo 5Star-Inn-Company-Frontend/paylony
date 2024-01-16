@@ -9,7 +9,7 @@ export const ProtectedRoute = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        const sessionTimeout = user?.authorization?.expires_in/3.2;
+        const sessionTimeout = user?.authorization?.expires_in/3.4;
         const lastLoginTime = new Date(localStorage.getItem(
             'lastLoginTime'
         ));

@@ -50,6 +50,7 @@ import { AssignRoles } from './components/portalSettings/assign_revoke_Roles';
 import { AllPermissions } from './components/portalSettings/permissions';
 import { Toaster } from 'react-hot-toast';
 import { DisBursementForm } from './components/disbursement/form';
+import { PageNotFound } from './pages/404';
 
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
             <Route exact path="/report-revenue_wallet" element={ <RevenueWalletHistory/>}/>
             <Route exact path="/report-main_wallet" element={ <MainWalletHistory/>}/>
             <Route exact path="/report-overview" element={ <Overview/>}/>
+            <Route exact path="*" element={ <PageNotFound/>}/>
             {/* <Route exact path="/viewAggregators" element={ <ViewAggregators/>}/> */}
             </Route>
           </Routes>

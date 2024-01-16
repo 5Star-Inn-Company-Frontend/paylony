@@ -14,7 +14,13 @@ export const mainWalletApi = createApi({
     }),
     endpoints:(builder)=>({
         getMainWallet: builder.query({
-            query: ()=> "/api/v1/analytics/main-wallet-history",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/analytics/main-wallet-history?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/analytics/main-wallet-history"
+                }
+            }
         }),
     }),
 });  
@@ -30,7 +36,13 @@ export const revenueWalletApi = createApi({
     }),
     endpoints:(builder)=>({
         getRevenueWallet: builder.query({
-            query: ()=> "/api/v1/analytics/revenue-wallet-history",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/analytics/revenue-wallet-history?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/analytics/revenue-wallet-history"
+                }
+            }
         }),
     }),
 });
@@ -64,6 +76,9 @@ export const agentMapApi = createApi({
         getAgentMap: builder.query({
             query: ()=> "/api/v1/analytics/agent-map",
         }),
+        getTransactionMap: builder.query({
+            query: ()=> "/api/v1/analytics/transaction-count-map",
+        }),
     }),
 });
 
@@ -94,7 +109,13 @@ export const agentCurrentMonthTargetApi = createApi({
     }),
     endpoints:(builder)=>({
         getAgentCurrentMonthTarget: builder.query({
-            query: ()=> "/api/v1/analytics/agent-current-month-target",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/analytics/agent-current-month-target?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/analytics/agent-current-month-target"
+                }
+            }
         }),
     }),
 });
@@ -161,7 +182,13 @@ export const cashOutApi = createApi({
     }),
     endpoints:(builder)=>({
         getCashOut: builder.query({
-            query: ()=> "/api/v1/cashout-history",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/cashout-history?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/cashout-history"
+                }
+            }
         }),
     }),
 });
@@ -177,8 +204,32 @@ export const transactHistoryApi = createApi({
     }),
     endpoints:(builder)=>({
         getTransactionHistory: builder.query({
-            query: ()=> "/api/v1/transactions",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/transactions?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/transactions"
+                }
+            }
         }),
+        getVasHistory: builder.query({
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/bills-history/vas?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/bills-history/vas"
+                }
+            }
+        }),
+        getBetHistory: builder.query({
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/bills-history/bet?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/bills-history/bet"
+                }
+            }
+        })
     }),
 });
 
@@ -261,7 +312,7 @@ export const businessTypeApi = createApi({
                 method:'POST',
                 body:todo.body
             }),
-        }),
+        }), 
     }),
 });
 
@@ -277,7 +328,13 @@ export const agentApi = createApi({
     }),
     endpoints:(builder)=>({
         getAllAgents: builder.query({
-            query: ()=> "/api/v1/agents",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/agents?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/agents"
+                }
+            }, 
             providesTags :['Agents']
         }),
         createAgent: builder.mutation({
@@ -328,7 +385,13 @@ export const managersApi = createApi({
     }),
     endpoints:(builder)=>({
         getAllManagers: builder.query({
-            query: ()=> "/api/v1/managers",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/managers?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/managers"
+                }
+            },
             providesTags :['manager']
         }),
         createManagers: builder.mutation({
@@ -453,7 +516,13 @@ export const aggregatorsApi = createApi({
     }),
     endpoints:(builder)=>({
         getAllAggregators: builder.query({
-            query: ()=> "/api/v1/aggregators?status=pending",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/aggregators?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/aggregators"
+                }
+            },
             providesTags :['aggregators']
         }),
         createAggregators: builder.mutation({
@@ -484,8 +553,14 @@ export const admintransactApi = createApi({
         }
     }),
     endpoints:(builder)=>({
-        getAllTransaction: builder.query({
-            query: ()=> "/api/v1/transactions",
+        getAdminTransaction: builder.query({
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/transactions?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/transactions"
+                }
+            },
             providesTags :['admintransact']
         }),
         createTransaction: builder.mutation({
@@ -520,7 +595,13 @@ export const terminalsApi = createApi({
     }),
     endpoints:(builder)=>({
         getAllTerminals: builder.query({
-            query: ()=> "/api/v1/terminals",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/terminals?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/terminals"
+                }
+            },
             providesTags :['terminals']
         }),
         createTerminals: builder.mutation({
@@ -568,13 +649,13 @@ export const terminalsApi = createApi({
 
 export const {useGetAllBanksQuery} = banksApi;
 export const {useGetCashOutQuery} = cashOutApi;
-export const {useGetTransactionHistoryQuery} = transactHistoryApi;
+export const {useGetTransactionHistoryQuery,useGetVasHistoryQuery,useGetBetHistoryQuery} = transactHistoryApi;
 export const {useGetTicketQuery,useGetTicketDetailsQuery} = ticketApi;
 export const {useGetDisputeQuery} = disputeApi;
 export const {useGetChargeBackQuery} = chargeBackApi;
 export const {useGetAgentCurrentMonthTargetQuery} = agentCurrentMonthTargetApi;
 export const {useGetAgentStateCountQuery} = agentStateCountApi;
-export const {useGetAgentMapQuery} = agentMapApi;
+export const {useGetAgentMapQuery,useGetTransactionMapQuery} = agentMapApi;
 export const {useGetOverviewReportQuery} = overviewReportApi;
 export const {useGetRevenueWalletQuery} = revenueWalletApi;
 export const {useGetMainWalletQuery} = mainWalletApi;
@@ -582,7 +663,7 @@ export const {useGetMainWalletQuery} = mainWalletApi;
 export const {useGetAllIdCardQuery} = idCardApi;
 export const {useGetAllDashboardQuery} = dashboardApi;
 export const {useGetAllAgentsQuery,useCreateAgentMutation} = agentApi;
-export const {useGetAllTransactionQuery,useCreateTransactionMutation} = admintransactApi;
+export const {useGetAdminTransactionQuery,useCreateTransactionMutation} = admintransactApi;
 export const {useGetAllManagersQuery,useCreateManagersMutation} = managersApi;
 export const {useGetAllAggregatorsQuery,useCreateAggregatorsMutation} = aggregatorsApi;
 export const {useGetAllRolesQuery,useGetAllPermissionsQuery,useGetSingleRolesQuery,useRevokeRolesMutation,useCreateRolesMutation,useDeleteRolesMutation,useAssignRolesMutation,useUpdateRolesMutation} = rolesApi;

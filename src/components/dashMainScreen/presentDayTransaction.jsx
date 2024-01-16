@@ -129,7 +129,7 @@ export const PTransaction =({data,isLoading,balance})=>{
                     <span>. October 2023</span>
                 </div>
                 <div className="bar-container">
-                    <TopAgent/>
+                    {data?.top_performing_terminal && <TopAgent agentdata={data}/>}
                 </div>
             </div>
         </div>

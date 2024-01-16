@@ -50,7 +50,7 @@ export const Overview =()=>{
                     />
                     <Text
                         style="text-sm text-start mb-8"
-                        value={`Performed ${overviewData?.data?.transaction_statistics?.total_successful_transaction} sucessfull transactions out of ${overviewData?.data?.transaction_statistics?.total_transaction} transactions `}
+                        value={`Performed ${overviewData?.data?.transaction_statistics?.total_successful_transaction_count} sucessfull transactions out of ${overviewData?.data?.transaction_statistics?.total_transaction_count} transactions `}
                     />
                     <div className="flex flex-col divide-y divide-slate-200">
                         {
@@ -63,13 +63,10 @@ export const Overview =()=>{
                                     value:`${overviewData?.data?.active_terminal}`
                                 },{
                                     title:"Total Transaction (count)",
-                                    value:`${overviewData?.data?.transaction_statistics?.total_transaction}`
+                                    value:`${overviewData?.data?.transaction_statistics?.total_transaction_count}`
                                 },{
                                     title:"Total Transaction (Successfull)",
-                                    value:`${overviewData?.data?.transaction_statistics?.total_successful_transaction}`
-                                },{
-                                    title:"Total Transaction (Unsuccessfull)",
-                                    value:`null`
+                                    value:`${overviewData?.data?.transaction_statistics?.total_successful_transaction_count}`
                                 },{
                                     title:"Total Wallet (Balance)",
                                     value:`$${overviewData?.data?.total_wallet}`
@@ -80,8 +77,8 @@ export const Overview =()=>{
                                     title:"Todays's Failed Transaction(Count)",
                                     value:`${overviewData?.data?.transaction_statistics?.todays_total_successful_transaction}`
                                 },{
-                                    title:"Total Cashout(successfull)",
-                                    value:"null"
+                                    title:"Total Successful transaction volume",
+                                    value:`${overviewData?.data?.transaction_statistics?.total_successful_transaction_volume}`
                                 },{
                                     title:"Estimated Fund Transfer Revenue",
                                     value:"null"

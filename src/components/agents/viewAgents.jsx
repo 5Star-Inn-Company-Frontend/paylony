@@ -3,58 +3,45 @@ import { TableLayout } from "./tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import {useGetAllAgentsQuery} from "../../store/apiSlice"
 import Spinner from "../global/spinner";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 export const ViewAgent =()=>{
+    
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"first_name",
+        value:""
+    });
+
     const{
         data:agentData,
         isLoading,
         isError,
         error
-    }= useGetAllAgentsQuery();
-
-    const[
-        actionData,
-        setActionData
-    ]= useState([]);
-
-    const[
-        filterBy,
-        setFilterBy
-    ]= useState("firstname");
+    }= useGetAllAgentsQuery({
+        filterBy:filterBy
+    });
 
     const[
         filterData,
         setFilterData
-    ]= useState("");
-
-    useEffect(()=>{
-        if(agentData){
-            setActionData(agentData?.data)
-        }
-    },[agentData])
+    ]= useState({
+        title:"first_name",
+        value:""
+    });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e,tobeFilterBy)=>{
-        let filterDdata;
-        console.log(tobeFilterBy)
-        switch(tobeFilterBy){
-            case "firstname": filterDdata = agentData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-            break;
-            case "id": filterDdata = agentData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
-            break;
-            case "lastname": filterDdata = agentData?.data?.filter((data)=>data.last_name?.toLowerCase().includes(e))
-            break;
-            case "email": filterDdata = agentData?.data?.filter((data)=>data.email?.toLowerCase().includes(e))
-            break;
-            case "date": filterDdata = agentData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
-            break;
-            case "agent_type": filterDdata = agentData?.data?.filter((data)=>data.agent_type?.toLowerCase().includes(e))
-            break;
-            default : filterDdata = agentData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-        }
-        setActionData(filterDdata)
+
+    const handleFilterChange =(e)=>{
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e
+            }
+        })
     }
 
     if(isError){
@@ -88,39 +75,42 @@ export const ViewAgent =()=>{
                         <TableLayout
                             createBtnAction={()=>window.location.replace("/personalInfo")}
                             createBtnText="Create Agent"
-                            handleInputChange={handleInputChange}
+                            // handleInputChange={handleInputChange}
                             downloadAction={"agents"}
                             sortButton={[
                                 {
-                                    title:"First Name",
-                                    action:"firstname"
+                                    title:"First name",
+                                    action:"first_name"
                                 },{
-                                    title:"Email",
-                                    action:"email"
+                                    title:"Creation Date",
+                                    action:"created_at"
                                 },{
-                                    title:"Id",
-                                    action:"id"
+                                    title:"Last name",
+                                    action:"last_name"
                                 },{
-                                    title:"Date",
-                                    action:"date"
+                                    title:"User Type",
+                                    action:"user_type"
                                 },{
-                                    title:"Agent type",
+                                    title:"Agent Type",
                                     action:"agent_type"
-                                }
+                                },{
+                                    title:"Account Status",
+                                    action:"account_status"
+                                },
                             ]}
                             filterData={filterData}
                             setFilterData={setFilterData}
-                            filterBy={filterBy}
                             setFilterBy={setFilterBy}
+                            handleFilterChange={handleFilterChange}
                             inputPlaceHolder={`Search agent`}
                             headerData={[
                                 "S/N","Id","First name","Last name","Email","Date of Birth","Gender","Residential address","State","Agent type","User type",
                                 "Account status","Created at"
                             ]}
-                            data={actionData}
+                            data={agentData?.data}
                         >
                         {
-                            actionData?.map((info,index)=>{
+                            agentData?.data?.map((info,index)=>{
                                 const{
                                     id,
                                     first_name,
@@ -152,7 +142,7 @@ export const ViewAgent =()=>{
                                                 dob,
                                                 gender,
                                                 residential_address,
-                                                state,
+                                                state?.name,
                                                 agent_type,
                                                 user_type,
                                                 account_status

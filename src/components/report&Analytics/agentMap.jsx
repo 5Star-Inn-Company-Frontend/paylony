@@ -61,38 +61,40 @@ export const Agent_Map =()=>{
                 isLoading ? (
                 <Spinner/>
                 ):(
-                <MapContainer 
-                    center={[6.684785721868957, 3.370807995598992]} 
-                        zoom={13} 
-                        scrollWheelZoom={false}
-                        style={{ width: "100%", height: "100%" }}
-                >
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <MarkerClusterGroup>
-                    {
-                        mapData?.data?.map((mapItem,index)=>{
-                            const{
-                                state,
-                                agent_count
-                            }=mapItem;
-                            return(
-                                <Marker
-                                    key={index} 
-                                    position={[6.684785721868957, 3.370807995598992]}
-                                   
-                                >
-                                    <Popup>
-                                        {state}
-                                    </Popup>
-                                </Marker>
-                            )
-                        })
-                    }
-                </MarkerClusterGroup>
-            </MapContainer>
+                    mapData?.data &&(
+                        <MapContainer 
+                            center={[mapData?.data[0]?.state?.latitude, mapData?.data[0]?.state?.longitude]} 
+                                zoom={13} 
+                                scrollWheelZoom={false}
+                                style={{ width: "100%", height: "100%" }}
+                        >
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            <MarkerClusterGroup>
+                            {
+                                mapData?.data?.map((mapItem,index)=>{
+                                    const{
+                                        state,
+                                        agent_count
+                                    }=mapItem;
+                                    return(
+                                        <Marker
+                                            key={index} 
+                                            position={[state?.latitude, state?.longitude]}
+                                        
+                                        >
+                                            <Popup>
+                                                {state?.name}
+                                            </Popup>
+                                        </Marker>
+                                    )
+                                })
+                            }
+                        </MarkerClusterGroup>
+                    </MapContainer>
+                )
             )
         }
         </div>

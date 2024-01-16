@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 
 export const TableLayout =({
+    handleFilterChange,
     headerData,
     children,
     data,
@@ -15,10 +16,8 @@ export const TableLayout =({
     downloadAction,
     filterData,
     setFilterData,
-    filterBy,
     setFilterBy,
     inputPlaceHolder,
-    handleInputChange,
 })=>{
     const[
         isLoading,
@@ -115,18 +114,33 @@ export const TableLayout =({
                         </div>
                     </div>
                     <div className="flex flex-wrap items-center">
-                        <div className="mb-1 lg:w-60 xl:w-60 md:w-60 sm:w-60 xs:w-full xxs:w-full me-4">
-                            <input
-                                type="search"
-                                className="text-xs text-gray-600 relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.55rem] text-base font-normal leading-[1.6] outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                                id="exampleSearch"
-                                onChange={(e)=>{
-                                    setFilterData(()=>e.target.value);
-                                    handleInputChange(e.target.value,filterBy)
-                                    }
-                                }
-                                placeholder={inputPlaceHolder}
-                            />
+                        <div className="flex items-center me-4 mb-1">
+                            <div className="lg:w-60 xl:w-60 md:w-60 sm:w-60 xs:w-full xxs:w-full me-2">
+                                <input
+                                    type="search"
+                                    className="text-xs text-gray-600 relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.55rem] text-base font-normal leading-[1.6] outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                                    id="exampleSearch"
+                                    onChange={(e)=>{
+                                        setFilterData((prev)=>{
+                                            return{
+                                                ...prev,
+                                                value:e.target.value
+                                            }
+                                        });
+                                    }}
+                                    placeholder={inputPlaceHolder}
+                                />
+                            </div>
+                            <div 
+                                className="bg-purple p-2 rounded"
+                                onClick={()=>{
+                                    setFilterBy(filterData)
+                                }}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="w-5 h-5">
+                                    <path strokelinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                </svg>
+                            </div>
                         </div>
                         {
                             sortButton &&(
@@ -137,10 +151,8 @@ export const TableLayout =({
                                     <label htmlFor="sort" className="w-fit me-1 text-sm text-gray">Filter By :</label>
                                     <select 
                                         name="sort"
-                                        onChange={(e)=>{
-                                            setFilterBy(e.target.value)
-                                            handleInputChange(filterData,e.target.value)}
-                                        }
+                                        onChange={(e)=>handleFilterChange(e.target.value)}
+                                            // handleInputChange(filterData,e.target.value)}
                                         className="bg-bodyCl  pb-2.5 pt-3 my-3 text-xs font-medium uppercase leading-normal inline-block rounded-md leading-normal"
                                     >
                                         {

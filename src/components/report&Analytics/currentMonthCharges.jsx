@@ -6,49 +6,40 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
 export const CurrentMonthCharges =()=>{
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"business_name",
+        value:""
+    });
+
     const{
         data:chargeData,
         isLoading,
         isError,
         error
-    }= useGetAgentCurrentMonthTargetQuery();
-    const[
-        actionData,
-        setActionData
-    ]= useState([]);
-
-    const[
-        filterBy,
-        setFilterBy
-    ]= useState("business_name");
+    }= useGetAgentCurrentMonthTargetQuery({
+        filterBy:filterBy
+    });
 
     const[
         filterData,
         setFilterData
-    ]= useState("");
-
-    useEffect(()=>{
-        if(chargeData){
-            setActionData(chargeData?.data)
-        }
-    },[chargeData])
+    ]= useState({
+        title:"business_name",
+        value:""
+    });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e,tobeFilterBy)=>{
-        let filterDdata;
-        console.log(tobeFilterBy)
-        switch(tobeFilterBy){
-            case "business_name": filterDdata = chargeData?.data?.filter((data)=>data.business_name?.toLowerCase().includes(e))
-            break;
-            case "terminal_id": filterDdata = chargeData?.data?.filter((data)=>data?.terminal_id?.toLowerCase().includes(e))
-            break;
-            case "user_id": filterDdata = chargeData?.data?.filter((data)=>data.user_id?.toLowerCase().includes(e))
-            break;
-            case "business_email": filterDdata = chargeData?.data?.filter((data)=>data.business_email?.toLowerCase().includes(e))
-            break;
-            default : filterDdata = chargeData?.data?.filter((data)=>data.business_name?.toLowerCase().includes(e))
-        }
-        setActionData(filterDdata)
+
+    const handleFilterChange =(e)=>{
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e,
+            }
+        })
     }
 
     if(isError){
@@ -79,7 +70,7 @@ export const CurrentMonthCharges =()=>{
                 ):(
             <TableLayout
             hideCreateAction={true}
-            handleInputChange={handleInputChange}
+            handleFilterChange={handleFilterChange}
             sortButton={[
                 {
                     title:"Business name",
@@ -97,17 +88,16 @@ export const CurrentMonthCharges =()=>{
             ]}
             filterData={filterData}
             setFilterData={setFilterData}
-            filterBy={filterBy}
             downloadAction={"transactions"}
             setFilterBy={setFilterBy}
             inputPlaceHolder={`Search by ${filterBy}`}
                 headerData={[
                     "S/N","Terminal Id","User Id","Business Name", "Business Email","Business Phone","Total Balance"
                 ]}
-                data={ actionData}
+                data={chargeData?.data}
             >
             {
-                 actionData?.map((info,index)=>{
+                 chargeData?.data?.map((info,index)=>{
                     const{
                         terminal_id,
                         user_id,

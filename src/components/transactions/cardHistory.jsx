@@ -4,57 +4,42 @@ import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import Spinner from "../global/spinner";
 import { TransactLayout } from "./transactLayout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const CardTransactionHistory =()=>{
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"transaction_ref",
+        value:""
+    });
+
     const{
         data:transactData,
         isLoading:transactIsLoading,
         isError,
         error
-    }= useGetCashOutQuery();
-    const data =[];
-    const[
-        actionData,
-        setActionData
-    ]= useState([]);
-
-    const[
-        filterBy,
-        setFilterBy
-    ]= useState("firstname");
-
+    }= useGetCashOutQuery({
+        filterBy:filterBy
+    });
     const[
         filterData,
         setFilterData
-    ]= useState("");
-
-    useEffect(()=>{
-        console.log(transactData)
-        if(transactData){
-            setActionData(transactData?.data)
-        }
-    },[transactData])
+    ]= useState({
+        title:"transaction_ref",
+        value:""
+    });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e,tobeFilterBy)=>{
-        let filterDdata;
-        switch(tobeFilterBy){
-            case "firstname": filterDdata = transactData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-            break;
-            case "id": filterDdata = transactData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
-            break;
-            case "lastname": filterDdata = transactData?.data?.filter((data)=>data.last_name?.toLowerCase().includes(e))
-            break;
-            case "email": filterDdata = transactData?.data?.filter((data)=>data.email?.toLowerCase().includes(e))
-            break;
-            case "date": filterDdata = transactData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
-            break;
-            case "agent_type": filterDdata = transactData?.data?.filter((data)=>data.agent_type?.toLowerCase().includes(e))
-            break;
-            default : filterDdata = transactData?.data?.filter((data)=>data.first_name?.toLowerCase().includes(e))
-        }
-        setActionData(filterDdata)
+
+    const handleFilterChange =(e)=>{
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e,
+            }
+        })
     }
 
     if(isError){
@@ -86,56 +71,51 @@ export const CardTransactionHistory =()=>{
             <Spinner/>
             ):(
             <TableLayout
-                handleInputChange={handleInputChange}
+                handleFilterChange={handleFilterChange}
                 sortButton={[
                     {
-                        title:"First Name",
-                        action:"firstname"
+                        title:"Transaction Ref",
+                        action:"transaction_ref"
                     },{
-                        title:"Email",
-                        action:"email"
+                        title:"Terminal Id",
+                        action:"terminal_id"
                     },{
-                        title:"Id",
-                        action:"id"
+                        title:"Transaction Amount",
+                        action:"amount"
                     },{
-                        title:"Date",
-                        action:"date"
+                        title:"Status",
+                        action:"status"
                     },{
-                        title:"Agent type",
-                        action:"agent_type"
+                        title:"Type",
+                        action:"type"
                     }
                 ]}
                 filterData={filterData}
                 setFilterData={setFilterData}
-                filterBy={filterBy}
                 setFilterBy={setFilterBy}
-                inputPlaceHolder={`Search agent by ${filterBy}`}
+                inputPlaceHolder={`Search`}
                 hideCreateAction={true}
                 headerData={[
-                    "Terminal ID","Transaction Ref","Transaction Amount","Customer Info","RRN","Stan","Status","Description","Bank","Transaction Time","Settlement Status","Action"
+                   "S/N","Id" ,"Terminal ID","Transaction Ref","Transaction Amount","Pos id","Type","Customer Info","Bank","RRN","Stan","Status","Description","Transaction Time"
                 ]}
-                data={data}
+                data={transactData?.data}
             >
             {
-                data?.map((info,index)=>{
+                transactData?.data?.map((info,index)=>{
                     const{
                         id,
-                        title,
-                        remark,
-                        // token,
-                        // server_response,
-                        server,
-                        new_balance,
-                        prev_balance,
-                        type,
-                        status,
-                        recipient,
+                        terminal_id,
+                        transaction_ref,
                         amount,
-                        commission,
-                        charges,
-                        reference,
-                        created_at,
-                        updated_at,
+                        pos_id,
+                        type,
+                        customer_info,
+                        bank,
+                        rrn,
+                        stan,
+                        status,
+                        description,
+                        transaction_time
                     }=info
                     return(
                         <tr 
@@ -146,20 +126,17 @@ export const CardTransactionHistory =()=>{
                             {
                                 [
                                     id,
-                                    title,
-                                    remark,
-                                    // token,
-                                    // server_response?.status,
-                                    server,
-                                    new_balance,
-                                    prev_balance,
-                                    type,
-                                    status,
-                                    recipient,
+                                    terminal_id,
+                                    transaction_ref,
                                     amount,
-                                    commission,
-                                    charges,
-                                    reference
+                                    pos_id,
+                                    type,
+                                    customer_info,
+                                    bank,
+                                    rrn,
+                                    stan,
+                                    status,
+                                    description
                                 ].map((body,index)=>{
                                     return  (
                                         <td className={bodyStyle} key={index}>{body}</td>
@@ -167,12 +144,7 @@ export const CardTransactionHistory =()=>{
                                 })
                             }
                             <td className={bodyStyle}>{
-                                    new Date(created_at)
-                                    .toLocaleString()
-                                }
-                            </td>
-                            <td className={bodyStyle}>{
-                                    new Date(updated_at)
+                                    new Date( transaction_time)
                                     .toLocaleString()
                                 }
                             </td>
