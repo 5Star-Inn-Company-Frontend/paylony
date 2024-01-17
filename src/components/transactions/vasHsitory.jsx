@@ -93,7 +93,7 @@ export const VasTransactionHistory =()=>{
                     }
                 ]}
                 filterData={filterData}
-                downloadAction={"transactions"}
+                downloadAction={"vas"}
                 setFilterData={setFilterData}
                 setFilterBy={setFilterBy}
                 inputPlaceHolder={`Search`}

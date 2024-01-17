@@ -92,7 +92,7 @@ export const BetTransactionHistory =()=>{
                     }
                 ]}
                 filterData={filterData}
-                downloadAction={"transactions"}
+                downloadAction={"bets"}
                 setFilterData={setFilterData}
                 setFilterBy={setFilterBy}
                 inputPlaceHolder={`Search `}

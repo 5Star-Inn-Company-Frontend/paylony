@@ -72,6 +72,7 @@ export const MainWalletHistory =()=>{
             ):(
             <TableLayout
             handleFilterChange={handleFilterChange}
+            downloadAction={"main-wallets"}
             sortButton={[
                 {
                     title:"Reference",

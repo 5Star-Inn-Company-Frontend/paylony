@@ -72,6 +72,7 @@ export const RevenueWalletHistory =()=>{
             <TableLayout
                 hideCreateAction={true}
                 handleFilterChange={handleFilterChange}
+                downloadAction={"revenue-wallets"}
                 sortButton={[
                     {
                         title:"Reference",

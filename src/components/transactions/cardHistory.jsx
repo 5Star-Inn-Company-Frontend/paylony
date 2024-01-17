@@ -91,6 +91,7 @@ export const CardTransactionHistory =()=>{
                     }
                 ]}
                 filterData={filterData}
+                downloadAction={"cashouts"}
                 setFilterData={setFilterData}
                 setFilterBy={setFilterBy}
                 inputPlaceHolder={`Search`}
