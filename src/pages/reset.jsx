@@ -6,14 +6,11 @@ import {
     Input,
     initTE,
   } from "tw-elements";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ForgetPassword } from "../store/authSlice";
+import { Loader } from "../components/global/btnLoader";
 
 export const Reset =()=>{
-    useEffect(()=>{
-        initTE({ Input });
-    })
     const dispatch = useDispatch();
     const {forgetStatus} = useSelector(state=>state.auth);
     const { 
@@ -66,13 +63,13 @@ export const Reset =()=>{
                                 
                                 <label
                                     for={`exampleFormControlInput1${index}`}
-                                    className="pointer-events-none origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-sm text-neutral-500 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
+                                    className="pointer-events-none origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-sm text-black font-semidold mb-2 transition-all duration-200 ease-out  dark:text-neutral-200 dark:peer-focus:text-primary"
                                     >{labelName}
                                 </label>
                                 <input
                                     type={type}
                                     name={title}
-                                    className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.72rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                    className="peer block min-h-[auto] border w-full rounded bg-transparent px-3 py-[0.42rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                     id={`exampleFormControlInput1${index}`}
                                     placeholder={placeHold} 
                                     {...register(
@@ -86,18 +83,13 @@ export const Reset =()=>{
             <div>
             {
                 forgetStatus ==="pending"?(
-                    <button
-                        type="button"
-                        data-te-ripple-init
-                        className=" bg-purple w-full text-center px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                        Please wait...
-                    </button> 
+                    <Loader full={true}/>  
                 ):(
                     <button
                         type="submit"
                         data-te-ripple-init
                         className=" bg-purple w-full text-center px-6 pb-2.5 pt-4 my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                                SEND
+                                Send
                     </button>
                 )
             }

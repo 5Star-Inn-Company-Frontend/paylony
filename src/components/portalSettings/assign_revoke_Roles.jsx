@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Text } from "../global/text";
 import toast from "react-hot-toast";
+import { Loader } from "../global/btnLoader";
 export const AssignRoles=()=>{
     const [assignRoles, {isLoading:assignIsLoading}] = useAssignRolesMutation();
     const [revokeRoles, {isLoading:revokeIsLoading}] = useRevokeRolesMutation();
@@ -208,12 +209,7 @@ export const AssignRoles=()=>{
                 <div className="flex justify-end items-end">
                     {
                         (assignIsLoading||revokeIsLoading)?(
-                            <button
-                                type="button"
-                                data-te-ripple-init
-                                className=" bg-purple w-fit px-8 py-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                                Please wait...
-                            </button> 
+                            <Loader/>
                         ):(
                             <div className="flex justify-end items-end">
                                 <button

@@ -4,6 +4,7 @@ import { useState } from "react";
 import {useCreateAgentMutation} from "../../store/apiSlice"
 import { agentStored } from "./action";
 import toast from "react-hot-toast";
+import { Loader } from "../global/btnLoader";
 
 export const DocUpload =()=>{
     const [createAgent, {isLoading}] = useCreateAgentMutation()
@@ -193,17 +194,12 @@ export const DocUpload =()=>{
             <div className="flex justify-end items-end">
             {
                 isLoading?(
-                    <button
-                        type="button"
-                        data-te-ripple-init
-                        className=" bg-purple w-fit px-12 p-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                        Please wait...
-                    </button> 
+                    <Loader/>
                 ):(
                     <button
                         type="submit"
                         data-te-ripple-init
-                        className=" bg-purple w-fit px-12 p-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
+                        className=" bg-purple w-fit px-12 p-[0.72rem] my-3 text-xs font-medium leading-normal text-white inline-block rounded-md leading-normal">
                         Submit
                     </button>
                 )

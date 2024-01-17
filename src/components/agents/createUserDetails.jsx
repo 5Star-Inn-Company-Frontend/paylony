@@ -1,9 +1,4 @@
-import { CreateViewLayout } from "./createAgent"
 import { useForm } from "react-hook-form"
-import {
-    Input,
-    initTE,
-  } from "tw-elements";
 import { CreateAccountManagerLayout } from "./createAccountMangerLayout";
 export const UserDetails =()=>{
     const { 

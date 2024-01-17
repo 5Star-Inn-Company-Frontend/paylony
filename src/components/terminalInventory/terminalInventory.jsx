@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { TerminalLayout } from "./terminalLayout";
 import { useCreateTerminalsMutation, useGetAllAggregatorsQuery, useGetAllBusinessTypeQuery } from "../../store/apiSlice";
 import toast from "react-hot-toast";
+import { Loader } from "../global/btnLoader";
 
 export const AddTerminalInventory=()=>{
     const [createTerminals, {isLoading}] = useCreateTerminalsMutation();
@@ -471,12 +472,7 @@ export const AddTerminalInventory=()=>{
                 <div className="flex justify-end items-end">
                     {
                         isLoading?(
-                            <button
-                                type="button"
-                                data-te-ripple-init
-                                className=" bg-purple w-fit px-8 py-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                                Please wait...
-                            </button> 
+                            <Loader/> 
                         ):(
                             <button
                                 type="submit"

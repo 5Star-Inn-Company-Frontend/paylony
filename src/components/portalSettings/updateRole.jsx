@@ -3,6 +3,7 @@ import { PortalLayout } from "./portalLayout";
 import { useUpdateRolesMutation } from "../../store/apiSlice";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Loader } from "../global/btnLoader";
 export const UpdateRoles=()=>{
     const [updateRoles, {isLoading}] = useUpdateRolesMutation();
     
@@ -104,12 +105,7 @@ export const UpdateRoles=()=>{
                 <div className="flex justify-end items-end">
                     {
                         isLoading?(
-                            <button
-                                type="button"
-                                data-te-ripple-init
-                                className=" bg-purple w-fit px-8 py-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                                Please wait...
-                            </button> 
+                            <Loader/>
                         ):(
                             <button
                                 type="submit"

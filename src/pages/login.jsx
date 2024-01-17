@@ -4,6 +4,7 @@ import { Text } from "../components/global/text";
 import { AuthLayout } from "../components/auth/authLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { LogInUser } from "../store/authSlice";
+import { Loader } from "../components/global/btnLoader";
 
 export const SignIn =()=>{
     const dispatch = useDispatch();
@@ -89,12 +90,7 @@ export const SignIn =()=>{
             <div>
             {
                 LoginStatus ==="pending"?(
-                    <button
-                        type="button"
-                        data-te-ripple-init
-                        className=" bg-purple w-full text-center px-6 pb-2.5 pt-4 my-3 text-xs font-medium leading-normal text-white inline-block rounded-md leading-normal">
-                        Please wait...
-                    </button> 
+                    <Loader full={true}/> 
                 ):(
                     <button
                         type="submit"

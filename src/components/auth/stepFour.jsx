@@ -3,6 +3,7 @@ import { Text } from "../global/text";
 import { useDispatch,useSelector } from "react-redux";
 import { registerUser } from "../../store/authSlice";
 import { useState } from "react";
+import { Loader } from "../global/btnLoader";
 
 
 export const StepFour =()=>{
@@ -125,12 +126,7 @@ export const StepFour =()=>{
             <div className="flex justify-end items-end">
             {
                 registerStatus ==="pending"?(
-                    <button
-                        type="button"
-                        data-te-ripple-init
-                        className=" bg-purple w-fit px-6 pb-2.5 pt-4 my-3 text-xs font-medium leading-normal text-white inline-block rounded-md leading-normal">
-                        Please wait...
-                    </button> 
+                    <Loader/> 
                 ):(
                     <button
                         type="submit"

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { CreateAccountManagerLayout } from "./createAccountMangerLayout";
 import { useCreateAggregatorsMutation } from "../../store/apiSlice";
 import toast from "react-hot-toast";
+import { Loader } from "../global/btnLoader";
 export const AggregatorsDetails =()=>{
     const [createAggregators, {isLoading}] = useCreateAggregatorsMutation()
     const { 
@@ -241,12 +242,7 @@ export const AggregatorsDetails =()=>{
                 <div className="flex justify-end items-end">
                     {
                         isLoading?(
-                            <button
-                                type="button"
-                                data-te-ripple-init
-                                className=" bg-purple w-fit px-8 py-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                                Please wait...
-                            </button> 
+                            <Loader/>
                         ):(
                             <button
                                 type="submit"

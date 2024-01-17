@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { PortalLayout } from "./portalLayout";
 import { useCreateRolesMutation } from "../../store/apiSlice";
 import toast from "react-hot-toast";
+import { Loader } from "../global/btnLoader";
 export const AddRoles=()=>{
     const [createRoles, {isLoading}] = useCreateRolesMutation()
     const { 
@@ -99,12 +100,7 @@ export const AddRoles=()=>{
                 <div className="flex justify-end items-end">
                     {
                         isLoading?(
-                            <button
-                                type="button"
-                                data-te-ripple-init
-                                className=" bg-purple w-fit px-8 py-[0.72rem] my-3 text-xs font-medium uppercase leading-normal text-white inline-block rounded-md leading-normal">
-                                Please wait...
-                            </button> 
+                            <Loader/>
                         ):(
                             <button
                                 type="submit"
