@@ -13,19 +13,25 @@ export const DashBoardLayout =({children})=>{
         initTE({ Sidenav, Ripple,Tab });
     });
     return(
-        <div>
+        <div className="h-full">
             <div className="mobileNav">
                 <Nav/>
             </div>
             <div className="h-full w-full">
                 <DashBoardTopNav/>
-                <div className="flex bg-cl">
-                    <div>
+                <div 
+                    style={{height:"86%"}} 
+                    className="flex bg-cl w-full"
+                >
+                    <div className="h-full pt-8">
                         <Nav 
-                            style="mt-8 bg-white z-[1035] relative  desktopNav h-[100%] w-60 overflow-hidden dark:bg-zinc-800"/>
+                            style=" bg-white z-[1035] relative  desktopNav w-60 overflow-hidden dark:bg-zinc-800"/>
                     </div>
-                    <div className="w-full lg:p-8 xl:p-8 md:p-8 sm:p-8 xs:p-4 xxs:p-4 xxxs:p-4 h-[100%] overflow-auto pb-0">
-                        {children}
+                    <div
+                        className="w-full h-full overflow-auto">
+                            <div className="h-[100%] w-full overflow-auto lg:p-8 xl:p-8 md:p-8 sm:p-8 xs:p-4 xxs:p-4 xxxs:p-4 pb-0">
+                                {children}
+                            </div>
                     </div>
                 </div>
             </div>

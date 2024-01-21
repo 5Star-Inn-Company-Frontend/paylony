@@ -3,22 +3,46 @@ import { TableLayout } from "../agents/tableLayout"
 import { useGetDisputeQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 export const DisputeCount =()=>{
+    
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"status",
+        value:""
+    });
+
     const{
         data:disputeData,
         isLoading,
         isError,
         error
-    }= useGetDisputeQuery();
-    console.log(disputeData)
-    const data =[];
+    }= useGetDisputeQuery({
+        filterBy:filterBy
+    });
+
+    const[
+        filterData,
+        setFilterData
+    ]= useState({
+        title:"status",
+        value:""
+    });
+
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e)=>{
-        console.log(e.target.value)
-        // const filtereddata = agentData?.find((data)=>data.name?.toLowerCase().includes(e))
-        // setActionData(filtereddata)
+   
+    const handleFilterChange =(e)=>{
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e,
+            }
+        })
     }
+
     if(isError){
         const{
             status,
@@ -46,15 +70,34 @@ export const DisputeCount =()=>{
                 <Spinner/>
                 ):(
             <TableLayout
-                hideheaderActions={true}
+                hideCreateAction={true}
+                handleFilterChange={handleFilterChange}
+                sortButton={[
+                    {
+                        title:"Status",
+                        action:"status"
+                    },{
+                        title:"Agent Code",
+                        action:"agent_code"
+                    },{
+                        title:"Charge Back Code",
+                        action:"charge_back_code"
+                    },{
+                        title:"Transaction Reference",
+                        action:"transaction_reference"
+                    }
+                ]}
                 headerData={[
+                    "S/N",
+                    "Id",
                     "Agent Code",
                     "Charge back code",
                     "Transaction reference",
-                    "Ticket Id",
                     "Type",
                     "Due date",
                     "Status",
+                    "Resolution",
+                    "Resolved Date",
                     "Updated At",
                     "Created At"
                 ]}
@@ -63,13 +106,15 @@ export const DisputeCount =()=>{
             {
                 disputeData?.data?.map((info,index)=>{
                     const{
+                        id,
                         agent_code,
                         charge_back_code,
                         transaction_reference,
-                        ticket_id,
                         type,
                         due_date,
                         status,
+                        resolution,
+                        resolved_date,
                         updated_at,
                         created_at
                     }=info
@@ -81,13 +126,15 @@ export const DisputeCount =()=>{
                             <td className={bodyStyle}>{index+1}</td>
                                 {
                                     [
+                                        id,
                                         agent_code,
                                         charge_back_code,
                                         transaction_reference,
-                                        ticket_id,
                                         type,
                                         due_date,
                                         status,
+                                        resolution,
+                                        resolved_date,
                                     ].map((body,index)=>{
                                         return  (
                                             <td className={bodyStyle} key={index}>{body}</td>

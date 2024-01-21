@@ -51,6 +51,7 @@ import { AllPermissions } from './components/portalSettings/permissions';
 import { Toaster } from 'react-hot-toast';
 import { DisBursementForm } from './components/disbursement/form';
 import { PageNotFound } from './pages/404';
+import { DisputeStatusCount } from './components/report&Analytics/disputeStatusCount';
 
 
 function App() {
@@ -103,7 +104,8 @@ function App() {
             <Route exact path="/report-dispute_count" element={ <DisputeCount/>}/>
             <Route exact path="/report-transaction_map" element={ <Transaction_Map/>}/>
             <Route exact path="/report-agent_map" element={ <Agent_Map/>}/>
-            <Route exact path="/report-discount_count" element={ <DisputeCount/>}/>
+            <Route exact path="/report-dispute_count" element={ <DisputeCount/>}/>
+            <Route exact path="/report-dispute_status_count" element={ <DisputeStatusCount/>}/>
             <Route exact path="/report-Charge_Back_count" element={ <ChargeBackCount/>}/>
             <Route exact path="/report-agent_count" element={ <AgentStateCount/>}/>
             {/* <Route exact path="/report-wallet_map" element={ <Wallet/>}/> */}

@@ -4,7 +4,7 @@ export const DashBoardTopNav =()=>{
     const user = JSON.parse(localStorage.getItem('paylonyToken'))
     console.log(user)
     return(
-        <div className="flex flex-row justify-between w-full py-4 px-4 items-center bg-white">
+        <div className="flex flex-row justify-between w-full py-4 px-4 items-center bg-white h-[14%]">
             <div className="flex items-center">
                 <div className="me-2 hamburger rounded-full">
                     <div

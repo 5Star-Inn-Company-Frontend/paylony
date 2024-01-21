@@ -147,7 +147,16 @@ export const disputeApi = createApi({
     }),   
     endpoints:(builder)=>({
         getDispute: builder.query({
-            query: ()=> "/api/v1/disputes",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/disputes?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/disputes"
+                }
+            }
+        }),
+        getDisputeStatusCount: builder.query({
+            query: ()=>"/api/v1/dispute-status"
         }),
     }),
 });
@@ -651,7 +660,7 @@ export const {useGetAllBanksQuery} = banksApi;
 export const {useGetCashOutQuery} = cashOutApi;
 export const {useGetTransactionHistoryQuery,useGetVasHistoryQuery,useGetBetHistoryQuery} = transactHistoryApi;
 export const {useGetTicketQuery,useGetTicketDetailsQuery} = ticketApi;
-export const {useGetDisputeQuery} = disputeApi;
+export const {useGetDisputeQuery,useGetDisputeStatusCountQuery} = disputeApi;
 export const {useGetChargeBackQuery} = chargeBackApi;
 export const {useGetAgentCurrentMonthTargetQuery} = agentCurrentMonthTargetApi;
 export const {useGetAgentStateCountQuery} = agentStateCountApi;
