@@ -72,32 +72,41 @@ export const DisputeCount =()=>{
             <TableLayout
                 hideCreateAction={true}
                 handleFilterChange={handleFilterChange}
+                filterData={filterData}
+                setFilterData={setFilterData}
+                setFilterBy={setFilterBy}
+                inputPlaceHolder={`Type query...`}
                 sortButton={[
                     {
                         title:"Status",
                         action:"status"
                     },{
-                        title:"Agent Code",
-                        action:"agent_code"
+                        title:"Business Id",
+                        action:"business_id"
                     },{
-                        title:"Charge Back Code",
-                        action:"charge_back_code"
+                        title:"Pos Id",
+                        action:"pos_id"
                     },{
-                        title:"Transaction Reference",
-                        action:"transaction_reference"
+                        title:"Reference",
+                        action:"reference"
+                    },{
+                        title:"Transaction Id",
+                        action:"transaction_id"
                     }
                 ]}
                 headerData={[
                     "S/N",
                     "Id",
-                    "Agent Code",
-                    "Charge back code",
-                    "Transaction reference",
-                    "Type",
-                    "Due date",
+                    "Business Id",
+                    "Pos Id",
+                    "Service",
+                    "Description",
+                    "Amount",
+                    "Refunded Amount",
+                    "Transaction Id",
+                    "Reference",
+                    "Comment",
                     "Status",
-                    "Resolution",
-                    "Resolved Date",
                     "Updated At",
                     "Created At"
                 ]}
@@ -107,14 +116,16 @@ export const DisputeCount =()=>{
                 disputeData?.data?.map((info,index)=>{
                     const{
                         id,
-                        agent_code,
-                        charge_back_code,
-                        transaction_reference,
-                        type,
-                        due_date,
+                        business_id,
+                        pos_id,
+                        service,
+                        description,
+                        amount,
+                        refunded_amount,
+                        transaction_id,
+                        reference,
+                        comment,
                         status,
-                        resolution,
-                        resolved_date,
                         updated_at,
                         created_at
                     }=info
@@ -127,14 +138,16 @@ export const DisputeCount =()=>{
                                 {
                                     [
                                         id,
-                                        agent_code,
-                                        charge_back_code,
-                                        transaction_reference,
-                                        type,
-                                        due_date,
-                                        status,
-                                        resolution,
-                                        resolved_date,
+                                        business_id,
+                                        pos_id,
+                                        service,
+                                        description,
+                                        amount,
+                                        refunded_amount,
+                                        transaction_id,
+                                        reference,
+                                        comment,
+                                        status
                                     ].map((body,index)=>{
                                         return  (
                                             <td className={bodyStyle} key={index}>{body}</td>

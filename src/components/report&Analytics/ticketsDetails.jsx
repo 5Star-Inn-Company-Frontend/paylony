@@ -3,62 +3,50 @@ import { useGetTicketDetailsQuery} from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import { useParams } from "react-router-dom";
 import { TableLayout } from "../agents/tableLayout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 export const TicketsDetails =()=>{
     const{
         status
     }= useParams()
+
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"status",
+        value:""
+    });
+
     const{
         data:ticketData,
         isLoading,
         isError,
         error
-    } = useGetTicketDetailsQuery(status);
-    console.log(ticketData)
-
-    const[
-        actionData,
-        setActionData
-    ]= useState([]);
-
-    const[
-        filterBy,
-        setFilterBy
-    ]= useState("firstname");
+    } = useGetTicketDetailsQuery({
+        filterBy:filterBy,
+        status:status
+    });
 
     const[
         filterData,
         setFilterData
-    ]= useState("");
-
-    useEffect(()=>{
-        if(ticketData){
-            setActionData(ticketData?.data)
-        }
-    },[ticketData])
+    ]= useState({
+        title:"status",
+        value:""
+    });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e,tobeFilterBy)=>{
-        let filterDdata;
-        switch(tobeFilterBy){
-            case "user_id": filterDdata = ticketData?.data?.filter((data)=>data.user_id?.toLowerCase().includes(e))
-            break;
-            case "id": filterDdata = ticketData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
-            break;
-            case "assignee_id": filterDdata = ticketData?.data?.filter((data)=>data.assignee_id?.toLowerCase().includes(e))
-            break;
-            case "ticket_id": filterDdata = ticketData?.data?.filter((data)=>data.ticket_id?.toLowerCase().includes(e))
-            break;
-            case "date": filterDdata = ticketData?.data?.filter((data)=>data.created_at?.toLowerCase().includes(e))
-            break;
-            case "status": filterDdata = ticketData?.data?.filter((data)=>data.status?.toLowerCase().includes(e))
-            break;
-            default : filterDdata = ticketData?.data?.filter((data)=>data.user_id?.toLowerCase().includes(e))
-        }
-        setActionData(filterDdata)
+   
+    const handleFilterChange =(e)=>{
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e,
+            }
+        })
     }
-
+    
     if(isError){
         const{
             status,
@@ -87,7 +75,11 @@ export const TicketsDetails =()=>{
                     ):(
                         <TableLayout
                             hideCreateAction={true}
-                            handleInputChange={handleInputChange}
+                            handleFilterChange={handleFilterChange}
+                            filterData={filterData}
+                            setFilterData={setFilterData}
+                            setFilterBy={setFilterBy}
+                            inputPlaceHolder={`Type query...`}
                             sortButton={[
                                 {
                                     title:"User Id",
@@ -109,18 +101,13 @@ export const TicketsDetails =()=>{
                                     action:"status"
                                 }
                             ]}
-                            filterData={filterData}
-                            setFilterData={setFilterData}
-                            filterBy={filterBy}
-                            setFilterBy={setFilterBy}
-                            inputPlaceHolder={`Search details by ${filterBy}`}
                             headerData={[
-                                "s/n","Id","User Id","assignee id","ticket id","title","description","status","Created At"
+                                "S/N","Id","User Id","assignee id","ticket id","title","description","status","Created At"
                             ]}
-                            data={actionData}
+                            data={ticketData?.data}
                         >
                         {
-                            actionData?.map((info,index)=>{
+                            ticketData?.data?.map((info,index)=>{
                                 const{
                                     id,
                                     user_id,

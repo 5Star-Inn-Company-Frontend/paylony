@@ -175,7 +175,13 @@ export const ticketApi = createApi({
             query: ()=> "/api/v1/tickets",
         }),
         getTicketDetails: builder.query({
-            query: (status)=> `/api/v1/tickets/status/${status}`,
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/tickets/status/${action?.status}?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return `/api/v1/tickets/status/${action?.status}`
+                }
+            }
         }),
     }),
 });

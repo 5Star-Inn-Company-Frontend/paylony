@@ -11,7 +11,6 @@ export const DisputeStatusCount =()=>{
         isError,
         error
     }= useGetDisputeStatusCountQuery();
-    console.log(disputeData)
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
     if(isError){
         const{
@@ -41,17 +40,18 @@ export const DisputeStatusCount =()=>{
                 ):(
             <TableLayout
                 hideheaderActions={true}
+                inputPlaceHolder={`Type query...`}
                 headerData={[
                     "S/N",
                     "Status",
-                    "Ticket Count",
+                    "Dispute Count",
                 ]}
                 data={disputeData?.data}
             >
             {
                 disputeData?.data?.map((info,index)=>{
                     const{
-                        ticket_count,
+                        dispute_count,
                         status
                     }=info
                     return(
@@ -62,8 +62,8 @@ export const DisputeStatusCount =()=>{
                             <td className={bodyStyle}>{index+1}</td>
                                 {
                                     [
-                                        ticket_count,
-                                        status
+                                        status,
+                                        dispute_count
                                     ].map((body,index)=>{
                                         return  (
                                             <td className={bodyStyle} key={index}>{body}</td>

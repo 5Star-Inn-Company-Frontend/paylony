@@ -4,7 +4,7 @@ export const DashBoardTopNav =()=>{
     const user = JSON.parse(localStorage.getItem('paylonyToken'))
     console.log(user)
     return(
-        <div className="flex flex-row justify-between w-full py-4 px-4 items-center bg-white h-[14%]">
+        <div className="flex flex-row justify-between w-full py-4 px-4 items-center bg-white h-[13%]">
             <div className="flex items-center">
                 <div className="me-2 hamburger rounded-full">
                     <div
@@ -55,8 +55,8 @@ export const DashBoardTopNav =()=>{
                             </svg>
                         </span>
                         <span
-                            className="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white"
-                        >1
+                            className="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.35em] text-[0.6rem] font-bold leading-none text-white"
+                        >
                         </span>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#9ca3af" className="w-6 h-6 me-2">

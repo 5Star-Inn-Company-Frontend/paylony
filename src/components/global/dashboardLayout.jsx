@@ -20,7 +20,7 @@ export const DashBoardLayout =({children})=>{
             <div className="h-full w-full">
                 <DashBoardTopNav/>
                 <div 
-                    style={{height:"86%"}} 
+                    style={{height:"87%"}} 
                     className="flex bg-cl w-full"
                 >
                     <div className="h-full pt-8">
