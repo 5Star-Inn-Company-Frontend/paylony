@@ -369,25 +369,6 @@ export const agentApi = createApi({
     }),
 });
 
-// export const logOutApi = createApi({
-//     reducerPath:"logOutApi",
-//     baseQuery: fetchBaseQuery({
-//         baseUrl:baseUrl,
-//         prepareHeaders: (headers, {getState})=>{
-//             headers.set( "Authorization",`Bearer Bearer ${user?.authorization?.token}`)
-//             return headers
-//         }
-//     }),
-//     endpoints:(builder)=>({
-//         logOut: builder.mutation({
-//             query: (todo)=> ({
-//                 url:"/api/v1/auth/logout",
-//                 method:'POST'
-//             }),
-//         }),
-//     })
-// })
-
 export const managersApi = createApi({
     reducerPath:"managersApi",
     baseQuery:  fetchBaseQuery({
@@ -660,8 +641,40 @@ export const terminalsApi = createApi({
     }),
 });
 
+export const bankTransferApi = createApi({
+    reducerPath:"bankTransferApi",
+    baseQuery:  fetchBaseQuery({
+        baseUrl:baseUrl,
+        tagTypes : ['bankstransfer'],
+        prepareHeaders: (headers, {getState})=>{
+            headers.set( "Authorization",`Bearer Bearer ${user?.authorization?.token}`)
+            return headers
+        }
+    }),
+    endpoints:(builder)=>({
+        getBankTransfer: builder.query({
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/bank-transfer?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/bank-transfer"
+                }
+            }
+        }),
+        getPayAttitude: builder.query({
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/payattitude-process?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/payattitude-process"
+                }
+            }
+        }),
+    }),
+});
 
 
+export const {useGetBankTransferQuery,useGetPayAttitudeQuery} = bankTransferApi;
 export const {useGetAllBanksQuery} = banksApi;
 export const {useGetCashOutQuery} = cashOutApi;
 export const {useGetTransactionHistoryQuery,useGetVasHistoryQuery,useGetBetHistoryQuery} = transactHistoryApi;

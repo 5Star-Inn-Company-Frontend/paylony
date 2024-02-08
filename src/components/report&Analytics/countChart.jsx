@@ -6,44 +6,46 @@ import {
     initTE,
   } from "tw-elements";
 
-export const CountChart =()=>{
+export const CountChart =({
+    data
+})=>{
     useEffect(()=>{
         initTE({ Tab });
     })
     const mothlydata=[
         {
             name:"Cash Out",
-            number:50
+            number:data?.transaction_counts?.cashouts?.monthly
         },{
             name:"Transfer",
-            number:20
+            number:data?.transaction_counts?.bank_transfers?.monthly
         },{
             name:"Total",
-            number:10
+            number:data?.transaction_counts?.total?.monthly
         }
     ]
     const weeklydata=[
         {
             name:"Cash Out",
-            number:40
+            number:data?.transaction_counts?.cashouts?.weekly
         },{
             name:"Transfer",
-            number:80
+            number:data?.transaction_counts?.bank_transfers?.weekly
         },{
             name:"Total",
-            number:100
+            number:data?.transaction_counts?.total?.weekly
         }
     ]
     const dailydata=[
         {
             name:"Cash Out",
-            number:87
+            number:data?.transaction_counts?.cashouts?.daily
         },{
             name:"Transfer",
-            number:90
+            number:data?.transaction_counts?.bank_transfers?.daily
         },{
             name:"Total",
-            number:50
+            number:data?.transaction_counts?.total?.daily
         }
     ]
     const [

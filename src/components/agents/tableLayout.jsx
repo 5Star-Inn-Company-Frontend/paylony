@@ -94,7 +94,7 @@ export const TableLayout =({
                         }
                         <div>
                             { 
-                                downloadAction &&(
+                                (downloadAction && (data.length > 0)) &&(
                                     isLoading?(
                                         <div
                                             data-te-ripple-init

@@ -44,17 +44,21 @@ export const AgentStateCount =()=>{
                 hideheaderActions={true}
                 headerData={[
                     'S/N',
-                    "State",
-                    "Agent Count"
+                    "Id",
+                    "Name",
+                    "Longitude",
+                    "Latitude"
                 ]}
                 data={stateCountData?.data}
             >
             {
                 stateCountData?.data?.map((info,index)=>{
                     const{
-                        state,
-                       agent_count
-                    }=info
+                        id,
+                        name,
+                        longitude,
+                        latitude
+                    }=info?.state
                     return(
                         <tr 
                             className="border-b dark:border-neutral-500"
@@ -63,8 +67,10 @@ export const AgentStateCount =()=>{
                             <td className={bodyStyle}>{index+1}</td>
                                 {
                                     [
-                                        state,
-                                        agent_count
+                                        id,
+                                        name,
+                                        longitude,
+                                        latitude
                                     ].map((body,index)=>{
                                         return  (
                                             <td className={bodyStyle} key={index}>{body}</td>

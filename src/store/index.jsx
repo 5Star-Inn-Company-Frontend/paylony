@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import auth_Slice from "./authSlice";
-import { banksApi,rolesApi,idCardApi,transactHistoryApi,businessTypeApi,cashOutApi,ticketApi,disputeApi,chargeBackApi,agentCurrentMonthTargetApi,agentStateCountApi,agentMapApi,overviewReportApi,revenueWalletApi,mainWalletApi,agentApi,aggregatorsApi,managersApi, terminalsApi, admintransactApi, dashboardApi } from "./apiSlice";
+import { banksApi,bankTransferApi,rolesApi,idCardApi,transactHistoryApi,businessTypeApi,cashOutApi,ticketApi,disputeApi,chargeBackApi,agentCurrentMonthTargetApi,agentStateCountApi,agentMapApi,overviewReportApi,revenueWalletApi,mainWalletApi,agentApi,aggregatorsApi,managersApi, terminalsApi, admintransactApi, dashboardApi} from "./apiSlice";
 
 const store = configureStore({
     reducer:{
@@ -16,7 +16,7 @@ const store = configureStore({
         [admintransactApi.reducerPath]: admintransactApi.reducer,
         [dashboardApi.reducerPath]: dashboardApi.reducer,
         [terminalsApi.reducerPath]: terminalsApi.reducer,
-        // [logOutApi.reducerPath]:logOutApi.reducer,
+        [bankTransferApi.reducerPath]: bankTransferApi.reducer,
         [ticketApi.reducerPath]:ticketApi.reducer,
         [disputeApi.reducerPath]:disputeApi.reducer,
         [chargeBackApi.reducerPath]:chargeBackApi.reducer,
@@ -52,6 +52,7 @@ const store = configureStore({
                 agentMapApi.middleware,
                 overviewReportApi.middleware,
                 revenueWalletApi.middleware,
+                bankTransferApi.middleware,
                 mainWalletApi.middleware
             ])
     },

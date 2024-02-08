@@ -52,6 +52,8 @@ import { Toaster } from 'react-hot-toast';
 import { DisBursementForm } from './components/disbursement/form';
 import { PageNotFound } from './pages/404';
 import { DisputeStatusCount } from './components/report&Analytics/disputeStatusCount';
+import { PayAttitude } from './components/transactions/payAttitude';
+import { BankTransfer } from './components/transactions/banktransfer';
 
 
 function App() {
@@ -108,12 +110,12 @@ function App() {
             <Route exact path="/report-dispute_status_count" element={ <DisputeStatusCount/>}/>
             <Route exact path="/report-Charge_Back_count" element={ <ChargeBackCount/>}/>
             <Route exact path="/report-agent_count" element={ <AgentStateCount/>}/>
-            {/* <Route exact path="/report-wallet_map" element={ <Wallet/>}/> */}
+            <Route exact path="/payattitude" element={ <PayAttitude/>}/>
             <Route exact path="/report-revenue_wallet" element={ <RevenueWalletHistory/>}/>
             <Route exact path="/report-main_wallet" element={ <MainWalletHistory/>}/>
             <Route exact path="/report-overview" element={ <Overview/>}/>
             <Route exact path="*" element={ <PageNotFound/>}/>
-            {/* <Route exact path="/viewAggregators" element={ <ViewAggregators/>}/> */}
+            <Route exact path="/banktransfer" element={ <BankTransfer/>}/>
             </Route>
           </Routes>
        </Router>

@@ -12,9 +12,9 @@ export const Loader =({
             >
                 <div
                 data-te-loading-icon-ref
-                className="flex flex-row h-5 w-5 animate-spin border-transparent motion-reduce:animate-[spin_1.5s_linear_infinite] me-2"
+                className="flex flex-row h-7 w-7 animate-spin border-transparent motion-reduce:animate-[spin_1.5s_linear_infinite] me-2"
                 role="status">
-                    <span className="[&>svg]:w-5">
+                    <span className="[&>svg]:w-7">
                         <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -28,7 +28,6 @@ export const Loader =({
                         </svg>
                     </span>
                 </div>
-                <span data-te-loading-text-ref className="text-white">Loading...</span>
             </div>
             </div>
         </>

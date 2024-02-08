@@ -57,10 +57,16 @@ export const Overview =()=>{
                             [
                                 {
                                     title:"Pool Account Balance",
-                                    value:`null`
+                                    value:`${overviewData?.data?.pool_balance}`
                                 },{
                                     title:"Number of Active Terminal",
                                     value:`${overviewData?.data?.active_terminal}`
+                                },{
+                                    title:"Total Cashout",
+                                    value:`${overviewData?.data?.total_cashout}`
+                                },{
+                                    title:"Total Revenue",
+                                    value:`${overviewData?.data?.total_revenue}`
                                 },{
                                     title:"Total Transaction (count)",
                                     value:`${overviewData?.data?.transaction_statistics?.total_transaction_count}`
@@ -79,9 +85,6 @@ export const Overview =()=>{
                                 },{
                                     title:"Total Successful transaction volume",
                                     value:`${overviewData?.data?.transaction_statistics?.total_successful_transaction_volume}`
-                                },{
-                                    title:"Estimated Fund Transfer Revenue",
-                                    value:"null"
                                 },{
                                     title:"Total transaction Volume",
                                     value:`$${overviewData?.data?.transaction_statistics?.total_transaction_volume}`
@@ -122,7 +125,7 @@ export const Overview =()=>{
                     </div>
                 </div>
                 <div>
-                    <CountChart/>
+                   {overviewData?.data && <CountChart data={overviewData.data}/>}
                 </div>
             </div>
         </ReportLayout>
