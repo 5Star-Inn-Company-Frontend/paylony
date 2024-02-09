@@ -5,8 +5,11 @@ import { DashBoardLayout } from "../global/dashboardLayout";
 import Spinner from "../global/spinner";
 import { TransactLayout } from "./transactLayout";
 import { useState } from "react";
+import { Merchant_Cashout_Table } from "./cashoutView/merchant_";
+import { SuperAdmin_Cashout_Table } from "./cashoutView/super_admin";
 
 export const CardTransactionHistory =()=>{
+    const user = JSON.parse(localStorage.getItem('paylonyToken'));
     const[
         filterBy,
         setFilterBy
@@ -70,91 +73,24 @@ export const CardTransactionHistory =()=>{
          transactIsLoading? (
             <Spinner/>
             ):(
-            <TableLayout
-                handleFilterChange={handleFilterChange}
-                sortButton={[
-                    {
-                        title:"Transaction Ref",
-                        action:"transaction_ref"
-                    },{
-                        title:"Terminal Id",
-                        action:"terminal_id"
-                    },{
-                        title:"Transaction Amount",
-                        action:"amount"
-                    },{
-                        title:"Status",
-                        action:"status"
-                    },{
-                        title:"Type",
-                        action:"type"
-                    }
-                ]}
-                filterData={filterData}
-                downloadAction={"cashouts"}
-                setFilterData={setFilterData}
-                setFilterBy={setFilterBy}
-                inputPlaceHolder={`Search`}
-                hideCreateAction={true}
-                headerData={[
-                   "S/N","Id" ,"Terminal ID","Transaction Ref","Transaction Amount","Pos id","Type","Customer Info","Bank","RRN","Stan","Status","Description","Transaction Time"
-                ]}
-                data={transactData?.data}
-            >
-            {
-                transactData?.data?.map((info,index)=>{
-                    const{
-                        id,
-                        terminal_id,
-                        transaction_ref,
-                        amount,
-                        pos_id,
-                        type,
-                        customer_info,
-                        bank,
-                        rrn,
-                        stan,
-                        status,
-                        description,
-                        transaction_time
-                    }=info
-                    return(
-                        <tr 
-                            className="border-b dark:border-neutral-500"
-                            key={index}
-                        >
-                            <td className={bodyStyle}>{index+1}</td>
-                            {
-                                [
-                                    id,
-                                    terminal_id,
-                                    transaction_ref,
-                                    amount,
-                                    pos_id,
-                                    type,
-                                    customer_info,
-                                    bank,
-                                    rrn,
-                                    stan,
-                                    status,
-                                    description
-                                ].map((body,index)=>{
-                                    return  (
-                                        <td className={bodyStyle} key={index}>{body}</td>
-                                        )
-                                })
-                            }
-                            <td className={bodyStyle}>{
-                                    new Date( transaction_time)
-                                    .toLocaleString()
-                                }
-                            </td>
-                        </tr>
-                    )
-                }
-            )
-        }
-            </TableLayout>
+                user?.user_type !== "admin"?
+                (
+                    <Merchant_Cashout_Table
+                        handleFilterChange={handleFilterChange}
+                        filterData={filterData}
+                        setFilterData={setFilterData}
+                        setFilterBy={setFilterBy}
+                        transactData={transactData}
+                    />
+                ):(
+                    <SuperAdmin_Cashout_Table
+                        handleFilterChange={handleFilterChange}
+                        filterData={filterData}
+                        setFilterData={setFilterData}
+                        setFilterBy={setFilterBy}
+                        transactData={transactData}
+                    />
+                )
             )
         }
         </TransactLayout>

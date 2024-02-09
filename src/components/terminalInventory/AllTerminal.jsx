@@ -7,7 +7,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 export const AllTerminal =()=>{
-    
+    const user = JSON.parse(localStorage.getItem('paylonyToken'));
+
     const[
         filterBy,
         setFilterBy
@@ -130,11 +131,12 @@ export const AllTerminal =()=>{
                 setFilterBy={setFilterBy}
                 inputPlaceHolder={`Search terminal `}
                 createBtnText="Add Terminal"
+                hideCreateAction={user?.user_type === "admin"?true:false}
                 headerData={[
                     "S/N",
                     "Id",
-                    // "Business ID",
-                    // "User_ID",
+                    user?.user_type === "admin"?"Business ID":null,
+                    user?.user_type === "admin"?"User_ID":null,
                     "Serial Number",
                     "POS Type",
                     "Name",
@@ -159,8 +161,6 @@ export const AllTerminal =()=>{
                     "Fee Bearer",
                     "Status",
                     "Date_assigned",
-                    // "Created_at",
-                    // "Updated_at",
                     "Actions"
                 ]}
                 data={terminalData?.data}
@@ -207,8 +207,8 @@ export const AllTerminal =()=>{
                             {
                                 [
                                     id,
-                                    // business_id,
-                                    // user_id,
+                                    user?.user_type === "admin"?business_id:null,
+                                    user?.user_type === "admin"?user_id:null,
                                     serial_number,
                                     pos_type,
                                     name,

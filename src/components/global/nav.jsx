@@ -6,13 +6,11 @@ import {
     Tab,
     initTE,
   } from "tw-elements";
-// import { useLogOutMutation } from "../../store/apiSlice";
-import { logOutUser } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export const Nav =({style})=>{
-    // const [logOut, {isLoading}] = useLogOutMutation()
+    const user = JSON.parse(localStorage.getItem('paylonyToken'))
     const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -51,6 +49,7 @@ export const Nav =({style})=>{
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    {user?.user_type !== "admin" &&
                     <li className="relative">
                         <a
                             className="group flex h-12 cursor-pointer items-center truncate rounded-[5px] px-6 py-4 text-[0.875rem] text-gray-700 outline-none transition duration-300 ease-linear hover:bg-[#77e22ce]-400/10 hover:text-[#77e22ce]-600 hover:outline-none focus:bg-[#77e22ce]-400/10 focus:text-[#77e22ce]-600 focus:outline-none active:bg-[#77e22ce]-400/10 active:text-[#77e22ce]-600 active:outline-none data-[te-sidenav-state-active]:text-[#77e22ce]-600 data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
@@ -111,6 +110,7 @@ export const Nav =({style})=>{
                             </li>
                         </ul>
                     </li>
+                    }
                     <li className="relative">
                         <a
                             className="group flex h-12 cursor-pointer items-center truncate rounded-[5px] px-6 py-4 text-[0.875rem] text-gray-700 outline-none transition duration-300 ease-linear hover:bg-[#77e22ce]-400/10 hover:text-[#77e22ce]-600 hover:outline-none focus:bg-[#77e22ce]-400/10 focus:text-[#77e22ce]-600 focus:outline-none active:bg-[#77e22ce]-400/10 active:text-[#77e22ce]-600 active:outline-none data-[te-sidenav-state-active]:text-[#77e22ce]-600 data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
