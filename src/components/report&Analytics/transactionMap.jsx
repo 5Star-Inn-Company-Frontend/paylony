@@ -50,7 +50,7 @@ export const Transaction_Map =()=>{
                 isLoading ? (
                 <Spinner/>
                 ):(
-                    mapData?.data &&(
+                    (mapData?.data && mapData?.data?.length !==0) &&(
                         <MapContainer 
                             center={[mapData?.data[0]?.state?.latitude, mapData?.data[0]?.state?.longitude]} 
                                 zoom={13} 
