@@ -1,4 +1,4 @@
-
+import Cookies from "universal-cookie";
 import icon3 from "../../assets/Frame 1000002437 (4).svg"
 import icon4 from "../../assets/Frame 1000002437 (5).svg"
 import { Text } from "../global/text"
@@ -10,7 +10,8 @@ import {
 import { useEffect } from "react"
 
 export const PTransaction =({data,isLoading,balance})=>{
-    const user = JSON.parse(localStorage.getItem('paylonyToken'))
+    const cookies = new Cookies(null, { path: '/' });
+    const user = cookies.get('paylonyToken')
     useEffect(()=>{
         initTE({ Ripple });
     })
