@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { TableLayout } from "../agents/tableLayout";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 export const TicketsDetails =()=>{
     const{
         status
@@ -52,19 +53,7 @@ export const TicketsDetails =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     return(

@@ -5,6 +5,7 @@ import { useGetTicketQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 export const Tickets =()=>{
     const{
         data:ticketData,
@@ -19,19 +20,7 @@ export const Tickets =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#f87171"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#f87171"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     return(

@@ -1,7 +1,9 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import Cookies from 'universal-cookie';
 
 export const baseUrl = "https://patrick.5starcompany.com.ng"
-const user = JSON.parse(localStorage.getItem('paylonyToken'))
+const cookies = new Cookies(null, { path: '/' });
+const user = cookies.get('paylonyToken')
 
 export const mainWalletApi = createApi({
     reducerPath:"mainWalletApi",
@@ -419,7 +421,13 @@ export const rolesApi = createApi({
     }),
     endpoints:(builder)=>({
         getAllRoles: builder.query({
-            query: ()=> "/api/v1/roles",
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/roles?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/roles"
+                }
+            },
             providesTags :['roles']
         }),
         getAllPermissions: builder.query({
@@ -670,11 +678,20 @@ export const bankTransferApi = createApi({
                 }
             }
         }),
+        getPerformanceReport: builder.query({
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/performance-reports?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return "/api/v1/performance-reports"
+                }
+            }
+        }),
     }),
 });
 
 
-export const {useGetBankTransferQuery,useGetPayAttitudeQuery} = bankTransferApi;
+export const {useGetBankTransferQuery,useGetPayAttitudeQuery,useGetPerformanceReportQuery} = bankTransferApi;
 export const {useGetAllBanksQuery} = banksApi;
 export const {useGetCashOutQuery} = cashOutApi;
 export const {useGetTransactionHistoryQuery,useGetVasHistoryQuery,useGetBetHistoryQuery} = transactHistoryApi;
@@ -687,7 +704,6 @@ export const {useGetAgentMapQuery,useGetTransactionMapQuery} = agentMapApi;
 export const {useGetOverviewReportQuery} = overviewReportApi;
 export const {useGetRevenueWalletQuery} = revenueWalletApi;
 export const {useGetMainWalletQuery} = mainWalletApi;
-// export const {useLogOutMutation} = logOutApi;
 export const {useGetAllIdCardQuery} = idCardApi;
 export const {useGetAllDashboardQuery} = dashboardApi;
 export const {useGetAllAgentsQuery,useCreateAgentMutation} = agentApi;

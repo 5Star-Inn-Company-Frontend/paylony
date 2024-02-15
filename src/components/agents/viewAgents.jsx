@@ -5,6 +5,7 @@ import {useGetAllAgentsQuery} from "../../store/apiSlice"
 import Spinner from "../global/spinner";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 
 export const ViewAgent =()=>{
     
@@ -49,19 +50,7 @@ export const ViewAgent =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
 

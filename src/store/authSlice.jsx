@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import  axios  from 'axios';
 import { apiBaseUrl } from './apiBaseUrl';
 import toast from 'react-hot-toast';
+import Cookies from 'universal-cookie';
 
 export const registerUser = createAsyncThunk(
     'auth/registerUser', 
@@ -254,9 +255,14 @@ const auth_Slice = createSlice({
                         primary:"#6ee7b7"
                     }
                 })
-                localStorage.setItem(
-                    'paylonyToken',
-                    JSON.stringify(data)
+                const cookies = new Cookies(null, { path: '/' });
+                const expiresIn = new Date(new Date().getTime() + data?.authorization?.expires_in * 60000);
+                cookies.set(
+                    'paylonyToken', 
+                    JSON.stringify(data),
+                    {
+                        expires: expiresIn
+                    }
                 )
                 localStorage.setItem(
                     'lastLoginTime',

@@ -4,6 +4,7 @@ import { ReportLayout } from "./reportLayout";
 import { useGetMainWalletQuery } from "../../store/apiSlice";
 import {useState } from "react";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 
 
 export const MainWalletHistory =()=>{
@@ -49,19 +50,7 @@ export const MainWalletHistory =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#f87171"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#f87171"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     return(

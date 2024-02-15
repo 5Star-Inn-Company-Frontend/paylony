@@ -63,7 +63,6 @@ export const SuperAdmin_Cashout_Table =({
                         rrn,
                         stan,
                         status,
-                        description,
                         created_at
                     }=info
                     return(

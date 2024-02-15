@@ -5,6 +5,7 @@ import { TerminalLayout } from "./terminalLayout";
 import Spinner from "../global/spinner";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 
 export const AllTerminal =()=>{
     const user = JSON.parse(localStorage.getItem('paylonyToken'));
@@ -45,19 +46,7 @@ export const AllTerminal =()=>{
                 status,
                 data
             }=error
-            if(data?.error){
-                toast.error(data?.error,{
-                    style:{
-                        background:"#fff1f2"
-                    }
-                })
-            }else{
-                toast.error(data?.message,{
-                    style:{
-                        background:"#fff1f2"
-                    }
-                })
-            }
+            ToastError(status,data)
             console.log(error)
         })
     }
@@ -86,27 +75,15 @@ export const AllTerminal =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#fff1f2"
-                }   
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     return(
         <TerminalLayout title="All Terminals">
         {
-                terminalIsLoading ? (
-                    <Spinner/>
-                    ):(
+        terminalIsLoading ? (
+            <Spinner/>
+            ):(
             <TableLayout
                 createBtnAction={()=>window.location.replace("/add_terminal")}
                 handleFilterChange={handleFilterChange}

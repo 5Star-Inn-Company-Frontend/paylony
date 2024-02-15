@@ -3,6 +3,7 @@ import { TableLayout } from "../agents/tableLayout"
 import { useGetChargeBackQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 
 export const ChargeBackCount =()=>{
     const{
@@ -24,19 +25,7 @@ export const ChargeBackCount =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#f87171"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#f87171"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     return(

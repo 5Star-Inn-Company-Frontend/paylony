@@ -94,7 +94,7 @@ export const TableLayout =({
                         }
                         <div>
                             { 
-                                (downloadAction && (data.length > 0)) &&(
+                                (downloadAction && (data?.length > 0)) &&(
                                     isLoading?(
                                         <div
                                             data-te-ripple-init
@@ -207,13 +207,15 @@ export const TableLayout =({
                 </div>
             </div>
             {
-                data?.length ===0 &&(
-                    <div className="w-44 m-auto">
-                        <img 
-                            src="https://cdn3.iconfinder.com/data/icons/shopping-and-ecommerce-29/90/empty_cart-512.png"
-                            alt="object not found"
-                        />
-                    </div>
+                Array.isArray(data) &&(
+                    data?.length ===0 &&(
+                        <div className="w-44 m-auto">
+                            <img 
+                                src="https://cdn3.iconfinder.com/data/icons/shopping-and-ecommerce-29/90/empty_cart-512.png"
+                                alt="object not found"
+                            />
+                        </div>
+                    )
                 )
             }
         </div>

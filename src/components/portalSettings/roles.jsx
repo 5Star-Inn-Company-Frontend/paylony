@@ -1,88 +1,62 @@
 import { PortalLayout } from "./portalLayout";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import Spinner from "../global/spinner";
 import { TableLayout } from "../agents/tableLayout";
 import { TableDropDown } from "../global/dropdown";
 import { useDeleteRolesMutation, useGetAllRolesQuery } from "../../store/apiSlice";
-import toast from "react-hot-toast";
+import { ToastError, ToastSucess } from "../global/toast";
 
 export const AllRoles =()=>{
+    const[
+        filterBy,
+        setFilterBy
+    ]= useState({
+        title:"name",
+        value:""
+    });
+
     const{
         data:rolesData,
         isLoading:rolesIsLoading,
         isError,
         error
-    }= useGetAllRolesQuery();
+    }= useGetAllRolesQuery({
+        filterBy:filterBy
+    });
 
     const [deleteRoles, {isLoading :deleteIsLoading}] = useDeleteRolesMutation();
 
     const deleteAction =(id)=>{
         deleteRoles(id).unwrap().then((payload)=>{
-            toast.success(payload?.message,{
-                style:{
-                    background:"#ecfdf5",
-                },
-                iconTheme:{
-                    primary:"#6ee7b7"
-                }
-            })
+            ToastSucess(payload?.message);
         }).catch((error)=>{
             const{
                 status,
                 data
             }=error
-            if(data?.error){
-                toast.error(data?.error,{
-                    style:{
-                        background:"#fff1f2"
-                    }
-                })
-            }else{
-                toast.error(data?.message,{
-                    style:{
-                        background:"#fff1f2"
-                    }
-                })
-            }
+            ToastError(status,data)
             console.log(error)
         })
     }
 
     const[
-        actionData,
-        setActionData
-    ]= useState([]);
-
-    const[
-        filterBy,
-        setFilterBy
-    ]= useState("name");
-
-    const[
         filterData,
         setFilterData
-    ]= useState("");
-
-    useEffect(()=>{
-        if(rolesData){
-            setActionData(rolesData?.data)
-        }
-    },[rolesData])
+    ]= useState({
+        title:"name",
+        value:""
+    });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
-    const handleInputChange =(e,tobeFilterBy)=>{
-        let filterDdata;
-        console.log(tobeFilterBy)
-        switch(tobeFilterBy){
-            case "name": filterDdata = rolesData?.data?.filter((data)=>data.name?.toLowerCase().includes(e))
-            break;
-            case "id": filterDdata = rolesData?.data?.filter((data)=>data.id?.toLowerCase().includes(e))
-            break;
-            case "guard_name": filterDdata = rolesData?.data?.filter((data)=>data.guard_name?.toLowerCase().includes(e))
-            break;
-            default : filterDdata = rolesData?.data?.filter((data)=>data.name?.toLowerCase().includes(e))
-        }
-        setActionData(filterDdata)
+   
+    const handleFilterChange =(e)=>{
+        console.log(e)
+        setFilterData((prev)=>{
+            return{
+                ...prev,
+                title:e,
+            }
+        })
     }
 
     if(isError){
@@ -90,19 +64,7 @@ export const AllRoles =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
 
@@ -118,28 +80,27 @@ export const AllRoles =()=>{
                     headerData={[
                         "S/N","Id","Name","Guard name","Action"
                     ]}
-                    handleInputChange={handleInputChange}
-                            sortButton={[
-                                {
-                                    title:"Name",
-                                    action:"name"
-                                },{
-                                    title:"Guard Name",
-                                    action:"guard_name"
-                                },{
-                                    title:"Id",
-                                    action:"id"
-                                }
-                            ]}
-                            filterData={filterData}
-                            setFilterData={setFilterData}
-                            filterBy={filterBy}
-                            setFilterBy={setFilterBy}
-                            inputPlaceHolder={`Search role `}
-                    data={ actionData}
-                >
+                    handleFilterChange={handleFilterChange}
+                    sortButton={[
+                        {
+                            title:"Name",
+                            action:"name"
+                        },{
+                            title:"Guard Name",
+                            action:"guard_name"
+                        },{
+                            title:"Id",
+                            action:"id"
+                        }
+                    ]}
+                    filterData={filterData}
+                    setFilterData={setFilterData}
+                    setFilterBy={setFilterBy}
+                    inputPlaceHolder={`Search for role `}
+                    data={rolesData?.data}
+                    >
                 {
-                    actionData?.map((info,index)=>{
+                    rolesData?.data?.map((info,index)=>{
                         const{
                             id,
                             name,

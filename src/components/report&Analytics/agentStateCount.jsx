@@ -3,6 +3,7 @@ import Spinner from "../global/spinner"
 import { ReportLayout } from "./reportLayout"
 import { useGetAgentStateCountQuery } from "../../store/apiSlice";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 
 export const AgentStateCount =()=>{
     const{
@@ -19,19 +20,7 @@ export const AgentStateCount =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#f87171"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#f87171"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     return(

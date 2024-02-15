@@ -5,6 +5,7 @@ import { DashBoardLayout } from "../global/dashboardLayout";
 import Spinner from "../global/spinner";
 import { TransactLayout } from "./transactLayout";
 import { useState } from "react";
+import { ToastError } from "../global/toast";
 
 export const AdminTransactionHistory =()=>{
 
@@ -49,19 +50,7 @@ export const AdminTransactionHistory =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     console.log(transactData);

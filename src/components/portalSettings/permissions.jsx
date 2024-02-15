@@ -3,6 +3,7 @@ import Spinner from "../global/spinner";
 import { TableLayout } from "../agents/tableLayout";
 import { useGetAllPermissionsQuery } from "../../store/apiSlice";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 
 export const AllPermissions =()=>{
     const{
@@ -17,19 +18,7 @@ export const AllPermissions =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
 

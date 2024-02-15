@@ -5,6 +5,7 @@ import { TransactLayout } from "./transactLayout";
 import { useGetPayAttitudeQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 
 export const PayAttitude=()=>{
     
@@ -50,16 +51,7 @@ export const PayAttitude=()=>{
             status,
             data
         }=error
-        toast.error(
-            data.error?
-                data.error:
-                    data.message,
-            {
-                style:{
-                    background:"#fff1f2"
-                }
-            }
-        )
+        ToastError(status,data)
         console.log(error)
     }
     console.log(transactData);
@@ -82,14 +74,14 @@ export const PayAttitude=()=>{
                         title:"Amount",
                         action:"amount"
                     },{
-                        title:"Provider",
-                        action:"provider"
+                        title:"business_id",
+                        action:"business_id"
                     },{
                         title:"Status",
                         action:"status"
                     },{
                         title:"Creation Date",
-                        action:"creation_date"
+                        action:"created_at"
                     }
                 ]}
                 filterData={filterData}
@@ -98,21 +90,23 @@ export const PayAttitude=()=>{
                 setFilterBy={setFilterBy}
                 inputPlaceHolder={`Search`}
                 headerData={[
-                    "S/n","Reference","Amount","Provider","Service Type","Customer","Description","Status","Creation Date"
+                    "S/n","Reference","Amount","Business Id","User Id","Pos Id","Fee","Total Amount","feeBearer","Status","Creation Date"
                 ]}
-                data={ transactData?.data}
+                data={transactData?.data}
             >
             {
                  transactData?.data?.map((info,index)=>{
                     const{
                         reference,
                         amount,
-                        provider,
-                        service_type,
-                        customer,
-                        decription,
+                        business_id,
+                        user_id,
+                        pos_id,
+                        fee,
+                        totalAmount,
+                        feeBearer,
                         status,
-                        creation_date
+                        created_at
                     }=info
                     return(
                         <tr 
@@ -124,10 +118,12 @@ export const PayAttitude=()=>{
                                 [
                                     reference,
                                     amount,
-                                    provider,
-                                    service_type,
-                                    customer,
-                                    decription,
+                                    business_id,
+                                    user_id,
+                                    pos_id,
+                                    fee,
+                                    totalAmount,
+                                    feeBearer,
                                     status
                                 ].map((body,index)=>{
                                     return  (
@@ -136,7 +132,7 @@ export const PayAttitude=()=>{
                                 })
                             }
                             <td className={bodyStyle}>{
-                                    new Date(creation_date)
+                                    new Date(created_at)
                                     .toLocaleString()
                                 }
                             </td>

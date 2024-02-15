@@ -1,7 +1,9 @@
 import { Text } from "./text"
 import logo from "../../assets/Paylony logo 1.svg"
+import Cookies from "universal-cookie";
 export const DashBoardTopNav =()=>{
-    const user = JSON.parse(localStorage.getItem('paylonyToken'))
+    const cookies = new Cookies(null, { path: '/' });
+    const user = cookies.get('paylonyToken');
     console.log(user)
     return(
         <div className="flex flex-row justify-between w-full py-4 px-4 items-center bg-white h-[13%]">

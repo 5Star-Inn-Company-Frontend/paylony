@@ -1,15 +1,16 @@
-import toast from "react-hot-toast";
 import { useGetCashOutQuery } from "../../store/apiSlice";
-import { TableLayout } from "../agents/tableLayout";
 import { DashBoardLayout } from "../global/dashboardLayout";
 import Spinner from "../global/spinner";
 import { TransactLayout } from "./transactLayout";
 import { useState } from "react";
 import { Merchant_Cashout_Table } from "./cashoutView/merchant_";
 import { SuperAdmin_Cashout_Table } from "./cashoutView/super_admin";
+import { ToastError } from "../global/toast";
+import Cookies from "universal-cookie";
 
 export const CardTransactionHistory =()=>{
-    const user = JSON.parse(localStorage.getItem('paylonyToken'));
+    const cookies = new Cookies(null, { path: '/' });
+    const user = cookies.get('paylonyToken');
     const[
         filterBy,
         setFilterBy
@@ -50,19 +51,7 @@ export const CardTransactionHistory =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     console.log(transactData);

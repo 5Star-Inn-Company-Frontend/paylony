@@ -4,6 +4,7 @@ import { Text } from "./text"
 import { TotalInformation } from "../dashMainScreen/totalDetails"
 import { useGetAllDashboardQuery } from "../../store/apiSlice"
 import toast from "react-hot-toast"
+import { ToastError } from "./toast"
 
 export const DashbaordMainView =()=>{
     const{
@@ -17,19 +18,7 @@ export const DashbaordMainView =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     return(

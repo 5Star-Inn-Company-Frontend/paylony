@@ -5,6 +5,7 @@ import { TransactLayout } from "./transactLayout";
 import { useGetBetHistoryQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 
 export const BetTransactionHistory =()=>{
 
@@ -49,16 +50,7 @@ export const BetTransactionHistory =()=>{
             status,
             data
         }=error
-        toast.error(
-            data.error?
-                data.error:
-                    data.message,
-            {
-                style:{
-                    background:"#fff1f2"
-                }
-            }
-        )
+        ToastError(status,data)
         console.log(error)
     }
     console.log(transactData);

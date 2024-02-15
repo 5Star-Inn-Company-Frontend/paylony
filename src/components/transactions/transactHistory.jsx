@@ -5,6 +5,7 @@ import { TransactLayout } from "./transactLayout";
 import { useState } from "react";
 import Spinner from "../global/spinner";
 import toast from "react-hot-toast";
+import { ToastError } from "../global/toast";
 
 export const TransactionHistory =()=>{
     const[
@@ -48,19 +49,7 @@ export const TransactionHistory =()=>{
             status,
             data
         }=error
-        if(data?.error){
-            toast.error(data?.error,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }else{
-            toast.error(data?.message,{
-                style:{
-                    background:"#fff1f2"
-                }
-            })
-        }
+        ToastError(status,data)
         console.log(error)
     }
     console.log(transactData);

@@ -3,6 +3,7 @@ import { PortalLayout } from "./portalLayout";
 import { useCreateRolesMutation } from "../../store/apiSlice";
 import toast from "react-hot-toast";
 import { Loader } from "../global/btnLoader";
+import { ToastError, ToastSucess } from "../global/toast";
 export const AddRoles=()=>{
     const [createRoles, {isLoading}] = useCreateRolesMutation()
     const { 
@@ -16,33 +17,14 @@ export const AddRoles=()=>{
         var formdata = new FormData();
         formdata.append("name", Name)
         createRoles(formdata).unwrap().then((payload)=>{
-            toast.success(payload?.message,{
-                style:{
-                    background:"#ecfdf5",
-                },
-                iconTheme:{
-                    primary:"#6ee7b7"
-                }
-            })
+            ToastSucess(payload?.message);
             window.location.replace("/all_roles");
         }).catch((error)=>{
             const{
                 status,
                 data
             }=error
-            if(data?.error){
-                toast.error(data?.error,{
-                    style:{
-                        background:"#fff1f2"
-                    }
-                })
-            }else{
-                toast.error(data?.message,{
-                    style:{
-                        background:"#fff1f2"
-                    }
-                })
-            }
+            ToastError(status,data)
             console.log(error)
         })
     }

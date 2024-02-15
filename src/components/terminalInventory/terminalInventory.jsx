@@ -1,28 +1,20 @@
 import { useForm } from "react-hook-form"
-import {
-    Input,
-    initTE,
-  } from "tw-elements";
-import { useEffect } from "react";
 import { TerminalLayout } from "./terminalLayout";
 import { useCreateTerminalsMutation, useGetAllAggregatorsQuery, useGetAllBusinessTypeQuery } from "../../store/apiSlice";
-import toast from "react-hot-toast";
 import { Loader } from "../global/btnLoader";
+import { ToastError, ToastSucess } from "../global/toast";
 
 export const AddTerminalInventory=()=>{
     const [createTerminals, {isLoading}] = useCreateTerminalsMutation();
 
+    // const{
+    //     data:business_Data,
+    //     isLoading:business_IsLoading,
+    //     isError:business_IsError,
+    //     error:business_Error
+    // }= useGetAllBusinessTypeQuery();
     const{
-        data:business_Data,
-        isLoading:business_IsLoading,
-        isError:business_IsError,
-        error:business_Error
-    }= useGetAllBusinessTypeQuery();
-    const{
-        data:aggregatorsData,
-        isLoading:aggregatorsIsLoading,
-        isError,
-        error
+        data:aggregatorsData
     }= useGetAllAggregatorsQuery();
     const { 
         register, 
@@ -126,32 +118,13 @@ export const AddTerminalInventory=()=>{
         createTerminals({
             body:formdata
         }).unwrap().then((payload)=>{
-            toast.success(payload?.message,{
-                style:{
-                    background:"#ecfdf5",
-                },
-                iconTheme:{
-                    primary:"#6ee7b7"
-                }
-            })
+            ToastSucess(payload?.message);
         }).catch((error)=>{
             const{
                 status,
                 data
             }=error
-            if(data?.error){
-                toast.error(data?.error,{
-                    style:{
-                        background:"#fff1f2"
-                    }
-                })
-            }else{
-                toast.error(data?.message,{
-                    style:{
-                        background:"#fff1f2"
-                    }
-                })
-            }
+            ToastError(status,data)
             console.log(error)
         })
     }
