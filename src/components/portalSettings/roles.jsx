@@ -78,7 +78,7 @@ export const AllRoles =()=>{
                     createBtnAction={()=>window.location.replace("/add_roles")}
                     createBtnText="Add Roles"
                     headerData={[
-                        "S/N","Id","Name","Guard name","Action"
+                        "S/N","Id","Name","Guard Name","Action"
                     ]}
                     handleFilterChange={handleFilterChange}
                     sortButton={[
@@ -127,19 +127,19 @@ export const AllRoles =()=>{
                                     <TableDropDown
                                         list={[
                                             {
-                                                dropTitle:deleteIsLoading?"please wait...":"delete",
+                                                dropTitle:deleteIsLoading?"please wait...":"Delete",
                                                 action:()=>deleteAction(id)
                                             },{
-                                                dropTitle:"update",
+                                                dropTitle:"Update",
                                                 action:()=>window.location.replace(`/portal/update_roles/${id}`)
                                             },{
-                                                dropTitle:"assign",
+                                                dropTitle:"Assign",
                                                 action:()=>{
                                                     let action = "assign"
                                                     window.location.replace(`/portal/${action}/${id}`)
                                                 }
                                             },{
-                                                dropTitle:"revoke",
+                                                dropTitle:"Revoke",
                                                 action:()=>{
                                                     let action = "revoke"
                                                     window.location.replace(`/portal/${action}/${id}`)

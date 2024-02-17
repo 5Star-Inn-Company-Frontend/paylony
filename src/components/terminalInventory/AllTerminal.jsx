@@ -228,7 +228,7 @@ export const AllTerminal =()=>{
                             <td>
                                 <TableDropDown
                                     list={[{
-                                        dropTitle:isLoading?"please wait...":"delete",
+                                        dropTitle:isLoading?"please wait...":"Delete",
                                         action:()=>deleteAction(id)
                                     }]}
                                 />

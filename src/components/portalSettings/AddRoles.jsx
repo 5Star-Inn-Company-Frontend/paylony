@@ -32,7 +32,7 @@ export const AddRoles=()=>{
         <PortalLayout title="Create Role">
             <form 
                 onSubmit={handleSubmit(SubmitHandler)}
-                className="m-auto py-8 bg-white lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 lg:w-[40%] xl:w-[40%] md:w-[40%] sm:w-ful xs:w-full"
+                className="m-auto py-8 bg-white lg:px-4 xl:px-4 md:px-4 sm:px-2 xs:px-2 lg:w-[75%] xl:w-[75%] md:w-[75%] sm:w-ful xs:w-full"
             >
                 <div className="flex flex-col items-center  justify-center ">
                     {

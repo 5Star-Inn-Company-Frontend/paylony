@@ -233,7 +233,7 @@ export const AddTerminalInventory=()=>{
                         <label
                             className={`mb-2 text-sm font-medium text-start`}
                             htmlFor="feeBearer">
-                            Payout Status
+                            Fee Bearer
                         </label>
                         <select
                             required

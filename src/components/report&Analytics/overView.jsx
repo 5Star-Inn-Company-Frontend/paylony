@@ -39,7 +39,7 @@ export const Overview =()=>{
                     />
                     <Text
                         style="text-sm text-start mb-8"
-                        value={`Performed ${overviewData?.data?.transaction_statistics?.total_successful_transaction_count} sucessfull transactions out of ${overviewData?.data?.transaction_statistics?.total_transaction_count} transactions `}
+                        value={`Performed ${overviewData?.data?.transaction_statistics?.total_successful_transaction_count} successfull transaction out of ${overviewData?.data?.transaction_statistics?.total_transaction_count} transactions `}
                     />
                     <div className="flex flex-col divide-y divide-slate-200">
                         {
@@ -64,7 +64,7 @@ export const Overview =()=>{
                                     value:`${overviewData?.data?.transaction_statistics?.total_successful_transaction_count}`
                                 },{
                                     title:"Total Wallet (Balance)",
-                                    value:`$${overviewData?.data?.total_wallet}`
+                                    value:`₦${overviewData?.data?.total_wallet}`
                                 },{
                                     title:"Today's SuccessFull Transaction",
                                     value:`${overviewData?.data?.transaction_statistics?.todays_total_failed_transaction}`
@@ -72,11 +72,11 @@ export const Overview =()=>{
                                     title:"Todays's Failed Transaction(Count)",
                                     value:`${overviewData?.data?.transaction_statistics?.todays_total_successful_transaction}`
                                 },{
-                                    title:"Total Successful transaction volume",
+                                    title:"Total Successfull transaction volume",
                                     value:`${overviewData?.data?.transaction_statistics?.total_successful_transaction_volume}`
                                 },{
                                     title:"Total transaction Volume",
-                                    value:`$${overviewData?.data?.transaction_statistics?.total_transaction_volume}`
+                                    value:`₦${overviewData?.data?.transaction_statistics?.total_transaction_volume}`
                                 }
                             ].map((info,index)=>{
                                 const{
