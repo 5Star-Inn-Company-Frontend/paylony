@@ -40,7 +40,7 @@ export const TotalInformation =({data,isLoading})=>{
                         icon:icon3,
                         img:img3
                     },{
-                        title:"Aggregiated Wallet Balance",
+                        title:"Aggregated Wallet Balance",
                         amount:data?.aggregated_wallent_balance,
                         bg:"bg-white",
                         icon:icon4,
@@ -58,13 +58,13 @@ export const TotalInformation =({data,isLoading})=>{
                         icon:icon2,
                         img:img2
                     },{
-                        title:"Successful transaction volume",
+                        title:"Successfull transaction volume",
                         amount:data?.transactions?.total_successful_transaction_volume,
                         icon:icon3,
                         bg:"bg-white",
                         img:img3
                     },{
-                        title:"Successful transaction Count",
+                        title:"Successfull transaction Count",
                         amount:data?.transactions?.total_successful_transaction_count,
                         bg:"bg-[#F8FBFF]",
                         icon:icon4,

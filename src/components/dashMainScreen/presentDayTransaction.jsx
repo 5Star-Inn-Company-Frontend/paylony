@@ -40,7 +40,7 @@ export const PTransaction =({data,isLoading,balance})=>{
                                 <div>
                                     <Text
                                         style="font-medium text-lg text-start text-white"
-                                        value="Successful Transaction"
+                                        value="Successfull Transaction"
                                     />
                                 </div>
                             </div>
