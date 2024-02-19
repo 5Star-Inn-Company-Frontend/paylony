@@ -112,6 +112,7 @@ export const AllTerminal =()=>{
                 headerData={[
                     "S/N",
                     "Id",
+                    "Termianl Id",
                     user?.user_type === "admin"?"Business ID":null,
                     user?.user_type === "admin"?"User_ID":null,
                     "Serial Number",
@@ -146,6 +147,7 @@ export const AllTerminal =()=>{
                  terminalData?.data?.map((info,index)=>{
                     const{
                         id,
+                        terminal_id,
                         business_id,
                         user_id,
                         serial_number,
@@ -184,6 +186,7 @@ export const AllTerminal =()=>{
                             {
                                 [
                                     id,
+                                    terminal_id,
                                     user?.user_type === "admin"?business_id:null,
                                     user?.user_type === "admin"?user_id:null,
                                     serial_number,
@@ -220,17 +223,17 @@ export const AllTerminal =()=>{
                                     .toLocaleString()
                                 }
                             </td>
-                            {/* <td className={bodyStyle}>{
-                                    new Date(updated_at)
-                                    .toLocaleString()
-                                }
-                            </td> */}
                             <td>
                                 <TableDropDown
-                                    list={[{
-                                        dropTitle:isLoading?"please wait...":"Delete",
-                                        action:()=>deleteAction(id)
-                                    }]}
+                                    list={[
+                                        {
+                                            dropTitle:isLoading?"please wait...":"Delete",
+                                            action:()=>deleteAction(id)
+                                        },{
+                                            dropTitle:"View transactions",
+                                            action:()=>window.location.replace(`/transactions/${terminal_id}`)
+                                        }
+                                    ]}
                                 />
                             </td>
                         </tr>

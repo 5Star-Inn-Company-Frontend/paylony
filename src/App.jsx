@@ -54,6 +54,7 @@ import { PageNotFound } from './pages/404';
 import { DisputeStatusCount } from './components/report&Analytics/disputeStatusCount';
 import { PayAttitude } from './components/transactions/payAttitude';
 import { BankTransfer } from './components/transactions/banktransfer';
+import { Terminal_Transactions } from './components/terminalInventory/terminal_transactions';
 
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
             <Route exact path="/wallet_disbursement" element={ <DisBursementForm/>}/>
             <Route exact path="/transact-refund" element={ <RefundTransactionHistory/>}/>
             <Route exact path="/all_terminals" element={ <AllTerminal/>}/>
+            <Route exact path="/transactions/:terminal_id" element={ <Terminal_Transactions/>}/>
             <Route exact path="/add_terminal" element={ <AddTerminalInventory/>}/>
             <Route exact path="/all_roles" element={ <AllRoles/>}/>
             <Route exact path="/all_permissions" element={ <AllPermissions/>}/>

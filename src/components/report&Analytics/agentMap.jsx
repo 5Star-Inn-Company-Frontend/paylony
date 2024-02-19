@@ -11,7 +11,17 @@ import shadowUrl from 'leaflet/dist/images/marker-shadow.png'
 import MarkerClusterGroup from "./react-leaflet-markercluster";
 import toast from "react-hot-toast";
 import { ToastError } from "../global/toast";
+import { useEffect, useState } from "react";
+import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 export const Agent_Map =()=>{
+    const [mapCoordinates, setMapCoordinates] = useState([]);
+    const heatmapOptions = {
+        radius: 20,
+        blur: 20,
+        maxZoom: 18,
+        minOpacity: 0.5,
+        maxOpacity: 1
+    };
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
         iconRetinaUrl:iconRetinaUrl,
@@ -24,7 +34,25 @@ export const Agent_Map =()=>{
         isError,
         error
     }= useGetAgentMapQuery();
-    console.log(mapData)
+
+    useEffect(() => {
+                let newData=[];
+                if(mapData?.data && mapData?.data?.length !==0){
+                    mapData?.data.forEach((coordinate)=>{
+                        const{
+                            state,
+                            agent_count
+                        }=coordinate;
+                        newData.push([
+                            parseFloat(state?.latitude),
+                            parseFloat(state?.longitude),
+                            agent_count
+                        ])
+                    })
+                }
+                setMapCoordinates(newData);
+            }, [mapData]);
+            console.log(mapCoordinates);
     if(isError){
         const{
             status,
@@ -57,6 +85,16 @@ export const Agent_Map =()=>{
                                 scrollWheelZoom={false}
                                 style={{ width: "100%", height: "100%" }}
                         >
+                            <HeatmapLayer
+                                fitBoundsOnLoad
+                                fitBoundsOnUpdate
+                                points={mapCoordinates}
+                                longitudeExtractor={(point) => point[1]}
+                                latitudeExtractor={(point) => point[0]}
+                                key={Math.random() + Math.random()}
+                                intensityExtractor={(point) => parseFloat(point[2])}
+                                {...heatmapOptions}
+                            />
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -65,8 +103,7 @@ export const Agent_Map =()=>{
                             {
                                 mapData?.data?.map((mapItem,index)=>{
                                     const{
-                                        state,
-                                        agent_count
+                                        state
                                     }=mapItem;
                                     return(
                                         <Marker
