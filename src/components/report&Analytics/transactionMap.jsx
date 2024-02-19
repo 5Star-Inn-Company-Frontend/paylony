@@ -53,7 +53,7 @@ export const Transaction_Map =()=>{
         }
         setMapCoordinates(newData);
     }, [mapData]);
-    
+
     if(isError){
         const{
             status,
@@ -63,11 +63,11 @@ export const Transaction_Map =()=>{
         console.log(error)
     }
     return(
-        <ReportLayout title="Agent Map">
+        <ReportLayout title="Transaction Map">
             <div className="mb-4">
                 <Text
                     style="mb-2 text-lg text-start font-medium"
-                    value="Agent Count Distribution"
+                    value="Transaction Count Distribution"
                 />
                 <Text
                     style="text-sm text-start font-light"
