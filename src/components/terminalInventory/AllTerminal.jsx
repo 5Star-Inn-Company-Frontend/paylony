@@ -106,7 +106,7 @@ export const AllTerminal =()=>{
                 filterData={filterData}
                 setFilterData={setFilterData}
                 setFilterBy={setFilterBy}
-                inputPlaceHolder={`Search terminal `}
+                inputPlaceHolder={`Type Query...`}
                 createBtnText="Add Terminal"
                 hideCreateAction={user?.user_type === "admin"?true:false}
                 headerData={[

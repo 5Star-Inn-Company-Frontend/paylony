@@ -1,5 +1,5 @@
 
-import { useGetTransactionHistoryQuery } from "../../store/apiSlice";
+import { useGetTerminalTransactionHistoryQuery } from "../../store/apiSlice";
 import Spinner from "../global/spinner";
 import { useParams } from "react-router-dom";
 import { TableLayout } from "../agents/tableLayout";
@@ -15,8 +15,8 @@ export const Terminal_Transactions=()=>{
         filterBy,
         setFilterBy
     ]= useState({
-        title:"terminal",
-        value:terminal_id
+        title:"transaction_ref",
+        value:''
     });
 
     const{
@@ -24,16 +24,17 @@ export const Terminal_Transactions=()=>{
         isLoading,
         isError,
         error
-    } = useGetTransactionHistoryQuery({
-        filterBy:filterBy
+    } = useGetTerminalTransactionHistoryQuery({
+        filterBy:filterBy,
+        id:terminal_id
     });
 
     const[
         filterData,
         setFilterData
     ]= useState({
-        title:"terminal",
-        value:terminal_id
+        title:"transaction_ref",
+        value:''
     });
 
     const bodyStyle ="whitespace-nowrap  px-6 py-4 font-light"
@@ -84,6 +85,8 @@ export const Terminal_Transactions=()=>{
                             ]}
                             headerData={[
                                 "S/N",
+                                "Id",
+                                "Terminal Id",
                                 "Transaction Ref",
                                 "Transaction Amount",
                                 "Status",
@@ -97,6 +100,8 @@ export const Terminal_Transactions=()=>{
                         {
                             terminalData?.data?.map((terminalinfo,index)=>{
                                 const{
+                                    id,
+                                    terminal_id,
                                     transaction_ref,
                                     transaction_amount,
                                     status,
@@ -113,6 +118,8 @@ export const Terminal_Transactions=()=>{
                                         <td className={bodyStyle}>{index+1}</td>
                                         {
                                             [
+                                                id,
+                                                terminal_id,
                                                 transaction_ref,
                                                 transaction_amount,
                                                 status,

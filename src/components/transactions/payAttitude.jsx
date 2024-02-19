@@ -85,7 +85,6 @@ export const PayAttitude=()=>{
                     }
                 ]}
                 filterData={filterData}
-                downloadAction={"vas"}
                 setFilterData={setFilterData}
                 setFilterBy={setFilterBy}
                 inputPlaceHolder={`Search`}

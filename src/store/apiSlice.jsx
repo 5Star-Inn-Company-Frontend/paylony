@@ -229,6 +229,15 @@ export const transactHistoryApi = createApi({
                 }
             }
         }),
+        getTerminalTransactionHistory: builder.query({
+            query: (action)=>{
+                if(action?.filterBy?.value){
+                    return `/api/v1/transactions-terminal/${action?.id}/?${action?.filterBy?.title}=${action?.filterBy?.value}`
+                }else{
+                    return `/api/v1/transactions-terminal/${action?.id}`
+                }
+            }
+        }),
         getVasHistory: builder.query({
             query: (action)=>{
                 if(action?.filterBy?.value){
@@ -694,7 +703,7 @@ export const bankTransferApi = createApi({
 export const {useGetBankTransferQuery,useGetPayAttitudeQuery,useGetPerformanceReportQuery} = bankTransferApi;
 export const {useGetAllBanksQuery} = banksApi;
 export const {useGetCashOutQuery} = cashOutApi;
-export const {useGetTransactionHistoryQuery,useGetVasHistoryQuery,useGetBetHistoryQuery} = transactHistoryApi;
+export const {useGetTransactionHistoryQuery,useGetTerminalTransactionHistoryQuery,useGetVasHistoryQuery,useGetBetHistoryQuery} = transactHistoryApi;
 export const {useGetTicketQuery,useGetTicketDetailsQuery} = ticketApi;
 export const {useGetDisputeQuery,useGetDisputeStatusCountQuery} = disputeApi;
 export const {useGetChargeBackQuery} = chargeBackApi;

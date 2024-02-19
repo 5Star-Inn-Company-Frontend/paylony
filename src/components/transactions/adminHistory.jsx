@@ -84,7 +84,6 @@ export const AdminTransactionHistory =()=>{
                     }
                 ]}
                 filterData={filterData}
-                downloadAction={"transactions"}
                 setFilterData={setFilterData}
                 setFilterBy={setFilterBy}
                 inputPlaceHolder={`Search `}

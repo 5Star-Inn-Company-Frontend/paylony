@@ -97,7 +97,7 @@ export const RevenueWalletHistory =()=>{
                 filterData={filterData}
                 setFilterData={setFilterData}
                 setFilterBy={setFilterBy}
-                inputPlaceHolder={`Search revenue wallet history`}
+                inputPlaceHolder={`Type Query...`}
                 headerData={[
                    "S/n","Id" ,"Terminal Id","Balance Before","Amount","Balance After","Reference","Channel","Source","Transaction type","Creation Date"
                 ]}
