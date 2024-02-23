@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import { baseUrl } from "../../store/apiSlice";
 import axios from "axios";
+import Cookies from "universal-cookie";
 import { useState } from "react";
 
 export const TableLayout =({
@@ -23,7 +24,8 @@ export const TableLayout =({
         isLoading,
         setIsLoading
     ]=useState(false);
-    const user = JSON.parse(localStorage.getItem('paylonyToken'));
+    const cookies = new Cookies(null, { path: '/' });
+    const user = cookies.get('paylonyToken')
     
     const triggerExcelExport = async(data)=>{
         const headers ={
